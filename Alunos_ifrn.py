@@ -27,12 +27,16 @@ except:
     print(f'Erro...{sys.exc_info()[0]}') #Utilizando do diretório sys para simplificar a mensagem e erro do sistema
     sys.exit
 else:
-    filtro1 = lambda cr: cr['campus'] == sig_campus #Criando um filtro para separar apenas o campus inserido no input
-    campus_1 = tuple(filter(filtro1, campi_alunos_aux)) #criando uma tupla para armazenar o resultado da filtragem 
-    cursos = set(map(lambda y:y['curso'],campus_1)) #Procurando dentro de campus_1 os cursos presentes no campus escolhido e utilizando set para evitar repetição
-    for curso in cursos:
-        filtro2 = lambda f: f['curso'] == curso #Criando um filtro para filtrar cada curso separadamente 
-        alunos_curso_aux = tuple(filter(filtro2, campus_1)) #Armazenando em uma variável cada repetição do curso do filtro
-        alunos_curso = len(alunos_curso_aux) #Fazendo a contagem de repetições
-        print(f'Campi {curso}: {alunos_curso} alunos matriculados nesse curso.')
+    if sig_campus in campi:
+        filtro1 = lambda cr: cr['campus'] == sig_campus #Criando um filtro para separar apenas o campus inserido no input
+        campus_1 = tuple(filter(filtro1, campi_alunos_aux)) #criando uma tupla para armazenar o resultado da filtragem 
+        cursos = set(map(lambda y:y['curso'],campus_1)) #Procurando dentro de campus_1 os cursos presentes no campus escolhido e utilizando set para evitar repetição
+        for curso in cursos:
+            filtro2 = lambda f: f['curso'] == curso #Criando um filtro para filtrar cada curso separadamente 
+            alunos_curso_aux = tuple(filter(filtro2, campus_1)) #Armazenando em uma variável cada repetição do curso do filtro
+            alunos_curso = len(alunos_curso_aux) #Fazendo a contagem de repetições
+            print(f'Campi {curso}: {alunos_curso} alunos matriculados nesse curso.')
+    else:
+        print('Cmapus inexistente...')
+
 print('-'*100)
