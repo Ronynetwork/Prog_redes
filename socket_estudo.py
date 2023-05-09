@@ -1,3 +1,4 @@
+import socket as sk
 # METODOS DE UM OBJETO  SOCKET
 accept()#Aceita uma conexão com o cliente
 bind(endereço)#associa um socket de servidor a um endereço
