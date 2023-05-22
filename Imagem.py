@@ -27,6 +27,7 @@ if conexão == 'http:':
     url_request = f'GET {url_image} HTTP/1.1\r\nHOST: {url_host}\r\n\r\n' 
     host_port   = 80
     buffer_size = 1024
+
 elif conexão == 'https:':
     url_request = f'GET {url_image} HTTPS/1.1\r\nHOST: {url_host}\r\n\r\n' 
     host_port   = 443
