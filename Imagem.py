@@ -18,7 +18,7 @@ url_image = '/' + '/'.join(link_separado)
 
 # Realizando a troca de extensão
 extensão = link.split('.')[-1]
-link_txt = link.replace(extensão,'png')
+link_txt = link.replace(extensão,'txt')
 print(link_txt)
 print('-'*100);print(f'Seu host é ({url_host}).\nSua imagem é ({url_image}).');print('-'*100)
 
@@ -63,6 +63,6 @@ headers   = data_ret[:position]
 image     = data_ret[position+4:]
 
 # Salvando a imagem
-file_output = open('image.png', 'wb')
+file_output = open('image.txt', 'wb')
 file_output.write(image)
 file_output.close()
