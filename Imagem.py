@@ -7,7 +7,8 @@ link = input('Insira o link da imagem em que deseja realizar o download:')
 link_separado = link.split('/')
 
 # Utilizando a posição dos separadores para extrair o host:
-conexão = f'{link_separado[0]}//'
+conexão = link_separado[0]
+print(conexão)
 url_host=link_separado[2]
 # apagando os valores menores que url_host:
 del link_separado[:3]
@@ -16,21 +17,21 @@ del link_separado[:3]
 url_image = '/' + '/'.join(link_separado)
 
 # Realizando a troca de extensão
-'''link = link[::-1]
-print(link)
-print('-'*100)
-link_doc = link.split('.')
-link_doc[0] = 'txt'
-link_doc = '.'.join(link_doc)
-doc = link_doc[::-1]
-print(doc)'''
-
+extensão = link.split('.')[-1]
+link_txt = link.replace(extensão,'png')
+print(link_txt)
 print('-'*100);print(f'Seu host é ({url_host}).\nSua imagem é ({url_image}).');print('-'*100)
 
-url_request = f'GET {url_image} HTTP/1.1\r\nHOST: {url_host}\r\n\r\n' 
-host_port   = 80
-buffer_size = 1024
-
+# definindo o tipo de conexão:
+if conexão == 'http:':
+    url_request = f'GET {url_image} HTTP/1.1\r\nHOST: {url_host}\r\n\r\n' 
+    host_port   = 80
+    buffer_size = 1024
+elif conexão == 'https:':
+    url_request = f'GET {url_image} HTTPS/1.1\r\nHOST: {url_host}\r\n\r\n' 
+    host_port   = 443
+    buffer_size = 1024
+# Buscando url da imagem:
 sock_img = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock_img.connect((url_host, host_port))
 sock_img.sendall(url_request.encode())
