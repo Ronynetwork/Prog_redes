@@ -1,3 +1,3 @@
 # Prog_redes
 
-Apenas realizando upload de arquivos para avaliação institucional 😎
+Olá! Aqui que deselvolvo projetos de aplicações de Python! 🐍
