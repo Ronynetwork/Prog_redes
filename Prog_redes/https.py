@@ -22,7 +22,7 @@ print('-'*100);print(f'Seu host é ({url_host}).\nSua imagem é ({url_image}).')
 RSS_PORT     = 443
 CODE_PAGE    = 'utf-8'
 MAX_NOTICIAS = 10
-BUFFER_SIZE  = 4096
+BUFFER_SIZE  = 1024
 # Construir requisição HTTP para obter o feed RSS
 request  = f'GET {url_image} HTTP/1.1\r\n'
 request += f'Host: {url_host}\r\n'
