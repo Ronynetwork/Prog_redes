@@ -12,7 +12,7 @@ conexão = link_separado[0]
 url_host=link_separado[2]
 
 # Unindo os elementos filtrados novamente em uma string:
-url_image = '/'.join(link_separado)
+url_image = '/'.join(link_separado[3:])
 # Realizando a troca de extensão
 extensão = link.split('.')[-1]
 arq_img = link.replace(extensão,'txt')
