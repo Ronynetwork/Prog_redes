@@ -2,5 +2,5 @@
 
 import subprocess
 subprocess.run(['git', 'add', '.'])
-subprocess.run(['git', 'commit', '-m', 'Atualizado'])
+subprocess.run(['git', 'commit', '-m', 'Atualização'])
 subprocess.call(["git", "push", "-u", "origin", "home"])
