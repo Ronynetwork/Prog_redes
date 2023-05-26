@@ -6,10 +6,10 @@ else:
     os.system('clear')
 
 #url = input('informa a url: ')
-url = str('https://www.nasa.gov/sites/default/files/thumbnails/image/nasa-logo-web-rgb.png')
+link = input('Insira o link que seja realizar o download: ')
 
 # fragmenta toda a URL
-link_quebrado = url.split('/')
+link_quebrado = link.split('/')
 
 # pega apenas o host do fragmento acima
 url_host = link_quebrado[2]
@@ -26,7 +26,7 @@ extensão = arq_image.split('.')[-1]
 arq_txt = arq_image.replace(extensão, 'txt')
 
 # pega o protocolo (HTTP ou HTTPS)
-protocolo = url.split(':')[0]
+protocolo = link.split(':')[0]
 print('='*100)
 print(f"\nhostname: {url_host}\nlocal_da_imagem: {url_image}\nnome_da_imagem: {arq_image}\nextensão: {extensão}\nprotocolo: {protocolo}\n")
 print('='*100)
