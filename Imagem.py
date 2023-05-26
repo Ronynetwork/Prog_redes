@@ -9,17 +9,18 @@ else:
 url = str('https://www.nasa.gov/sites/default/files/thumbnails/image/nasa-logo-web-rgb.png')
 
 # fragmenta toda a URL
-url_fragmentada = url.split('/')
+link_quebrado = url.split('/')
 
 # pega apenas o host do fragmento acima
-url_host = url_fragmentada[2]
+url_host = link_quebrado[2]
 
 # pega o local da imagem
-url_image = '/'+'/'.join(url_fragmentada[3:])
+url_image = '/'+'/'.join(link_quebrado[3:])
 
 # pega o nome da imagem + extensão
-arq_image = url_fragmentada[-1]
-
+nome_image = link_quebrado[-1]
+print(nome_image)
+arq_image = nome_image
 # pega apenas a extensão e converte para txt
 extensão = arq_image.split('.')[-1]
 arq_txt = arq_image.replace(extensão, 'txt')
@@ -35,17 +36,17 @@ if protocolo == 'https':
     buffer_size = 1024 
     url_request = f'GET {url_image} HTTP/1.1\r\nHOST: {url_host}\r\n\r\n' 
 
-    context         = ssl.create_default_context()
-    context.check_hostname = False
-    context.verify_mode = ssl.CERT_NONE
-
+    context = ssl.create_default_context()
+    '''   context.check_hostname = False
+    context.verify_mode = ssl.CERT_NONE'''
+    
 
     sockt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock_img = context.wrap_socket(sockt, server_hostname=url_host)
-    sock_img = socket.create_connection((url_host, 443))
+    sock_img.connect((url_host, 443))
     sock_img.send(url_request.encode())
-    print('\nBaixando a imagem...')
 
+    print('\nBaixando a imagem...')
     # Montado a variável que armazenará os dados de retorno
     data_ret = b''
     while True:
@@ -68,7 +69,7 @@ if protocolo == 'https':
     print('='*100)
 
     # Salvando a imagem
-    file_output = open('image.png', 'wb')
+    file_output = open(arq_image, 'wb')
     file_output.write(image)
     file_output.close()
 

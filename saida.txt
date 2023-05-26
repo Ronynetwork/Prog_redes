@@ -1,0 +1,23 @@
+HTTP/1.1 200 OK
+Content-Type: image/png
+Content-Length: 125881
+Connection: keep-alive
+x-amz-id-2: WVpeiDVzDDnsG23b9BtMF+J1sRFZ/45Pa9g/AG6vcgQ+pMo0QnRN3ouX65W+CzszwMfbXUJJPpM=
+x-amz-request-id: HT1E1G865SEPMDK9
+Last-Modified: Wed, 03 Feb 2016 15:50:18 GMT
+x-amz-meta-md5_hash: 6099842fdaa23fbcaa3260f73c528545
+x-amz-version-id: null
+Accept-Ranges: bytes
+Server: AmazonS3
+X-UA-Compatible: IE=edge,chrome=1
+Date: Fri, 26 May 2023 01:04:00 GMT
+Cache-Control: max-age=300
+ETag: "6099842fdaa23fbcaa3260f73c528545"
+Referrer-Policy: strict-origin
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=31557600; includeSubdomains; preload
+Content-Security-Policy: frame-ancestors 'self' https://*.nasa.gov
+X-Cache: RefreshHit from cloudfront
+Via: 1.1 b457bf4ac0ccd3d57efd7a807ed5a572.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: FOR50-P2
+X-Amz-Cf-Id: bsO1wsqLaunb4YHGH472eg2T7Gr7LligVxbOX6xk9fcx1R7DtUQddA==
