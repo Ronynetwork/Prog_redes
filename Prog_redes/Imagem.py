@@ -1,80 +1,77 @@
-import socket,sys,ssl
+import socket, sys, ssl, os, platform
 
-# Solicitando o link da imagem a ser baixada:
-link = input('Insira o link da imagem em que deseja realizar o download:')
+if platform.system() == 'Windows':
+    os.system('cls')
+else:
+    os.system('clear')
 
-# Separando em formato de lista com o método split:
-link_separado = link.split('/')
+#url = input('informa a url: ')
+url = str('https://www.nasa.gov/sites/default/files/thumbnails/image/nasa-logo-web-rgb.png')
 
-# Utilizando a posição dos separadores para extrair o host:
-conexão = link_separado[0]
-url_host=link_separado[2]
+# fragmenta toda a URL
+link_quebrado = url.split('/')
 
-# Unindo os elementos filtrados novamente em uma string:
-url_image = '/'.join(link_separado[3:])
-# Realizando a troca de extensão
-extensão = link.split('.')[-1]
-arq_img = link.replace(extensão,'txt')
-print('-'*100);print(f'Seu host é ({url_host}).\nSua imagem é ({url_image}).');print('-'*100)
+# pega apenas o host do fragmento acima
+url_host = link_quebrado[2]
 
-# definindo o tipo de conexão:
-if conexão == 'http:':
-    try:
-        url_request = f'GET {url_image} HTTP/1.1\r\nHOST: {url_host}\r\n\r\n' 
-        host_port   = 80
-        buffer_size = 1024
-        sock_img = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock_img.connect((url_host, host_port))
-        sock_img.sendall(url_request.encode())
+# pega o local da imagem
+url_image = '/'+'/'.join(link_quebrado[3:])
 
-        print('-'*100)
-        dados = sock_img.recv(buffer_size)
-        dados = str(dados,'utf-8')
-        print(dados)
-        print('-'*100)
+# pega o nome da imagem + extensão
+nome_image = link_quebrado[-1]
+print(nome_image)
+arq_image = nome_image
+# pega apenas a extensão e converte para txt
+extensão = arq_image.split('.')[-1]
+arq_txt = arq_image.replace(extensão, 'txt')
+
+# pega o protocolo (HTTP ou HTTPS)
+protocolo = url.split(':')[0]
+print('='*100)
+print(f"\nhostname: {url_host}\nlocal_da_imagem: {url_image}\nnome_da_imagem: {arq_image}\nextensão: {extensão}\nprotocolo: {protocolo}\n")
+print('='*100)
+
+# Define a porta se a url for HTTP ou HTTPS
+if protocolo == 'https':
+    buffer_size = 1024 
+    url_request = f'GET {url_image} HTTP/1.1\r\nHOST: {url_host}\r\n\r\n' 
+
+    context = ssl.create_default_context()
+    '''   context.check_hostname = False
+    context.verify_mode = ssl.CERT_NONE'''
+    
+
+    sockt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock_img = context.wrap_socket(sockt, server_hostname=url_host)
+    sock_img.connect((url_host, 443))
+    sock_img.send(url_request.encode())
+
+    print('\nBaixando a imagem...')
+    # Montado a variável que armazenará os dados de retorno
+    data_ret = b''
+    while True:
+        data = sock_img.recv(buffer_size)
+        if not data: 
+            break
+        data_ret += data
+
+    sock_img.close()
 
 
-        # Montado a variável que armazenará os dados de retorno
-        data_ret = b''
-        while True:
-            data = sock_img.recv(buffer_size)
-            if not data: break
-            data_ret += data
+    # Separando o Cabeçalho dos Dados
+    delimiter = '\r\n\r\n'.encode()
+    position  = data_ret.find(delimiter)
+    headers   = data_ret[:position]
+    image     = data_ret[position+4:]
 
-        # Criando o arquivo que armazenará os dados
-        arquivo = open('dados.txt', 'w')
-        arquivo.write(dados)
-        arquivo.close()
+    print('='*100,'\n')
+    print(str(headers, 'utf-8'),'\n')
+    print('='*100)
 
-        sock_img.close()
+    # Salvando a imagem
+    file_output = open(arq_image, 'wb')
+    file_output.write(image)
+    file_output.close()
 
-        # Obtendo o tamanho da imagem
-        img_size = -1
-        tmp = data_ret.split('\r\n'.encode())
-        for line in tmp:
-            if 'Content-Length:'.encode() in line:
-                img_size = int(line.split()[1])
-                break
-        print(f'\nTamanho da Imagem: {img_size} bytes')
-
-        # Separando o Cabeçalho dos Dados
-        delimiter = '\r\n\r\n'.encode()
-        position  = data_ret.find(delimiter)
-        headers   = data_ret[:position]
-        image     = data_ret[position+4:]
-
-        # Salvando a imagem
-        file_output = open('image.txt', 'wb')
-        file_output.write(image)
-        file_output.close()
-    except:
-        print(f'Erro na conexão......: {sys.exc_info()[0]}\n')
-elif conexão == 'https:':
-    try:
-        porta = 443
-        buffer_size  = 4096
-        context         = ssl.create_default_context()
-        socket_rss      = socket.create_connection((url_host, porta))
-        socket_rss_wrap = context.wrap_socket(socket_rss, server_hostname=url_host)
-    except:
-        print(f'Erro na conexão......: {sys.exc_info()[0]}\n')
+    with open('saida.txt', 'w', encoding='utf-8') as header:
+        header.write(headers.decode('utf-8'))
