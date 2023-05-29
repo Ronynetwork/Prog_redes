@@ -22,7 +22,7 @@ link_txt = link.replace(extensão,'txt')
 print(link_txt)
 print('-'*100);print(f'Seu host é ({url_host}).\nSua imagem é ({url_image}).');print('-'*100)
 
-# definindo o tipo de conexão:
+# definç;[indo o tipo de conexão:
 if conexão == 'http:':
     url_request = f'GET {url_image} HTTP/1.1\r\nHOST: {url_host}\r\n\r\n' 
     host_port   = 80
