@@ -104,9 +104,11 @@ elif protocolo =='http':
 else:
     print(f'O protocolo inserido não é suportado... \nTente novamente utilizando HTTP ou HTTPS.')
 
+dir_cabeçalho = local + f'\\{arq_txt}'
+
 # salvando o head em um arquivo
 try:
-    with open(arq_txt, 'w', encoding='utf-8') as header:
+    with open(dir_cabeçalho, 'w', encoding='utf-8') as header:
         header.write(headers.decode('utf-8'))
 except:
     print(f'Erro...{sys.exc_info()[0]}')
@@ -114,9 +116,6 @@ except:
 
 #identificando o locando onde é localizado as extensões no head
 chave_extensão = 'Content-Type'
-
-# Localizando o arquivo cabeçalho
-dir_cabeçalho = local + f'\\{arq_txt}'
 
 # Realizando a tentativa de encontrar a extensão
 try:
@@ -130,8 +129,10 @@ except:
 
 # Salvando a imagem com a nova extensão
 nome_final = 'imagem.' + extensão_head
+local_imagem = local + f'\\{nome_final}'
+
 try:
-    with open(nome_final, 'wb') as imagem:
+    with open(local_imagem, 'wb') as imagem:
         imagem.write(image)
 except:
     print(f'Erro...{sys.exc_info()[0]}')
