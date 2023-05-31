@@ -1,4 +1,8 @@
-import ssl, socket, sys
+import ssl, socket, sys, os
+
+# Localizando o diretório atual
+local = os.path.dirname(os.path.abspath(__file__))
+
 #url = input('informa a url: ')
 link = input('Insira o endereço do arquivo que você deseja baixar:')
 
@@ -13,19 +17,17 @@ url_image = '/'+'/'.join(link_quebrado[3:])
 
 # pega o nome da imagem + extensão
 n_img = link_quebrado[-1]
-print(n_img)
-arq_image = n_img
-extensão = arq_image.split('.')[-1]
+extensão = n_img.split('.')[-1]
 
 # pega apenas a extensão e converte para txt
-arq_txt = arq_image.replace(extensão, 'txt')
+arq_txt = n_img.replace(extensão, 'txt')
 
 # pega o protocolo (HTTP ou HTTPS)
 protocolo = link.split(':')[0]
 print(protocolo)
 print('-'*100)
 print(f'\nhost:{url_host}\nlocal_imagem:{url_image}')
-print(f'\nnome_imagem:{arq_image}\nextensão:{extensão}\nprotocolo:{protocolo}\n')
+print(f'\nnome_imagem:{n_img}\nextensão:{extensão}\nprotocolo:{protocolo}\n')
 print('-'*100)
 
 # Define a porta se a url for HTTP ou HTTPS
@@ -61,14 +63,6 @@ if protocolo == 'https':
         print('-'*100,'\n')
         print(str(headers, 'utf-8'),'\n')
         print('-'*100)
-
-        # Salvando a imagem
-        file_output = open(n_img, 'wb')
-        file_output.write(image)
-        file_output.close()
-
-        with open(arq_txt, 'w', encoding='utf-8') as cabeçalho:
-            cabeçalho.write(headers.decode('utf-8'))
     except :
         print(f'Erro...{sys.exc_info(0)}')  
         exit()      
@@ -104,15 +98,41 @@ elif protocolo =='http':
         print(str(headers, 'utf-8'),'\n')
         print('-'*100)
 
-        # Salvando a imagem
-        file_output = open(n_img, 'wb')
-        file_output.write(image)
-        file_output.close()
-
-        with open(arq_txt, 'w', encoding='utf-8') as cabeçalho:
-            cabeçalho.write(headers.decode('utf-8'))
     except :
         print(f'Erro...{sys.exc_info(0)}')  
         exit()      
 else:
     print(f'O protocolo inserido não é suportado... \nTente novamente utilizando HTTP ou HTTPS.')
+
+# salvando o head em um arquivo
+try:
+    with open(arq_txt, 'w', encoding='utf-8') as header:
+        header.write(headers.decode('utf-8'))
+except:
+    print(f'Erro...{sys.exc_info()[0]}')
+    exit()
+
+#identificando o locando onde é localizado as extensões no head
+chave_extensão = 'Content-Type'
+
+# Localizando o arquivo cabeçalho
+dir_cabeçalho = local + f'\\{arq_txt}'
+
+# Realizando a tentativa de encontrar a extensão
+try:
+    with open(dir_cabeçalho, 'r', encoding='utf-8') as leitor_cabeçalho:
+        for x in leitor_cabeçalho:
+            if chave_extensão in x:
+                extensão_head = x.split('/')[1].strip()
+except:
+    print(f'Erro...{sys.exc_info()[0]}')
+    exit()
+
+# Salvando a imagem com a nova extensão
+nome_final = 'imagem.' + extensão_head
+try:
+    with open(nome_final, 'wb') as imagem:
+        imagem.write(image)
+except:
+    print(f'Erro...{sys.exc_info()[0]}')
+    exit()
