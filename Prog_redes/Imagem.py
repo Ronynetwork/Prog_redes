@@ -35,23 +35,30 @@ if protocolo == 'https':
     try:
         buffer_size = 1024 
         porta = 443
-        url_request = f'GET {url_image} HTTP/1.1\r\nHOST: {url_host}\r\n\r\n' 
+    
+    # Buscando a url
+        url_request = f'GET {url_image} HTTP/1.1\r\nHOST: {url_host}\r\n\r\n'
         context = ssl.create_default_context()
+    # Desativando a checagem e verificação de segurança
         context.check_hostname = False
         context.verify_mode = ssl.CERT_NONE
 
+    # Definindo o tipo de conexão
         sockt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock_img = context.wrap_socket(sockt, server_hostname=url_host)
+
+    # Estabelecendp a conexão
         sock_img.connect((url_host, porta))
         sock_img.send(url_request.encode())
-        print('Baixando a imagem...')
+        print('O arquivo está sendo baixada, aguarde...')
+
     # Montado a variável que armazenará os dados de retorno
         retorno = b''
         while True:
-            data = sock_img.recv(buffer_size)
-            if not data: 
+            dados = sock_img.recv(buffer_size)
+            if not dados: 
                 break
-            retorno += data
+            retorno += dados
         sock_img.close()
         
         # Separando o Cabeçalho dos Dados
@@ -83,10 +90,10 @@ elif protocolo =='http':
         # Pegando e armazenando o retorno dos dados
         retorno = b''
         while True:
-            data = sock_img.recv(buffer_size)
-            if not data: 
+            dados = sock_img.recv(buffer_size)
+            if not dados: 
                 break
-            retorno += data
+            retorno += dados
         #Fechando a conexão
         sock_img.close()
         delimiter = '\r\n\r\n'.encode()
@@ -120,9 +127,9 @@ chave_extensão = 'Content-Type'
 # Realizando a tentativa de encontrar a extensão
 try:
     with open(dir_cabeçalho, 'r', encoding='utf-8') as leitor_cabeçalho:
-        for x in leitor_cabeçalho:
-            if chave_extensão in x:
-                extensão_head = x.split('/')[1].strip()
+        for linha in leitor_cabeçalho:
+            if chave_extensão in linha:
+                extensão_head = linha.split('/')[1].strip()
 except:
     print(f'Erro...{sys.exc_info()[0]}')
     exit()
