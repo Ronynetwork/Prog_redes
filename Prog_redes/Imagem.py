@@ -63,9 +63,12 @@ if protocolo == 'https':
         print('-'*100)
 
         # Salvando a imagem
-        file_output = open('arquivo.jpg', 'wb')
+        file_output = open(n_img, 'wb')
         file_output.write(image)
         file_output.close()
+
+        with open(arq_txt, 'w', encoding='utf-8') as cabeçalho:
+            cabeçalho.write(headers.decode('utf-8'))
     except :
         print(f'Erro...{sys.exc_info(0)}')  
         exit()      
@@ -106,7 +109,7 @@ elif protocolo =='http':
         file_output.write(image)
         file_output.close()
 
-        with open('cabeçalho.txt', 'w', encoding='utf-8') as cabeçalho:
+        with open(arq_txt, 'w', encoding='utf-8') as cabeçalho:
             cabeçalho.write(headers.decode('utf-8'))
     except :
         print(f'Erro...{sys.exc_info(0)}')  
