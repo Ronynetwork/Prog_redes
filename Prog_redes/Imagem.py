@@ -1,30 +1,15 @@
-import ssl, socket, sys, os
+import os, sys
+local = os.path.dirname(os.path.abspath(__file__)) 
+sys.path.append(local+'//Funções')
+import funções_link 
 
-# Localizando o diretório atual
-local = os.path.dirname(os.path.abspath(__file__))
-
-#url = input('informa a url: ')
+print(local)
+'''#url = input('informa a url: ')
 link = input('Insira o endereço do arquivo que você deseja baixar:')
 
-# fragmenta a URL
-link_quebrado = link.split('/')
+# Utilizando de função para modelar a url
+url_host, n_img, link_quebrado, extensão, url_image = funções_link.link_change(link)
 
-# pega apenas o host do fragmento acima
-url_host = link_quebrado[2]
-
-# seleciona o local da imagem
-url_image = '/'+'/'.join(link_quebrado[3:])
-
-# pega o nome da imagem + extensão
-n_img = link_quebrado[-1]
-extensão = n_img.split('.')[-1]
-
-# pega apenas a extensão e converte para txt
-arq_txt = n_img.replace(extensão, 'txt')
-
-# pega o protocolo (HTTP ou HTTPS)
-protocolo = link.split(':')[0]
-print(protocolo)
 print('-'*100)
 print(f'\nhost:{url_host}\nlocal_imagem:{url_image}')
 print(f'\nnome_imagem:{n_img}\nextensão:{extensão}\nprotocolo:{protocolo}\n')
@@ -104,9 +89,20 @@ elif protocolo =='http':
 else:
     print(f'O protocolo inserido não é suportado... \nTente novamente utilizando HTTP ou HTTPS.')
 
+# Tratamento de caracteres especiais no nome do head
+special = [';','.','*','?','/','>','<','|','"']
+contem = 0
+for letra in special:
+    while contem != -1:
+        contem = n_img.find(letra)
+        n_img = n_img.replace(letra,'-')
+
+# Definindo o local do head
+dir_cabeçalho = local + f'\\{n_txt}'
+
 # salvando o head em um arquivo
 try:
-    with open(arq_txt, 'w', encoding='utf-8') as header:
+    with open(n_img, 'w', encoding='utf-8') as header:
         header.write(headers.decode('utf-8'))
 except:
     print(f'Erro...{sys.exc_info()[0]}')
@@ -116,7 +112,7 @@ except:
 chave_extensão = 'Content-Type'
 
 # Localizando o arquivo cabeçalho
-dir_cabeçalho = local + f'\\{arq_txt}'
+dir_cabeçalho = local + f'\\{n_img}'
 
 # Realizando a tentativa de encontrar a extensão
 try:
@@ -130,9 +126,12 @@ except:
 
 # Salvando a imagem com a nova extensão
 nome_final = 'imagem.' + extensão_head
+imagem = local + f'\\{n_img}'
+
 try:
-    with open(nome_final, 'wb') as imagem:
-        imagem.write(image)
+    with open(imagem, 'wb') as img:
+        img.write(image)
 except:
     print(f'Erro...{sys.exc_info()[0]}')
     exit()
+'''
