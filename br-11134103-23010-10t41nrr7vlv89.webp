@@ -1,0 +1,14 @@
+HTTP/1.1 200 OK
+Date: Wed, 24 May 2023 15:01:27 GMT
+Content-Type: image/webp
+Content-Length: 36692
+Connection: close
+Server: nginx/1.21.0
+X-Mms-Request-Id: 55f59c20a17e44fd8a1213ec2b962ba8-646e26ca
+Handle-By: img.susercontent.com
+Access-Control-Allow-Origin: *
+Cache-Control: max-age=31536000
+X-CDN: lumen
+Timing-Allow-Origin: *
+Age: 808871
+Accept-Ranges: bytes

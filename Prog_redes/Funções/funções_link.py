@@ -4,10 +4,10 @@ def link_change(link):
     try:
         # fragmenta a URL
         link_quebrado = link.split('/')
-
+        print(link_quebrado)
         # pega apenas o host do fragmento acima
         url_host = link_quebrado[2]
-
+        print(url_host)
         # seleciona o local da imagem
         url_image = '/'+'/'.join(link_quebrado[3:])
 
@@ -20,6 +20,6 @@ def link_change(link):
 
         # pega o protocolo (HTTP ou HTTPS)
         protocolo = link.split(':')[0]
-        return url_host, url_image, arq_txt, n_img, extensão, link_quebrado, protocolo
+        return link_quebrado, url_host, url_image, n_img, extensão, arq_txt, protocolo
     except:
         print(f'Erro na fragmentação... {sys.exc_info()[0]}')
