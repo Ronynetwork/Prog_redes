@@ -1,29 +1,28 @@
-import sys, socket, funções_link,ssl
+import sys, socket,ssl
 
-
-def connect_skt(url_host, url_image):
+def connect_http(url_host, url_image):
     url_request = f'GET {url_image} HTTP/1.1\r\nHOST: {url_host}\r\nConnection: close\r\n\r\n' 
-    context = ssl.create_default_context()
-    context.check_hostname = False
-    context.verify_mode = ssl.CERT_NONE
-    sockt_IPv4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sockt_img = context.wrap_socket(sockt_IPv4, server_hostname=url_host)
-    buffer_size = 1024
-    
-    a,b,c,d,e, protocolo = funções_link.link_change(link_input)
-    if protocolo == 'https':
-        try:
-            sockt_img.connect((url_host, 443))
-            sockt_img.send(url_request.encode())
-        except:
-            print(f'Erro de conexão HTTPS...{sys.exc_info()[0]}')
-    elif protocolo == 'http':
-        try:
-            sockt_img.connect((url_host, 80))
-            sockt_img.send(url_request.encode())
-        except:
-            print(f'Erro de conexão HTTP...{sys.exc_info()[0]}')
-    else:
-        print(f'Insira um protocolo válido... HTTP ou HTTPS.')
+    socket_img = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        socket_img.connect((url_host, 80))
+        socket_img.send(url_request.encode())
+    except:
+        print(f'Erro de conexão HTTP...{sys.exc_info()[0]}')
+        exit()
+    return socket_img
 
-    return url_request, context, sockt_IPv4, sockt_img, buffer_size
+def connect_https(url_host, url_image):
+    url_request = f'GET {url_image} HTTP/1.1\r\nHOST: {url_host}\r\nConnection: close\r\n\r\n'    # define a requisição 
+    context = ssl.create_default_context()      # criação do contexto SSL para conexão HTTPS
+    context.check_hostname = False      # desativa a verificação do nome do host durante a autenticação SSL.
+    context.verify_mode = ssl.CERT_NONE     # o certificado do servidor não será verificado
+    socket_TCP_IPV4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)     # criação do socket/ conexão com o server (IPV4/TCP)
+    socket_img = context.wrap_socket(socket_TCP_IPV4, server_hostname=url_host)     # Envolve o socket criado anteriormente em uma conexão segura (wrap_socket)
+    
+    try:
+        socket_img.connect((url_host,443))
+        socket_img.sendall(url_request.encode('utf-8'))
+    except:
+        print(f'Erro de conexão HTTPS... {sys.exc_info()[0]}')
+        exit()
+    return socket_img

@@ -4,45 +4,52 @@ print(local)
 sys.path.append(local + '\\Funções')
 import funções_link, funções_download
 
-#url = input('informa a url: ')
-link = input('Insira o endereço do arquivo que você deseja baixar:')
-
 # Utilizando de função para modelar a url
-link_quebrado, url_host, url_image, n_img, extensão, arq_txt, protocolo = funções_link.link_change(link)
+link_quebrado, url_host, url_image, n_img, extensão, arq_txt, protocolo = funções_link.link_change()
 
-print('-'*100)
+'''print('-'*100)
 print(arq_txt)
 print(f'Host: {url_host}\nLocal_imagem: {url_image}')
 print(f'Nome_imagem: {n_img}\nExtensão: {extensão}\nProtocolo: {protocolo}')
-print('-'*100)
+print('-'*100)'''
 
 # Realizando a conexão
-url_request, context, sockt_IPv4, sockt_img, buffer_size = funções_download.connect_skt()
+if protocolo == 'http':
+    socket_img = funções_download.connect_http(url_host, url_image)
+    print('Conexão estabelecida!'); print('-'*100)
 
+elif protocolo == 'https':
+    socket_img = funções_download.connect_https(url_host, url_image)
+    print('Conexão estabelecida!'); print('-'*100)
 
-print('Baixando o arquivo...')
+else:
+    print('Protocolo não suportado... Tente novamente com HTTP ou HTTPS\n')
+    exit()
 
+buffer_size = 4096
 # Pegando e armazenando o retorno dos dados
 retorno = b''
 while True:
-    data = sockt_img.recv(buffer_size)
+    data = socket_img.recv(buffer_size)
     if not data: 
         break
     retorno += data
 #Fechando a conexão
-sockt_img.close()
+socket_img.close()
 
 delimiter = '\r\n\r\n'.encode()
 position  = retorno.find(delimiter) #Pegando a posição de início do cabeçalho
 headers   = retorno[:position] # Armazenando o cabeçalho em Headers
 image     = retorno[position+4:] # Pegando apenas a imagem
 
+extensão = funções_link.content_type(headers)
+
 print('-'*100,'\n')
 print(str(headers, 'utf-8'),'\n')
 print('-'*100)
 
 # Definindo o local do head
-nome_cabeçalho = '\\arquivo' + arq_txt
+nome_cabeçalho = '\\arquivo.' + arq_txt
 local_cabeçalho = local + f'\\{nome_cabeçalho}'
 
 # salvando o head em um arquivo
@@ -53,8 +60,7 @@ except:
     print(f'Erro na criação do arquivo txt...{sys.exc_info()[0]}')
 
 # Salvando a imagem
-extensão_head = funções_link.extension_head # Recebendo a função criada
-nome_final = f'{n_img}.' + extensão_head # Definindo o nome da imagem
+nome_final = f'{n_img}.' + extensão # Definindo o nome da imagem
 imagem = local + f'\\{nome_final}' # Definindo o local de download
 
 try:
