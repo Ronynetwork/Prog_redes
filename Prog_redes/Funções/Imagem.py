@@ -86,16 +86,8 @@ elif protocolo =='http':
         print(f'Erro...{sys.exc_info(0)}')  
         exit()      
 
-# Tratamento de caracteres especiais no nome do head
-special = ['*','?','/','>','<','|']
-
 # Definindo o local do head
 local_cabeçalho = local + f'\\{arq_txt}'
-contem = 0
-for letra in special:
-    while contem != -1:
-        contem = n_img.find(letra)
-        n_img = n_img.replace(letra,'-')
 
 # salvando o head em um arquivo
 try:
@@ -115,8 +107,16 @@ except:
     print(f'Erro ao escever cabeçalho...{sys.exc_info()[0]}')
     exit()
 
+# Tratamento de caracteres especiais no nome da imagem
+special = ['*','?','/','>','<','|']
 # Salvando a imagem com a nova extensão
-nome_final = 'arquivo.' + extensão_head
+for letra in special:
+    contem = n_img.find(letra)
+    while contem != -1:
+        n_img = n_img.replace(letra,'-')
+
+nome_final = f'{n_img}.' + extensão_head
+
 imagem = local + f'\\{nome_final}'
 try:
     with open(imagem, 'wb') as arquivo:
