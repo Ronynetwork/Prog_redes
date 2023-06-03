@@ -15,22 +15,24 @@ def link_change():
         url_image = '/'+'/'.join(link_quebrado[3:])
 
         # pega o nome da imagem + extensão
-        extensão = link_quebrado[-1].split('.')[1]
-        print(extensão)
         n_img = link_quebrado[-1].split('.')[0]
-        print(n_img)
+        if len(n_img) >= 150:
+            n_img = n_img[0:150]
         # pega apenas a extensão e converte para txt
-        arq_txt = n_img + '.txt'
-        print(arq_txt)
+        arq_txt = '.txt'
         # pega o protocolo (HTTP ou HTTPS)
         protocolo = link_input.split(':')[0]
+        # retirando caracteres que são proibidos de ter no nome de um arquivo, para salvar...
+        caracteres_bloqueados = ['/', ':', '*', '?', '|', '<', '>', '"', '\\']
+        for x in caracteres_bloqueados: 
+            n_img = n_img.replace(x, '')
 
-        return link_quebrado, url_host, url_image, n_img, extensão, arq_txt, protocolo
+        return link_quebrado, url_host, url_image, n_img, arq_txt, protocolo
     except:
         print(f'Erro na fragmentação... {sys.exc_info()[0]}')
     
 
-def content_type (headers): # FUNÇÃO PARA RETIRAR O CONTENT-TYPE DO HEADER DE UM ARQUIVO
+'''def content_type (headers): # FUNÇÃO PARA RETIRAR O CONTENT-TYPE DO HEADER DE UM ARQUIVO
     try:
         linhas = headers.strip().split('\n') # pego o header já decodificado e quebro ele em linhas
         for x in linhas:
@@ -44,4 +46,4 @@ def content_type (headers): # FUNÇÃO PARA RETIRAR O CONTENT-TYPE DO HEADER DE 
         return extensão
     except:
         print(f'\nErro na captura do Content-Type...{sys.exc_info()[0]}\n')
-        
+        '''
