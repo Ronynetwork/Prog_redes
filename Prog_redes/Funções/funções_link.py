@@ -12,9 +12,11 @@ def link_change(link):
         url_image = '/'+'/'.join(link_quebrado[3:])
 
         # pega o nome da imagem + extensão
-        n_img = link_quebrado[-1]
-        extensão = n_img.split('.')[-1]
-        n_img = n_img - extensão
+
+        extensão = link_quebrado[-1].split('.')[-1]
+        n_img = link_quebrado[-1].split('.')[0]
+        
+
         # pega apenas a extensão e converte para txt
         arq_txt = n_img.replace(extensão, 'txt')
 
