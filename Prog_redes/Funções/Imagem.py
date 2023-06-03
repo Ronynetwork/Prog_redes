@@ -3,7 +3,6 @@ local = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(local + '\\Funções')
 import funções_link
 
-print(local)
 #url = input('informa a url: ')
 link = input('Insira o endereço do arquivo que você deseja baixar:')
 
@@ -91,20 +90,37 @@ elif protocolo =='http':
 special = ['*','?','/','>','<','|']
 
 # Definindo o local do head
-dir_cabeçalho = local + f'\\{arq_txt}'
-
+local_cabeçalho = local + f'\\{arq_txt}'
 contem = 0
 for letra in special:
     while contem != -1:
         contem = n_img.find(letra)
         n_img = n_img.replace(letra,'-')
 
-# Definindo o local do head
-dir_cabeçalho = local + f'\\{n_img}'
-
 # salvando o head em um arquivo
 try:
-    with open(n_img, 'w', encoding='utf-8') as header:
+    with open(local_cabeçalho, 'w', encoding='utf-8') as header:
         header.write(headers.decode('utf-8'))
 except:
     print(f'Erro...{sys.exc_info()[0]}')
+
+# Realizando a tentativa de encontrar a extensão
+chave_extensão = 'Content-Type'
+try:
+    with open(local_cabeçalho, 'r', encoding='utf-8') as leitor_cabeçalho:
+        for x in leitor_cabeçalho:
+            if chave_extensão in x:
+                extensão_head = x.split('/')[1].strip()
+except:
+    print(f'Erro ao escever cabeçalho...{sys.exc_info()[0]}')
+    exit()
+
+# Salvando a imagem com a nova extensão
+nome_final = 'arquivo.' + extensão_head
+imagem = local + f'\\{nome_final}'
+try:
+    with open(imagem, 'wb') as arquivo:
+        arquivo.write(image)
+except:
+    print(f'Erro ao salvar a imagem...{sys.exc_info()[0]}')
+    exit()
