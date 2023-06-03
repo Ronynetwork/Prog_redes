@@ -1,8 +1,0 @@
-HTTP/1.1 200 OK
-Date: Sat, 03 Jun 2023 00:23:25 GMT
-Content-Type: image/png
-Content-Length: 8090
-Connection: close
-Server: gunicorn/19.9.0
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Credentials: true
