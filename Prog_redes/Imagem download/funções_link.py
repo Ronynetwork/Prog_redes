@@ -30,11 +30,3 @@ def link_change():
         return link_quebrado, url_host, url_image, n_img, arq_txt, protocolo
     except:
         print(f'Erro na fragmentação... {sys.exc_info()[0]}')
-
-def content_lenght(headers):
-    linhas = headers.strip().split('\n')  # pego o header já decodificado e quebro ele em linhas
-    for x in linhas:
-        if x.startswith('Content-Length:'): # vasculho nessas linhas o content-length por meio do startswich que retorna True quando a palavra existir
-            linha_length = int(x[16:]) # transforma em int e pega somente da posição 16 em diante
-            break
-    return linha_length 

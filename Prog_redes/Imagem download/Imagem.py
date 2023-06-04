@@ -10,7 +10,6 @@ link_quebrado, url_host, url_image, n_img, arq_txt, protocolo = funções_link.l
 print('-'*100)
 print(f'Host: {url_host}\nLocal_imagem: {url_image}')
 print(f'Nome_imagem: {n_img}\nProtocolo: {protocolo}')
-print('-'*100)
 
 # Realizando a conexão
 if protocolo == 'http':
@@ -48,6 +47,7 @@ local_cabeçalho = local + f'\\{nome_cabeçalho}' # Definindo o diretório de do
 try:
     with open(local_cabeçalho, 'w', encoding='utf-8') as header: # Criando o arquivo e salvando o cabeçalho no mesmo diretório
         header.write(headers)
+    print('-'*100); print('\nCabeçalho salvo com sucesso.\n');print('-'*100)
 except:
     print(f'Erro na criação do arquivo txt...{sys.exc_info()[0]}')
 try:
@@ -62,15 +62,16 @@ try:
         # formato content type HTML -> html; charset = utf-8
 except:
     print(f'\nErro na captura do Content-Type...{sys.exc_info()[0]}\n')
-print(f'Extensão: {extensão}')
-linha_lenght = funções_link.content_lenght(headers)
+print(f'Extensão: {extensão}'); print('-'*100)
 # Salvando a imagem
 nome_final = f'{n_img}.' + extensão # Definindo o nome da imagem
 imagem = local + f'\\{nome_final}' # Definindo o local de download
-
+print('\nImagem salva com sucesso.\n');print('-'*100)
 try:
     with open(imagem, 'wb') as arquivo:
         arquivo.write(image)
 except:
-    print(f'Erro ao salvar a imagem...{sys.exc_info()[0]}')
+    print(f'Erro ao salvar a imagem...{sys.exc_info()[0]}');print('-'*100)
     exit()
+
+print('\nAplicação finalzada!\n\n Sua imagem e Cabeçalho foram devidamente baixados e salvos.')
