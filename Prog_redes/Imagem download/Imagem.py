@@ -7,11 +7,11 @@ import funções_link, funções_download
 # Utilizando de função para modelar a url
 link_quebrado, url_host, url_image, n_img, arq_txt, protocolo = funções_link.link_change()
 
-'''print('-'*100)
+print('-'*100)
 print(arq_txt)
 print(f'Host: {url_host}\nLocal_imagem: {url_image}')
-print(f'Nome_imagem: {n_img}\nExtensão: {extensão}\nProtocolo: {protocolo}')
-print('-'*100)'''
+print(f'Nome_imagem: {n_img}\nProtocolo: {protocolo}')
+print('-'*100)
 
 # Realizando a conexão
 if protocolo == 'http':
@@ -70,7 +70,7 @@ try:
 
 except:
     print(f'\nErro na captura do Content-Type...{sys.exc_info()[0]}\n')
-print(extensão)
+print(f'Extensão: {extensão}')
 # Salvando a imagem
 nome_final = f'{n_img}.' + extensão # Definindo o nome da imagem
 imagem = local + f'\\{nome_final}' # Definindo o local de download
