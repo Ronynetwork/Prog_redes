@@ -1,4 +1,4 @@
-import socket
+import socket, sys
 from server_constantes import *
 
 # Criando o socket UDP
@@ -15,13 +15,15 @@ while True:
     if nome_arquivo.upper() == 'EXIT': break #Quebrando a conexão caso o cliente digite EXIT
 
     # Recebendo o conteúdo do servidor
-    dado_retorno, ip_retorno = udp_socket.recvfrom(BUFFER_SIZE)
+    dado_retorno, ip_retorno = udp_socket.recvfrom(BUFFER_SIZE) # Recebendo do servidor o dado de retorno e ip de retorno
 
     # Gravar o dado recebido em arquivo
-    print(f'Gravando o arquivo {nome_arquivo}')
-    arquivo = open(nome_arquivo, 'wb')
-    arquivo.write(dado_retorno)
-    arquivo.close()
-
+    print(f'Gravando o arquivo {nome_arquivo}') 
+    try:
+        with open (nome_arquivo, 'wb') as arquivo:
+            arquivo.write(dado_retorno)
+    except:
+        print(f'Erro ao salvar o arquivo...{sys.exc_info()[0]}');print('-'*100)
+        exit()
 # Fechando o socket
 udp_socket.close()
