@@ -21,8 +21,8 @@ try:
             arquivo.close()
         else:
             # Nome do arquivo a ser enviado
-            nome_arquivo = atual_dir + '\\img\\' + mensagem
-            print(f'Enviando arquivo {mensagem.upper()} ')  
+            nome_arquivo = atual_dir + '\\img\\' + mensagem.lower()
+            print(f'Enviando arquivo {mensagem} ')  
 
             tamanho_arquivo = os.path.getsize(nome_arquivo)
             msg = f'Size:{tamanho_arquivo}'.encode(CODE_PAGE)

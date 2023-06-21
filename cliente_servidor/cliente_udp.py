@@ -1,4 +1,4 @@
-import socket, sys,time
+import socket, sys
 from server_constantes import *
 
 # Criando o socket UDP
@@ -29,24 +29,31 @@ while True:
         total_lenght = int(dado_retorno.split(':')[1])
 
     # Gravar o dado recebido em arquivo
-    print(f'Gravando o arquivo {nome_arquivo} ({total_lenght} bytes)')
-    nome_arquivo_ = DIR_ATUAL + '\\img_client\\' + nome_arquivo
-    arquivo = open(nome_arquivo_, 'wb')
+    try:
+        print(f'Gravando o arquivo {nome_arquivo} ({total_lenght} bytes)')
+        nome_arquivo_ = DIR_ATUAL + '\\img_client\\' + nome_arquivo
+        arquivo = open(nome_arquivo_, 'wb')
+    except:
+        print(f'Erro ao salvar o arquivo... {sys.exc_info()[0]}.')
     bytes_recebidos = 0
     pct = 1
 
     while True:
         # Recebendo o conteúdo do servidor
-        dado_retorno, ip_retorno = udp_socket.recvfrom(BUFFER_SIZE) #Definindo a mensagem recebida e o IP do servidor que está sendo conectado
-        if not dado_retorno: break #Finalizando o laço se não possuir dados
-        print(f'Pacote ({pct}) - Dados Recebidos: {len(dado_retorno)} bytes')
-        
-        arquivo.write(dado_retorno)
-        bytes_recebidos += len(dado_retorno)
-        if bytes_recebidos >= total_lenght: break
-        pct += 1
-
-    arquivo.close()
+        try:
+            dado_retorno, ip_retorno = udp_socket.recvfrom(BUFFER_SIZE) #Definindo a mensagem recebida e o IP do servidor que está sendo conectado
+            if not dado_retorno: break #Finalizando o laço se não possuir dados
+            print(f'Pacote ({pct}) - Dados Recebidos: {len(dado_retorno)} bytes')
+        except:
+            print(f'Erro ao obter o retorno do servidor... {sys.exc_info()[0]}.')
+        try:
+            arquivo.write(dado_retorno)
+            bytes_recebidos += len(dado_retorno)
+            if bytes_recebidos >= total_lenght: break
+            pct += 1
+        except:
+            print(f'Erro ao calcular is dados de retorno... {sys.exc_info()[0]}')
+        arquivo.close()
 
 # Fechando o socket
 udp_socket.close()  
