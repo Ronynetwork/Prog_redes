@@ -18,6 +18,7 @@ try:
         mensagem = mensagem.decode(CODE_PAGE)
         if mensagem.upper() == 'EXIT':
             print(f'\nO {ip_cliente} SE DESCONECTOU DO SERVIDOR...\n')
+            arquivo.close()
         else:
             # Nome do arquivo a ser enviado
             nome_arquivo = atual_dir + '\\img\\' + mensagem
@@ -34,7 +35,6 @@ try:
                 udp_socket.sendto(data_retorno, ip_cliente)
                 time.sleep(0.02)
             print(f'Arquivo {mensagem.upper()} Enviado...')
-            arquivo.close()
 
 except KeyboardInterrupt:
     print('Foi pressionado CTRL+C')

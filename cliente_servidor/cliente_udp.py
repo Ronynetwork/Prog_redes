@@ -1,4 +1,4 @@
-import socket, sys
+import socket, sys,time
 from server_constantes import *
 
 # Criando o socket UDP
@@ -7,13 +7,18 @@ udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 while True:
     # Solicitar o arquivo
     print('-'*100)
-    nome_arquivo = input('Digite o nome do arquivo (EXIT p/ sair):');print('-'*100) # Solicitando o arquivo a ser baixado
+    try:
+        nome_arquivo = input('Digite o nome do arquivo (EXIT p/ sair):');print('-'*100) # Solicitando o arquivo a ser baixado
 
-    # Enviando o nome do arquivo para o servidor
-    print(f'Solicitando o arquivo {nome_arquivo}');print('-'*100)
+        # Enviando o nome do arquivo para o servidor
+        print(f'Solicitando o arquivo {nome_arquivo}');print('-'*100)
 
-    udp_socket.sendto(nome_arquivo.encode(CODE_PAGE), (HOST_SERVER, SOCKET_PORT))#Enviando a  requisição do arquivo para o servidor 
-    
+        udp_socket.sendto(nome_arquivo.encode(CODE_PAGE), (HOST_SERVER, SOCKET_PORT))#Enviando a  requisição do arquivo para o servidor
+    except KeyboardInterrupt:
+        print('Foi pressionado CTRL+C')
+
+    # Fechando o socket
+    udp_socket.close()   
     if nome_arquivo.upper() == 'EXIT': break #Quebrando a conexão caso o cliente digite EXIT
 
     # Recebendo o conteúdo do servidor
@@ -40,5 +45,8 @@ while True:
         bytes_recebidos += len(dado_retorno)
         if bytes_recebidos >= total_lenght: break
         pct += 1
+
+    arquivo.close()
+
 # Fechando o socket
 udp_socket.close()  
