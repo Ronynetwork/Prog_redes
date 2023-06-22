@@ -9,19 +9,19 @@ print(f'\nSERVIDOR ATIVO: {udp_socket.getsockname()}')
 print('\nRecebendo Mensagens...\n\n')
 try:
     while True:
-        mensagem, ip_cliente = udp_socket.recvfrom(BUFFER_SIZE)
-        mensagem = mensagem.decode(CODE_PAGE)
+        req_client, ip_cliente = udp_socket.recvfrom(BUFFER_SIZE)
+        req_client = req_client.decode(CODE_PAGE)
 
-        if mensagem.upper() == 'EXIT':
+        if req_client.upper() == 'EXIT':
             print(f'\nO {ip_cliente} SE DESCONECTOU DO SERVIDOR...\n')
             udp_socket.close()
 
         else:
             # Nome do arquivo a ser enviado
-            nome_arquivo = DIR_ATUAL + '\\img\\' + mensagem.lower()
+            nome_arquivo = DIR_ATUAL + '\\img\\' + req_client.lower()
 
-            print(f'Enviando arquivo {mensagem} ')  
-            tamanho_arquivo = os.path.getsize(nome_arquivo)
+            print(f'Enviando arquivo {req_client} ')  
+            tamanho_arquivo = os.path.getsize(nome_arquivo)     
 
             msg = f'Size:{tamanho_arquivo}'.encode(CODE_PAGE)
             udp_socket.sendto(msg, ip_cliente)
@@ -34,7 +34,7 @@ try:
                 udp_socket.sendto(data_retorno, ip_cliente)
                 time.sleep(0.02)
 
-            print(f'Arquivo {mensagem.upper()} Enviado...')
+            print(f'Arquivo {req_client.upper()} Enviado...')
             arquivo.close()
 
 except KeyboardInterrupt:

@@ -1,6 +1,7 @@
 import socket, sys
 from socket_constants import *
 # Criando o socket UDP
+
 udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 while True:
     # Solicitar o arquivo
