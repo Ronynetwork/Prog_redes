@@ -2,25 +2,25 @@ import socket, sys
 from socket_constants import *
 # Criando o socket UDP
 
-udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)#Definindo uma conexão UDP e de IPv4
 while True:
     # Solicitar o arquivo
     print('-'*100)
     try:
-            nome_arquivo = input('Digite o nome do arquivo (EXIT p/ sair):');print('-'*100) # Solicitando o arquivo a ser baixado
+        nome_arquivo = input('Digite o nome do arquivo (EXIT p/ sair):');print('-'*100) # Solicitando o arquivo a ser baixado
 
-            # Enviando o nome do arquivo para o servidor
-            print(f'Solicitando o arquivo {nome_arquivo}');print('-'*100)
-
-            udp_socket.sendto(nome_arquivo.encode(CODE_PAGE), (HOST_SERVER, SOCKET_PORT))#Enviando a  requisição do arquivo para o servidor
+        # Enviando o nome do arquivo para o servidor
+        print(f'Solicitando o arquivo {nome_arquivo}');print('-'*100)
+        udp_socket.sendto(nome_arquivo.encode(CODE_PAGE), (HOST_SERVER, SOCKET_PORT))#Enviando a  requisição do arquivo para o servidor
+        # Fechando o socket
+        udp_socket.close()   
+        
+        if nome_arquivo.upper() == 'EXIT': 
+            udp_socket.close()
+            break #Quebrando a conexão caso o cliente digite EXIT
     except KeyboardInterrupt:
         print('Foi pressionado CTRL+C')
 
-        # Fechando o socket
-        udp_socket.close()   
-        if nome_arquivo.upper() == 'EXIT': break #Quebrando a conexão caso o cliente digite EXIT
-        udp_socket.close()
-        
         # Recebendo o conteúdo do servidor
         dado_retorno, ip_retorno = udp_socket.recvfrom(BUFFER_SIZE) # Recebendo do servidor o dado de retorno e ip de retorno
         dado_retorno = dado_retorno.decode(CODE_PAGE) #Deixando o arquivo legível

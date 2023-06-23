@@ -2,7 +2,7 @@ import socket, sys, os, time
 from socket_constants import *
 
 # Criando o socket UDP
-udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Definindo uma conexão UDP e de IPv4
 # Vincular o socket a tupla (host, port)
 udp_socket.bind((HOST_SERVER, SOCKET_PORT)) 
 print(f'\nSERVIDOR ATIVO: {udp_socket.getsockname()}')
