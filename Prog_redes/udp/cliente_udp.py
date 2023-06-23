@@ -19,7 +19,8 @@ while True:
         # Fechando o socket
         udp_socket.close()   
         if nome_arquivo.upper() == 'EXIT': break #Quebrando a conexão caso o cliente digite EXIT
-
+        udp_socket.close()
+        
         # Recebendo o conteúdo do servidor
         dado_retorno, ip_retorno = udp_socket.recvfrom(BUFFER_SIZE) # Recebendo do servidor o dado de retorno e ip de retorno
         dado_retorno = dado_retorno.decode(CODE_PAGE) #Deixando o arquivo legível
