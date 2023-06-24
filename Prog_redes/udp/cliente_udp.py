@@ -12,14 +12,12 @@ while True:
         # Enviando o nome do arquivo para o servidor
         print(f'Solicitando o arquivo {nome_arquivo}');print('-'*100)
         udp_socket.sendto(nome_arquivo.encode(CODE_PAGE), (HOST_SERVER, SOCKET_PORT))#Enviando a  requisição do arquivo para o servidor
-        # Fechando o socket
-        udp_socket.close()   
-        
+
         if nome_arquivo.upper() == 'EXIT': 
             udp_socket.close()
             break #Quebrando a conexão caso o cliente digite EXIT
-    except KeyboardInterrupt:
-        print('Foi pressionado CTRL+C')
+        
+        total_lenght = 0
 
         # Recebendo o conteúdo do servidor
         dado_retorno, ip_retorno = udp_socket.recvfrom(BUFFER_SIZE) # Recebendo do servidor o dado de retorno e ip de retorno
@@ -51,6 +49,9 @@ while True:
             except:
                 print(f'Erro ao calcular is dados de retorno... {sys.exc_info()[0]}')
             arquivo.close()
+            
+    except KeyboardInterrupt:
+        print('Foi pressionado CTRL+C')
 
 # Fechando o socket
 udp_socket.close()  

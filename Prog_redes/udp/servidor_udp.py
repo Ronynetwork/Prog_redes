@@ -26,7 +26,8 @@ try:
             msg = f'Size:{tamanho_arquivo}'.encode(CODE_PAGE)
             udp_socket.sendto(msg, ip_cliente)
 
-            arquivo = open(nome_arquivo, 'rb')# Lendo em binário a mensagem
+        with open(nome_arquivo, 'rb') as arquivo:
+            
             while True:
                 data_retorno = arquivo.read(BUFFER_SIZE)
 
