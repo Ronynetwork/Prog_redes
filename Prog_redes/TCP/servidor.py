@@ -1,22 +1,20 @@
-HOST = 'localhost'
-PORT = '50000'
-
 import socket, sys, time
 from constantes_tcp import *
 
 try:
+    endereço_server = ('localhost',PORT)
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((HOST, PORT))
+    server.bind(endereço_server)
     print('-'*100)
-    print(f'\nSERVIDOR ATIVO: {server.getsockname()}')
-    print('-'*100)
-    server.listen()
-    print('Aguardando a conexão do cliente...\n')
-    print('-'*100);print('-'*100)
-    conn, end = server.accept()
-    print('Conexão aceita!')
 except:
-    print(f'Erro ao extabelecer conexão... {sys.exc_info()[0]}')
+    print(f'Erro ao estabelecer conexão...{sys.exc_info()[0]}')
+server.listen(1)
+time.sleep(5)
+print('Aguardando a conexão do cliente...\n')
+print('-'*100)
+conn, end = server.accept()
+print(f'Conexão aceita!\n Cliente conectado {end}')
+
 try:
     while True:
         req_client = conn.recv(BUFFER)
@@ -41,7 +39,7 @@ try:
                 data_retorno = arquivo.read(BUFFER)
 
                 if not data_retorno: break                                
-                conn.sendto(data_retorno, end)
+                conn.sendall(data_retorno, end)
                 time.sleep(0.02)
 
             print(f'Arquivo {req_client.upper()} Enviado...')
