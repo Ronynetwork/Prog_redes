@@ -1,47 +1,53 @@
-HOST = '127.0.0.1'
-
-from constantes_tcp import *
 import socket, sys
 
-bytes_recebidos = 0
-pct = 1
-conexão = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-conexão.connect((HOST,PORT))
+# Caso o arquivo sockets_constants.py esteja um diretório acima do atual
+#diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+#diretorio_atual = diretorio_atual.rsplit('\\',1)[0]
+#sys.path.insert(0, diretorio_atual)
 
+from constantes_tcp import *
+
+# Criando o socket UDP
+try:
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client.connect('127.0.0.1', PORT)
+except:
+    print(f'Erro ao tentar estabelecer a conexão... {sys.exc_info()[0]}')
 while True:
-    try:    
-        nome_arq = input('Digite o nome do arquivo (EXIT p/ sair):')
-        conexão.sendall(nome_arq.encode(CODE_PAGE))
-        if not dado_retorno: #Finalizando o laço se não possuir dados
-            print(f'Pacote ({pct}) - Dados Recebidos: {len(dado_retorno)} bytes')
-            break
-        print('-'*100)
-        if nome_arq.upper() == 'EXIT':
-            print('\nFechando a conexão...\n')
-            conexão.close()
-            break
+    # Solicitar o arquivo
+    nome_arquivo = input('Digite o nome do arquivo (EXIT p/ sair): ')
+    
+    if nome_arquivo.upper() == 'EXIT': break
+
+    # Enviando o nome do arquivo para o servidor
+    print(f'\nSolicitando o arquivo {nome_arquivo}')
+    client.sendto(nome_arquivo.encode(CODE_PAGE))
+    
+    dado_retorno = client.recv(BUFFER)
+    dado_retorno = dado_retorno.decode(CODE_PAGE)
+    if 'Size:' in dado_retorno:
+        tamanho_total = int(dado_retorno.split(':')[1])
+
+    # Gravar o dado recebido em arquivo
+    print(f'Gravando o arquivo {nome_arquivo} ({tamanho_total} bytes)')
+    try:
+        nome_arquivo_ = DIR_ATUAL + '\\img_client\\' + nome_arquivo
+        arquivo = open(nome_arquivo_, 'wb')
     except:
-        print(f'Erro de conexão... {sys.exc_info()[0]}')
-        dado_retorno, ip_retorno = conexão.recv(BUFFER)
-        dado_retorno = dado_retorno.decode(CODE_PAGE)
-        if 'Size:' in dado_retorno:
-            tamanho = int(dado_retorno.split(':')[-1])
-        
-        try: 
-            print(f'Gravando o arquivo {nome_arq} ({tamanho} bytes)')
-            nome_arq = DIR_ATUAL + '\\img_client\\' + nome_arq
-            arquivo = open(nome_arq, 'wb')
-        except:
-            print(f'Erro ao salvar o arquivo... {sys.exc_info()[0]}')
-            
-        try:
-            arquivo.write(dado_retorno)
-            bytes_recebidos += len(dado_retorno)
-            if bytes_recebidos >= tamanho: break
-            pct += 1
-        except:
-            print(f'Erro ao calcular is dados de retorno... {sys.exc_info()[0]}')
-        arquivo.close()
+        print(f'Erro ao salvar o arquivo... {sys.exc_info()[0]}')
+    bytes_recebidos = 0
+    pct = 1
+    while True:
+        # Recebendo o conteúdo do servidor
+        dado_retorno = client.recv(BUFFER)
+        if not dado_retorno: break
+        print(f'Pacote ({pct}) - Dados Recebidos: {len(dado_retorno)} bytes')
+        arquivo.write(dado_retorno)
+        bytes_recebidos += len(dado_retorno)
+        if bytes_recebidos >= tamanho_total: break
+        pct += 1
+
+    arquivo.close()
 
 # Fechando o socket
-conexão.close()
+client.close()

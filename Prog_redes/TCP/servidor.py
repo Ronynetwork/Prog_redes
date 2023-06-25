@@ -1,56 +1,58 @@
-import socket, sys, time
+import socket, sys, os, time
+
+# Caso o arquivo sockets_constants.py esteja um diretório acima do atual
+#diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+#diretorio_atual = diretorio_atual.rsplit('\\',1)[0]
+#sys.path.insert(0, diretorio_atual)
+
 from constantes_tcp import *
 
+endereço = ('localhost', PORT)
+# Criando o socket UDP
 try:
-    endereço_server = ('localhost',PORT)
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(endereço_server)
+    server.bind(endereço) 
+    server.listen(1)
+    print('Aguardando a conexão do cliente...\n')
     print('-'*100)
+    conn, end = server.accept()
+    print(f'Conexão aceita!\n Cliente conectado {end}')
 except:
-    print(f'Erro ao estabelecer conexão...{sys.exc_info()[0]}')
-server.listen(1)
-time.sleep(5)
-print('Aguardando a conexão do cliente...\n')
-print('-'*100)
-conn, end = server.accept()
-print(f'Conexão aceita!\n Cliente conectado {end}')
+    print(f'Erro de conexão... {sys.exc_info()[0]}')
+# Vincular o socket a tupla (host, port)
+
+print(f'\nSERVIDOR ATIVO: {server.getsockname()}')
+print('\nRecebendo Mensagens...\n\n')
 
 try:
     while True:
-        req_client = conn.recv(BUFFER)
-        req_client = req_client.decode(CODE_PAGE)
-
-        if req_client.upper() == 'EXIT':
+        mensagem = server.recv(BUFFER)
+        mensagem = mensagem.decode(CODE_PAGE)
+        if mensagem.upper() == 'EXIT':
             print(f'\nO {end} SE DESCONECTOU DO SERVIDOR...\n')
-            conn.close()
-
         else:
             # Nome do arquivo a ser enviado
-            nome_arquivo = DIR_ATUAL + '\\img\\' + req_client.lower()
+            nome_arquivo = DIR_ATUAL + '\\img_server\\' + mensagem
+            print(f'Enviando arquivo {mensagem.upper()} ...')
 
-            print(f'Enviando arquivo {req_client} ')  
-            tamanho_arquivo = os.path.getsize(nome_arquivo)     
-
+            tamanho_arquivo = os.path.getsize(nome_arquivo)
             msg = f'Size:{tamanho_arquivo}'.encode(CODE_PAGE)
-            conn.sendto(msg, end)
+            server.sendto(msg, end)
 
-            arquivo = open(nome_arquivo, 'rb')# Lendo em binário a mensagem
+            arquivo = open(nome_arquivo, 'rb')
             while True:
                 data_retorno = arquivo.read(BUFFER)
-
                 if not data_retorno: break                                
-                conn.sendall(data_retorno, end)
+                server.sendto(data_retorno, end)
                 time.sleep(0.02)
-
-            print(f'Arquivo {req_client.upper()} Enviado...')
+            print(f'Arquivo {mensagem.upper()} Enviado...')
             arquivo.close()
-
 except KeyboardInterrupt:
     print('Foi pressionado CTRL+C')
+    # Fechando o socket
     server.close()    
 except:
     print(f'\nERRO: {sys.exc_info()[0]}')
 finally:    
     # Fechando o socket
-    conn.close()
     server.close()
