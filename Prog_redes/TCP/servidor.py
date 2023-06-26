@@ -13,12 +13,16 @@ try:
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(endereço) 
     server.listen(1)
+
+    print('-'*100)
     print('Aguardando a conexão do cliente...\n')
     print('-'*100)
-    conn, end = server.accept()
-    print(f'Conexão aceita!\n Cliente conectado {end}')
-except:
-    print(f'Erro de conexão...')
+except KeyboardInterrupt:
+    print(f'A conexão foi encerrada pois foi pressionado Ctrl+C')
+    server.close()
+    
+conn, end = server.accept()
+print(f'Conexão aceita!\n Cliente conectado {end}')
 # Vincular o socket a tupla (host, port)
 
 print(f'\nSERVIDOR ATIVO: {server.getsockname()}')
@@ -30,6 +34,8 @@ try:
         mensagem = mensagem.decode(CODE_PAGE)
         if mensagem.upper() == 'EXIT':
             print(f'\nO {end} SE DESCONECTOU DO SERVIDOR...\n')
+            server.close()
+            break
         else:
             # Nome do arquivo a ser enviado
             nome_arquivo = DIR_ATUAL + '\\img_server\\' + mensagem
