@@ -37,13 +37,13 @@ try:
 
             tamanho_arquivo = os.path.getsize(nome_arquivo)
             msg = f'Size:{tamanho_arquivo}'.encode(CODE_PAGE)
-            server.send(msg, end)
+            conn.send(msg)
 
             arquivo = open(nome_arquivo, 'rb')
             while True:
                 data_retorno = arquivo.read(BUFFER)
                 if not data_retorno: break                                
-                server.send(data_retorno, end)
+                conn.send(data_retorno)
                 time.sleep(0.02)
             print(f'Arquivo {mensagem.upper()} Enviado...')
             arquivo.close()
