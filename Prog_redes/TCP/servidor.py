@@ -26,7 +26,7 @@ print('\nRecebendo Mensagens...\n\n')
 
 try:
     while True:
-        mensagem = server.recv(BUFFER)
+        mensagem = conn.recv(BUFFER)
         mensagem = mensagem.decode(CODE_PAGE)
         if mensagem.upper() == 'EXIT':
             print(f'\nO {end} SE DESCONECTOU DO SERVIDOR...\n')
@@ -37,13 +37,13 @@ try:
 
             tamanho_arquivo = os.path.getsize(nome_arquivo)
             msg = f'Size:{tamanho_arquivo}'.encode(CODE_PAGE)
-            server.sendto(msg, end)
+            server.send(msg, end)
 
             arquivo = open(nome_arquivo, 'rb')
             while True:
                 data_retorno = arquivo.read(BUFFER)
                 if not data_retorno: break                                
-                server.sendto(data_retorno, end)
+                server.send(data_retorno, end)
                 time.sleep(0.02)
             print(f'Arquivo {mensagem.upper()} Enviado...')
             arquivo.close()
