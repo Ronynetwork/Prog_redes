@@ -7,7 +7,7 @@ import socket, sys, os, time
 
 from constantes_tcp import *
 
-endereço = ('localhost', PORT)
+endereço = (('localhost', PORT))
 # Criando o socket UDP
 try:
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -18,7 +18,7 @@ try:
     conn, end = server.accept()
     print(f'Conexão aceita!\n Cliente conectado {end}')
 except:
-    print(f'Erro de conexão... {sys.exc_info()[0]}')
+    print(f'Erro de conexão...')
 # Vincular o socket a tupla (host, port)
 
 print(f'\nSERVIDOR ATIVO: {server.getsockname()}')
