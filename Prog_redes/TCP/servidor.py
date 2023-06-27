@@ -16,7 +16,7 @@ try:
     server.listen(1) # Escutando para tentar detecar uma conexão
 
     print('-'*100)
-    print('Aguardando a conexão do cliente...\n')
+    print('\nAguardando a conexão do cliente...\n')
     print('-'*100)
         
     conn, end = server.accept() 
@@ -52,7 +52,21 @@ try:
             conn.send(data_retorno)
             if not data_retorno: break                                
             time.sleep(0.02)
-        print(f'Arquivo {mensagem} Enviado...')
+
+        print('-'*100)
+        print(f'\nArquivo {mensagem} Enviado...\n')
+        print('-'*100)
+
         arquivo.close()
+except FileNotFoundError:
+    arquivo = open(nome_arquivo, 'rb')
+    arquivo.write('Esse arquivo não existia em nossa base de dados...')
+    total_data_retorno = 0
+    while True:
+        data_retorno = arquivo.read(BUFFER)
+        total_data_retorno += len(data_retorno)
+        conn.send(data_retorno)
+        if not data_retorno: break                                
+        time.sleep(0.02)
 except:
     print(f'\nERRO: {sys.exc_info()[0]}')
