@@ -30,12 +30,12 @@ try:
 
         mensagem = (conn.recv(BUFFER).decode())
 
-        if mensagem.upper() == 'EXIT':
+        if mensagem.lower() == 'exit':
             print(f'\nO {end} SE DESCONECTOU DO SERVIDOR...\n')
             conn.close()
             server.close()
             break
-        
+
         # Nome do arquivo a ser enviado
         nome_arquivo = DIR_ATUAL + '\\img_server\\' + mensagem
         print(f'Enviando arquivo {mensagem} ...')
@@ -43,7 +43,7 @@ try:
         tamanho_arquivo = os.path.getsize(nome_arquivo)
         msg = f'Size:{tamanho_arquivo}'.encode(CODE_PAGE)
         conn.send(msg)
-
+        
         arquivo = open(nome_arquivo, 'rb')
         total_data_retorno = 0
         while True:

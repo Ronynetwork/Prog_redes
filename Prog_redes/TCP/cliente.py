@@ -36,7 +36,7 @@ try:
                 print('Você solicitou o fim da conexão.\n\nAté a próxima!!')
                 print('-'*100)
                 break
-
+            
             # Enviando o nome do arquivo para o servidor
             print(f'\nSolicitando o arquivo {nome_arquivo}')
             client.send(nome_arquivo.encode(CODE_PAGE))
@@ -70,10 +70,10 @@ try:
                 if bytes_recebidos >= tamanho_total: break
                 pct += 1
     except:
-        print(f'Erro ao tentar estabelecer a conexão... {sys.exc_info()}')
+        print(f'Erro ao baixar o arquivo... {sys.exc_info()[0]}')
 
         arquivo.close()
 except:
-    print(f'Erro... {sys.exc_info()}')
+    print(f'Erro... {sys.exc_info()[0]}')
 # Fechando o socket
 client.close()
