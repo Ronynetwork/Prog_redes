@@ -33,7 +33,7 @@ def Git_Push ():
     
     commit_name = 'Atualizado'
     branch_origin = 'home'
-    tempo_seg = 90
+    tempo_seg = 60
     print('')
     print('='*100)
     if modo == 'A':
