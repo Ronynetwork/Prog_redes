@@ -32,7 +32,7 @@ try:
     while True:
         mensagem = conn.recv(BUFFER)
         mensagem = mensagem.decode(CODE_PAGE)
-        if mensagem.upper() == 'EXIT':
+        if mensagem.lower() == 'exit':
             print(f'\nO {end} SE DESCONECTOU DO SERVIDOR...\n')
             server.close()
             break
