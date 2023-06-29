@@ -15,14 +15,15 @@ try:
     time.sleep(1)
     past = DIR_ATUAL + '\\img_client\\'
 
-    if not os.path.exists(past):
+    try:
+        os.path.exists(past)
         os.makedirs(past)
 
         print('-'*100)
         print(f'O diretório img_client foi criado.')
         print('-'*100)
         
-    else:
+    except:
         print('-'*100)
         print(f'O diretório img_client já existe.\n\nCotinuando a requisição...')
         print('-'*100)
@@ -30,25 +31,19 @@ try:
         while True:
             # Solicitar o arquivo
             nome_arquivo = input('Digite o nome do arquivo (EXIT p/ sair): ').lower()            
-            if nome_arquivo.lower() == 'exit': 
-            
-                print('Você solicitou o fim da conexão.\n\nAté a próxima!!')
-                print('-'*100)
-                break
-            
-            if nome_arquivo.lower() == 'exit': 
-            
-                print('Você solicitou o fim da conexão.\n\nAté a próxima!!')
-                print('-'*100)
-                break
 
             # Enviando o nome do arquivo para o servidor
             print(f'\nSolicitando o arquivo {nome_arquivo}')
             client.send(nome_arquivo.encode(CODE_PAGE))
             print('-'*100)
 
-            dado_retorno = client.recv(BUFFER)
-            dado_retorno = dado_retorno.decode(CODE_PAGE)
+            if nome_arquivo.lower() == 'exit': 
+                
+                print('Você solicitou o fim da conexão.\n\nAté a próxima!!')
+                print('-'*100)
+                break
+
+            dado_retorno = (client.recv(BUFFER)).decode(CODE_PAGE)
 
             
             if 'Size:' in dado_retorno:
@@ -68,15 +63,15 @@ try:
             while True:
                 # Recebendo o conteúdo do servidor
                 dado_retorno = client.recv(BUFFER)
+
                 if not dado_retorno: break
+
                 print(f'Pacote ({pct}/{qtd_pacotes}) - Dados Recebidos: {len(dado_retorno)} bytes')
                 arquivo.write(dado_retorno)
                 bytes_recebidos += len(dado_retorno)
                 if bytes_recebidos >= tamanho_total: break
                 pct += 1
     except:
-        print(f'Erro ao tentar estabelecer a conexão... {sys.exc_info()}')
-
         print(f'Erro ao baixar o arquivo... {sys.exc_info()[0]}')
         arquivo.close()
 except:

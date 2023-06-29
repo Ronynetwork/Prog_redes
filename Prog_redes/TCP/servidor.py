@@ -27,18 +27,11 @@ try:
     print('\nRecebendo Mensagens...\n\n')
 
     while True:
-        mensagem = conn.recv(BUFFER)
-        mensagem = mensagem.decode(CODE_PAGE)
-
-
-        mensagem = (conn.recv(BUFFER).decode())
+        mensagem = (conn.recv(BUFFER).decode(CODE_PAGE))
 
         if mensagem.lower() == 'exit':
             print(f'\nO {end} SE DESCONECTOU DO SERVIDOR...\n')
-            conn.close()
-            server.close()
             break
-
         # Nome do arquivo a ser enviado
         nome_arquivo = DIR_ATUAL + '\\img_server\\' + mensagem
         print(f'Enviando arquivo {mensagem} ...')
@@ -61,10 +54,8 @@ try:
         print('-'*100)
 
         arquivo.close()
-except FileNotFoundError:
-    arquivo = open(nome_arquivo, 'rb')
-    arquivo.write('Esse arquivo não existia em nossa base de dados...')
-    total_data_retorno = 0
+except NameError:
+    conn.send('O arquivo não existe em nossa base de dados')
     while True:
         data_retorno = arquivo.read(BUFFER)
         total_data_retorno += len(data_retorno)
@@ -73,3 +64,6 @@ except FileNotFoundError:
         time.sleep(0.02)
 except:
     print(f'\nERRO: {sys.exc_info()[0]}')
+finally:
+    conn.close()
+    server.close()
