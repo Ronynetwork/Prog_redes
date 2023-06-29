@@ -29,7 +29,12 @@ try:
     try:
         while True:
             # Solicitar o arquivo
-            nome_arquivo = input('Digite o nome do arquivo (EXIT p/ sair): ').lower()
+            nome_arquivo = input('Digite o nome do arquivo (EXIT p/ sair): ').lower()            
+            if nome_arquivo.lower() == 'exit': 
+            
+                print('Você solicitou o fim da conexão.\n\nAté a próxima!!')
+                print('-'*100)
+                break
             
             if nome_arquivo.lower() == 'exit': 
             
@@ -72,6 +77,7 @@ try:
     except:
         print(f'Erro ao tentar estabelecer a conexão... {sys.exc_info()}')
 
+        print(f'Erro ao baixar o arquivo... {sys.exc_info()[0]}')
         arquivo.close()
 except:
     print(f'Erro... {sys.exc_info()}')
