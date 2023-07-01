@@ -27,7 +27,7 @@ try:
     print('\nRecebendo Mensagens...\n\n')
 
     while True:
-        mensagem = (conn.recv(BUFFER).decode(CODE_PAGE))
+        mensagem = (conn.recv(11264).decode('utf-8'))
 
         if mensagem.lower() == 'exit':
             print(f'\nO {end} SE DESCONECTOU DO SERVIDOR...\n')
@@ -37,13 +37,13 @@ try:
         print(f'Enviando arquivo {mensagem} ...')
 
         tamanho_arquivo = os.path.getsize(nome_arquivo)
-        msg = f'Size:{tamanho_arquivo}'.encode(CODE_PAGE)
+        msg = f'Size:{tamanho_arquivo}'.encode('utf-8')
         conn.send(msg)
         
         arquivo = open(nome_arquivo, 'rb')
         total_data_retorno = 0
         while True:
-            data_retorno = arquivo.read(BUFFER)
+            data_retorno = arquivo.read(11264)
             total_data_retorno += len(data_retorno)
             conn.send(data_retorno)
             if not data_retorno: break                                
@@ -54,10 +54,10 @@ try:
         print('-'*100)
 
         arquivo.close()
-except NameError:
+except FileNotFoundError:
     conn.send('O arquivo não existe em nossa base de dados')
     while True:
-        data_retorno = arquivo.read(BUFFER)
+        data_retorno = arquivo.read(11264)
         total_data_retorno += len(data_retorno)
         conn.send(data_retorno)
         if not data_retorno: break                                

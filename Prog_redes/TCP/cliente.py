@@ -30,26 +30,27 @@ try:
     try:
         while True:
             # Solicitar o arquivo
-            nome_arquivo = input('Digite o nome do arquivo (EXIT p/ sair): ').lower()            
-
-            # Enviando o nome do arquivo para o servidor
-            print(f'\nSolicitando o arquivo {nome_arquivo}')
-            client.send(nome_arquivo.encode(CODE_PAGE))
-            print('-'*100)
+            nome_arquivo = input('Digite o nome do arquivo (EXIT p/ sair):');print('-'*100)
 
             if nome_arquivo.lower() == 'exit': 
-                
+                client.send(nome_arquivo)
                 print('Você solicitou o fim da conexão.\n\nAté a próxima!!')
                 print('-'*100)
-                break
+                break         
 
-            dado_retorno = (client.recv(BUFFER)).decode(CODE_PAGE)
+            # Enviando o nome do arquivo para o servidor
+            client.send(nome_arquivo.encode('utf-8'))
+
+            print(f'\nSolicitando o arquivo {nome_arquivo}')
+            print('-'*100)
+
+            dado_retorno = (client.recv(11264)).decode('utf-8')
 
             
             if 'Size:' in dado_retorno:
                 tamanho_total = int(dado_retorno.split(':')[1])
                 print(tamanho_total)
-                qtd_pacotes = math.ceil(tamanho_total/BUFFER)
+                qtd_pacotes = math.ceil(tamanho_total/11264)
                 
             # Gravar o dado recebido em arquivo
             print(f'Gravando o arquivo {nome_arquivo} ({tamanho_total} bytes)')
@@ -62,7 +63,7 @@ try:
             pct = 1
             while True:
                 # Recebendo o conteúdo do servidor
-                dado_retorno = client.recv(BUFFER)
+                dado_retorno = client.recv(11264)
 
                 if not dado_retorno: break
 
@@ -75,6 +76,6 @@ try:
         print(f'Erro ao baixar o arquivo... {sys.exc_info()[0]}')
         arquivo.close()
 except:
-    print(f'Erro... {sys.exc_info()}')
+    print(f'Erro... {sys.exc_info()[0]}')
 # Fechando o socket
 client.close()
