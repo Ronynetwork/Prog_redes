@@ -32,8 +32,8 @@ try:
             # Solicitar o arquivo
             nome_arquivo = input('Digite o nome do arquivo (EXIT p/ sair):');print('-'*100)
 
-            if nome_arquivo.lower() == 'exit': 
-                client.send(nome_arquivo)
+            if (nome_arquivo.lower())== 'exit': 
+                client.send(nome_arquivo.encode('utf-8'))
                 print('Você solicitou o fim da conexão.\n\nAté a próxima!!')
                 print('-'*100)
                 break         
@@ -44,7 +44,7 @@ try:
             print(f'\nSolicitando o arquivo {nome_arquivo}')
             print('-'*100)
 
-            dado_retorno = (client.recv(11264)).decode('utf-8')
+            dado_retorno = ((client.recv(11264)).decode('utf-8'))
 
             
             if 'Size:' in dado_retorno:
@@ -58,7 +58,7 @@ try:
                 nome_arquivo = past + nome_arquivo
                 arquivo = open(nome_arquivo, 'wb')
             except:
-                print(f'Erro ao salvar o arquivo... {sys.exc_info()[0]}')
+                print(f'Erro ao salvar o arquivo... {sys.exc_info}')
             bytes_recebidos = 0
             pct = 1
             while True:
@@ -73,9 +73,9 @@ try:
                 if bytes_recebidos >= tamanho_total: break
                 pct += 1
     except:
-        print(f'Erro ao baixar o arquivo... {sys.exc_info()[0]}')
+        print(f'Erro ao baixar o arquivo... {sys.exc_info()}')
         arquivo.close()
 except:
-    print(f'Erro... {sys.exc_info()[0]}')
+    print(f'Erro... {sys.exc_info()}')
 # Fechando o socket
 client.close()

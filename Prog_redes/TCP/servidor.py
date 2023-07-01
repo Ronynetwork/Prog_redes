@@ -33,14 +33,14 @@ try:
             print(f'\nO {end} SE DESCONECTOU DO SERVIDOR...\n')
             break
         # Nome do arquivo a ser enviado
-        nome_arquivo = DIR_ATUAL + '\\img_server\\' + mensagem
+        name_arq = DIR_ATUAL + '\\img_server\\' + mensagem
         print(f'Enviando arquivo {mensagem} ...')
 
-        tamanho_arquivo = os.path.getsize(nome_arquivo)
-        msg = f'Size:{tamanho_arquivo}'.encode('utf-8')
-        conn.send(msg)
+        tamanho_arquivo = os.path.getsize(name_arq)
+        msg = f'Size:{tamanho_arquivo}'
+        conn.send(msg.encode('utf-8'))
         
-        arquivo = open(nome_arquivo, 'rb')
+        arquivo = open(name_arq, 'rb')
         total_data_retorno = 0
         while True:
             data_retorno = arquivo.read(11264)
@@ -61,7 +61,6 @@ except FileNotFoundError:
         total_data_retorno += len(data_retorno)
         conn.send(data_retorno)
         if not data_retorno: break                                
-        time.sleep(0.02)
 except:
     print(f'\nERRO: {sys.exc_info()[0]}')
 finally:
