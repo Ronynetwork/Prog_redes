@@ -20,7 +20,7 @@ try:
     print('-'*100)
         
     conn, end = server.accept() 
-    print(f'Conexão aceita!\n Cliente conectado {end}')
+    
     # Vincular o socket a tupla (host, port)
 
     print(f'\nSERVIDOR ATIVO: {server.getsockname()}')
@@ -55,12 +55,7 @@ try:
 
         arquivo.close()
 except FileNotFoundError:
-    conn.send('O arquivo não existe em nossa base de dados')
-    while True:
-        data_retorno = arquivo.read(11264)
-        total_data_retorno += len(data_retorno)
-        conn.send(data_retorno)
-        if not data_retorno: break                                
+    conn.send('O arquivo não existe em nossa base de dados')                     
 except:
     print(f'\nERRO: {sys.exc_info()[0]}')
 finally:
