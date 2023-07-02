@@ -24,7 +24,7 @@ def PAST_CLIENT():
 
         PRINTS('O diretório img_client foi criado.')
     except:
-        PRINTS('O diretório img_client já existe.\n\nContinuand a requisição...')
+        PRINTS('O diretório img_client já existe.\n\nContinuando a requisição...')
 
     return past
 
@@ -34,7 +34,7 @@ def PAST_CLIENT():
 def DADOS(dado_retorno):
     if 'Size:' in dado_retorno:
         tamanho_total = int(dado_retorno.split(':')[1])
-        qtd_pacotes = math.ceil(tamanho_total/11264)
+        qtd_pacotes = math.ceil(tamanho_total/8192)
         return tamanho_total, qtd_pacotes
     
 def PACOTES(client, arquivo, tamanho_total, qtd_pacotes):
@@ -42,15 +42,30 @@ def PACOTES(client, arquivo, tamanho_total, qtd_pacotes):
         bytes_recebidos = 0
         pct = 1
         while True:
-            dado_retorno = client.recv(11264)
+            dado_retorno = client.recv(8192)
             print(f'Pacote ({pct}/{qtd_pacotes}) - Dados Recebidos: {len(dado_retorno)} bytes')
             arquivo.write(dado_retorno)
             bytes_recebidos += len(dado_retorno)
-            if bytes_recebidos >= tamanho_total: break
+            if bytes_recebidos >= tamanho_total:
+                break
             pct += 1
     except:
-        print(f'Erro ao baixar o arquivo... {sys.exc_info()}')
+        print(f'Erro ao baixar o arquivo... {sys.exc_info()[0]}')
         arquivo.close()
+
+def CHECAGEM(req,check):
+    server_img = check + '\img_server\\'
+    client_img = check + '\img_client\\'
+    lista_arquivos = os.listdir(server_img)
+    if req in lista_arquivos:
+        arq_size = os.path.getsize(server_img + req)
+        return (True, arq_size, server_img + req, client_img + req)
+    else:
+        arquivos_exist = []
+        for x in lista_arquivos:
+            if x.find(req) != -1:
+                arquivos_exist.append(x)
+        return (False,arquivos_exist)
 
 # PARTE SERVIDOR
 
@@ -70,32 +85,3 @@ def CONEXÃO_SERVER():
         return conn, end, server
     except:
         print(f'Erro ao estabelecer a conexão... {sys.exc_info()[0]}')
-
-
-def ENV_ARQ(conn, mensagem):
-    try:
-        # Nome do arquivo a ser enviado
-        nome_arq = os.path.dirname(os.path.abspath(__file__)) + '\\img_server\\' + mensagem
-        print(f'Enviando arquivo {mensagem} ...')
-
-        tamanho_arquivo = os.path.getsize(nome_arq)
-        msg = f'Size:{tamanho_arquivo}'
-        conn.send(msg.encode('utf-8'))
-
-        arquivo = open(nome_arq, 'rb')
-        total_data_retorno = 0
-
-        while True:
-            data_retorno = arquivo.read(11264)
-            total_data_retorno += len(data_retorno)
-            conn.send(data_retorno)
-            if not data_retorno:
-                break
-
-        print('-' * 100)
-        print(f'\nArquivo {mensagem} Enviado...\n')
-        print('-' * 100)
-
-        arquivo.close()
-    except:
-        print(f'Erro ao eniviar o arquivo {sys.exc_info()[0]}')

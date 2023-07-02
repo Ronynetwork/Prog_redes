@@ -9,13 +9,13 @@ past = PAST_CLIENT()
 try: 
     while True:
 # Solicitar o arquivo
-        arq_solicitado = input('Digite o nome do arquivo (EXIT p/ sair):');print('-'*100)
+        arq_solicitado = input('Digite o arquivo que deseja baixar do servidor (Ou EXIT para sair):')
 
         # Enviando o nome do arquivo para o servidor
-        client.send(arq_solicitado.encode('utf-8'))
+        client.send(arq_solicitado.encode())
 
-        if (arq_solicitado.lower())== 'exit': 
-            client.send(arq_solicitado.encode('utf-8'))
+        if (arq_solicitado).lower()== 'exit': 
+            client.send(arq_solicitado)
             print('Você solicitou o fim da conexão.\n\nAté a próxima!!')
             print('-'*100)
             break
@@ -23,9 +23,13 @@ try:
         print(f'\nSolicitando o arquivo {arq_solicitado}')
         print('-'*100)
 
-        dado_retorno = ((client.recv(11264)).decode('utf-8'))
+        dado_retorno = ((client.recv(8192))).decode()
+        PRINTS(dado_retorno)
 
+
+        dado_retorno = eval(dado_retorno)
         tamanho_total, qtd_pacotes = DADOS(dado_retorno)
+
         try:
             nome_arq = past + arq_solicitado
             arquivo = open(nome_arq, 'wb')
@@ -35,4 +39,4 @@ try:
         PACOTES(client, arquivo, tamanho_total, qtd_pacotes)
 except:
     print(f'Erro... {sys.exc_info()[0]}')
-client.close
+client.close()
