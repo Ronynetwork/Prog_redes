@@ -23,8 +23,7 @@ try:
         print(f'\nSolicitando o arquivo {arq_solicitado}')
         print('-'*100)
 
-        dado_retorno = ((client.recv(8192))).decode()
-        PRINTS(dado_retorno)
+        dado_retorno = (client.recv(8192)).decode()
 
 
         dado_retorno = eval(dado_retorno)

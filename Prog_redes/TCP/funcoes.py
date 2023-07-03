@@ -53,19 +53,7 @@ def PACOTES(client, arquivo, tamanho_total, qtd_pacotes):
         print(f'Erro ao baixar o arquivo... {sys.exc_info()[0]}')
         arquivo.close()
 
-def CHECAGEM(req,check):
-    server_img = check + '\img_server\\'
-    client_img = check + '\img_client\\'
-    lista_arquivos = os.listdir(server_img)
-    if req in lista_arquivos:
-        arq_size = os.path.getsize(server_img + req)
-        return (True, arq_size, server_img + req, client_img + req)
-    else:
-        arquivos_exist = []
-        for x in lista_arquivos:
-            if x.find(req) != -1:
-                arquivos_exist.append(x)
-        return (False,arquivos_exist)
+        
 
 # PARTE SERVIDOR
 
@@ -85,3 +73,17 @@ def CONEXÃO_SERVER():
         return conn, end, server
     except:
         print(f'Erro ao estabelecer a conexão... {sys.exc_info()[0]}')
+
+def CHECAGEM(req,check):
+    server_img = check + '\img_server\\'
+    client_img = check + '\img_client\\'
+    lista_arquivos = os.listdir(server_img)
+    if req in lista_arquivos:
+        arq_size = os.path.getsize(server_img + req)
+        return (True, arq_size, server_img + req, client_img + req)
+    else:
+        arquivos_exist = []
+        for x in lista_arquivos:
+            if x.find(req) != -1:
+                arquivos_exist.append(x)
+        return (False,arquivos_exist)
