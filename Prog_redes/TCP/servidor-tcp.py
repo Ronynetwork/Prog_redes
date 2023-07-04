@@ -6,8 +6,7 @@ conn, end,server = CONEXÃO_SERVER()
 
 try:
     while True:
-        mensagem_bytes = conn.recv(8192)
-        mensagem = mensagem_bytes.decode()
+        mensagem = (conn.recv(8192)).decode()
 
         if mensagem.lower() == 'exit':
             print(f'\nO {end} SE DESCONECTOU DO SERVIDOR...\n')
