@@ -16,7 +16,7 @@ def CONEXÃO_CLIENTE():
 
 # Verificando se existe e criando a pasta img_client
 def PAST_CLIENT():
-    past = (os.path.dirname(os.path.abspath(__file__))) + '\\img_client\\'
+    past = os.path.dirname(__file__) + '\\img_client\\'
 
     try: 
         os.path.exists(past)
@@ -34,7 +34,7 @@ def PAST_CLIENT():
 def DADOS(dado_retorno):
     if 'Size:' in dado_retorno:
         tamanho_total = int(dado_retorno.split(':')[1])
-        qtd_pacotes = math.ceil(tamanho_total/8192)
+        qtd_pacotes = math.ceil(tamanho_total/4096)
         return tamanho_total, qtd_pacotes
     
 def PACOTES(client, arquivo, tamanho_total, qtd_pacotes):
@@ -42,7 +42,7 @@ def PACOTES(client, arquivo, tamanho_total, qtd_pacotes):
         bytes_recebidos = 0
         pct = 1
         while True:
-            dado_retorno = client.recv(8192)
+            dado_retorno = client.recv(4096)
             print(f'Pacote ({pct}/{qtd_pacotes}) - Dados Recebidos: {len(dado_retorno)} bytes')
             arquivo.write(dado_retorno)
             bytes_recebidos += len(dado_retorno)
@@ -74,10 +74,13 @@ def CONEXÃO_SERVER():
     except:
         print(f'Erro ao estabelecer a conexão... {sys.exc_info()[0]}')
 
-def CHECAGEM(req,check):
-    server_img = check + '\img_server\\'
-    client_img = check + '\img_client\\'
+def CHECAGEM(req):
+    dir_atual = os.path.dirname(__file__)
+    server_img = dir_atual + '\img_server\\'
+    client_img = dir_atual + '\img_client\\'
     lista_arquivos = os.listdir(server_img)
+    print(req)
+    print()
     if req in lista_arquivos:
         arq_size = os.path.getsize(server_img + req)
         return (True, arq_size, server_img + req, client_img + req)
@@ -86,4 +89,6 @@ def CHECAGEM(req,check):
         for x in lista_arquivos:
             if x.find(req) != -1:
                 arquivos_exist.append(x)
+        PRINTS(arquivos_exist)
         return (False,arquivos_exist)
+    
