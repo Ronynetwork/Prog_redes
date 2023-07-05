@@ -24,7 +24,7 @@ try:
         check = client.recv(4096).decode()
 
         tamanho = check[1]
-        print(check[0])
+        print(check)
         if check[0] == 'True':
             qtd_pct_total = int(tamanho)//4096
             pct = 0
