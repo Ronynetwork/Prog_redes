@@ -84,6 +84,7 @@ def CHECAGEM(req):
     if req in lista_arquivos:
         arq_size = os.path.getsize(server_img + req)
         return (True, arq_size, server_img + req, client_img + req)
+        
     else:
         arquivos_exist = []
         for x in lista_arquivos:

@@ -14,21 +14,23 @@ try:
             server.close()    
             break
         else:
-            check = CHECAGEM(mensagem)
-            print(check)
-            if check[0] == True:
+            check = list(CHECAGEM(mensagem))
+            print(check[1])
+            if check[1] == True:
                 total_data = 0
                 conn.send(str(check).encode())
-
-                print('Deu certo porra')
-                with open(check[2], 'rb') as arquivo:
-                    while True:
-                        data_retorno = arquivo.read(4096)
-                        total_data += len(data_retorno)
-                        print(total_data)
-                        conn.send(data_retorno)
-                        if not data_retorno:
-                            break
+                try:
+                    print('Deu certo porra')
+                    with open(check[2], 'rb') as arquivo:
+                        while True:
+                            data_retorno = arquivo.read(4096)
+                            total_data += len(data_retorno)
+                            print(total_data)
+                            conn.send(data_retorno)
+                            if not data_retorno:
+                                break
+                except:
+                    print('Não foi possivel enviar o restante do arquivo')
 
 except FileNotFoundError:
     conn.send('O arquivo não existe nossa base de dados.'.encode())

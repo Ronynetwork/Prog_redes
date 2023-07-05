@@ -16,15 +16,16 @@ try:
         
         client.send(arq_solicitado.encode())
 
-        if (arq_solicitado).lower() == 'exit': 
+        if arq_solicitado.lower() == 'exit': 
             client.send(arq_solicitado.encode())
             print('Você solicitou o fim da conexão.\n\nAté a próxima!!')
             print('-'*100)
             break
-        check = eval(client.recv(4096).decode())
+        check = client.recv(4096).decode()
+
         tamanho = check[1]
         print(check[0])
-        if check[0] == True:
+        if check[0] == 'True':
             qtd_pct_total = int(tamanho)//4096
             pct = 0
             print('chegou aqui')
@@ -39,7 +40,7 @@ try:
                 arquivo.write(data_retorno)
                              
 except:
-    print('sla')
+    print(f'sla ... {sys.exc_info()}')
 '''
         data_retorno = 0
         while True:
