@@ -25,12 +25,10 @@ def connm_server():
 def Client_Interaction(conn_server, end,clients):
     command = b''
     while command != b'!q':
-        try:
+        '''   try:
             command = conn_server.recv(512)
             broadCast (command, end)
         except:
             command = b'!q'
             clients.remove ((conn_server, end))
-            conn_server.close()
-    
-    def 
+            conn_server.close()'''
