@@ -10,18 +10,11 @@ def conn_server():
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind(('localhost', 50000))
         server.listen(6)
-
-        PRINTS('\nAguardando a conexão com o cliente...\n')
-        conn, end = server.accept()
-        print(f'Conexão aceita!\nCliente {end} conectado ao servidor TCP.')
-
-        print(f'\nSERVIDOR ATIVO: {server.getsockname()}')
-        print('\nRecebendo Mensagens...\n\n')
         
     except:
         print(f'Erro ao estabaelecer a conexão do servidor{sys.exc_info()}')
 
-        return server, conn, end
+        return server
     
 def broadCast(comunicacao, end_procurado, clients):
     comunicacao = f"{end_procurado} -> {comunicacao.decode('utf-8')}"
