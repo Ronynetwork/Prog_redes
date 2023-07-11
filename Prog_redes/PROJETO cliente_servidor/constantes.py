@@ -5,7 +5,7 @@ def PRINTS(x):
     print(x)
     print('-'*100)
 
-def connm_server():
+def conn_server():
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind(('localhost', 50000))
@@ -13,22 +13,30 @@ def connm_server():
 
         PRINTS('\nAguardando a conexão com o cliente...\n')
         conn, end = server.accept()
-        print(f'Conexão aceita!\n Cliente conectado {end}')
+        print(f'Conexão aceita!\nCliente {end} conectado ao servidor TCP.')
 
         print(f'\nSERVIDOR ATIVO: {server.getsockname()}')
         print('\nRecebendo Mensagens...\n\n')
         
     except:
         print(f'Erro ao estabaelecer a conexão do servidor{sys.exc_info()}')
+
         return server, conn, end
     
-def Client_Interaction(conn_server, end,clients):
+def broadCast(comunicacao, end_procurado, clients):
+    comunicacao = f"{end_procurado} -> {comunicacao.decode('utf-8')}"
+    print (comunicacao)
+    for conn, end in clients:
+        if end != end_procurado:
+            conn.send(comunicacao.encode('utf-8'))
+
+def Client_Interaction(conn_server, end, clients):
     command = b''
     while command != b'!q':
-        '''   try:
+        try:
             command = conn_server.recv(512)
             broadCast (command, end)
         except:
             command = b'!q'
             clients.remove ((conn_server, end))
-            conn_server.close()'''
+            conn_server.close()
