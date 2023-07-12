@@ -74,4 +74,5 @@ def closeSocket(sock):
     except:
         None
 
-def commands
+def commands():
+    
