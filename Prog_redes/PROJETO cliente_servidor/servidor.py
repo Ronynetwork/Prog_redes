@@ -6,6 +6,7 @@ PORT = 7000
 
 try:
     server = conn_server()
+    
     clients = []
     while True:  
         sock_client, end = server.accept()
