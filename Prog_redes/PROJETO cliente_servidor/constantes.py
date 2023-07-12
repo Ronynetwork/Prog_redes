@@ -76,4 +76,5 @@ def closeSocket(sock):
 
 def commands(msg):
     while msg != '/q':
-        
+        if msg == '/l':
+            print(clients)
