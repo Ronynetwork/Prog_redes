@@ -32,12 +32,13 @@ def broadCast(comunicacao, end_procurado, clients):
             conn.send(comunicacao.encode(CODE))
 
 def Client_Interaction(conn_server, end, clients):
-    while command != b'!q':
+    comunicacao = b''
+    while comunicacao != b'!q':
         try:
-            command = conn_server.recv(512)
-            broadCast (command, end, clients)
+            comunicacao = conn_server.recv(512)
+            broadCast (comunicacao, end, clients)
         except:
-            command = b'!q'
+            comunicacao = b'!q'
             clients.remove ((conn_server, end))
             conn_server.close()
 
@@ -53,7 +54,7 @@ def server_interaction(sock):
             print ("\n"+msg.decode(CODE)+"\n"+PROMPT)
         except:
             msg = b''
-    closeSocket()
+    closeSocket(sock)
 
 def client_interaction(sock):
     msg = ''
@@ -63,7 +64,7 @@ def client_interaction(sock):
             if msg != '': sock.send(msg.encode(CODE))
         except:
             msg = '!q'
-    closeSocket()
+    closeSocket(sock)
 
 def closeSocket(sock):
     try:
