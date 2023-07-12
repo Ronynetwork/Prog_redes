@@ -43,7 +43,7 @@ def Client_Interaction(conn_server, end, clients):
 
 #----------------------------------------------------------------------------------------------------------
 
-'''         PARTE CLIENTE            '''
+'''                                        PARTE CLIENTE                                                '''
 
 def conn_client():
     try:
