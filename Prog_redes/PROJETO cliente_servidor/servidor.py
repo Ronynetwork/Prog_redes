@@ -14,5 +14,8 @@ try:
         tClient = threading.Thread(target=Client_Interaction, args=(sock_client, end))
         tClient.start()
 
-except:
-    print('Todas as portas do servidor estão ocupadas')
+except Exception as e:
+    if e.errno == 98:
+        print('Todas as portas do servidor estão ocupadas')
+    else:
+        print('Erro ao estabelecer a conexão do servidor:', e)
