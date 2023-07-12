@@ -1,6 +1,6 @@
 import socket, os, sys
 
-SERVER = '10.25.2.148'
+SERVER = '0.0.0.0'
 PORT = 5678
 PROMPT = 'Digite sua msg (!q para terminar) > '
 CLIENT = 'localhost'
