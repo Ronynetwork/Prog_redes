@@ -10,11 +10,11 @@ try:
         sock_client, end = server.accept()
         PRINTS(f'\nConexão TCP estabelecida.\nCliente {end[0]} conectado na porta {end[1]}.')
         print ("Connection from: ", end)
-        clients.append((conn_server, end))
+        clients.append((sock_client, end))
         tClient = threading.Thread(target=Client_Interaction, args=(sock_client, end))
         tClient.start()
 
-except Exception as e:
+except OSError as e:
     if e.errno == 98:
         print('Todas as portas do servidor estão ocupadas')
     else:
