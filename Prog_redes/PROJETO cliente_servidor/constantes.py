@@ -75,4 +75,4 @@ def closeSocket(sock):
         None
 
 def commands():
-    
+    while 
