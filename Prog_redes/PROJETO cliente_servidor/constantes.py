@@ -15,7 +15,7 @@ def conn_server():
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind(('localhost', PORT))
-        PRINTS('Conexão estabelecida!')
+        PRINTS('\nServidor a espera de conexões!\n')
         server.listen(6)
 
         return server
