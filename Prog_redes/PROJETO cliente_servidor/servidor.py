@@ -8,7 +8,7 @@ try:
 
     while True:  
         sock_client, end = server.accept()
-        PRINTS(f'Conexão TCP estabelecida.\nCliente {end[0]} conectado na porta {end[1]}.')
+        PRINTS(f'Conexão TCP estabelecida.\n\nCliente {end[0]} conectado na porta {end[1]}.')
         clients.append((sock_client, end))
         tClient = threading.Thread(target=Client_Interaction, args=(sock_client, end))
         tClient.start()
