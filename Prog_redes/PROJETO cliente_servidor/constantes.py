@@ -74,5 +74,6 @@ def closeSocket(sock):
     except:
         None
 
-def commands():
-    while 
+def commands(msg):
+    while msg != '/q':
+        
