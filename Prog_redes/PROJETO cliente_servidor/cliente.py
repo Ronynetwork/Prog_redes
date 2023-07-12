@@ -3,8 +3,8 @@ import threading
 
 try:
     print ("Conectado a: ", (SERVER, PORT))
-    tServer = threading.Thread(target=server_interaction)
-    tUser = threading.Thread(target=client_interaction)
+    tServer = threading.Thread(target=server_interaction())
+    tUser = threading.Thread(target=client_interaction())
 
     tServer.start()
     tUser.start()
