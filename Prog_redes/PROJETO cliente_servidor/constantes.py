@@ -1,5 +1,11 @@
 import socket, os, sys
 
+SERVER = '10.25.2.148'
+PORT = 5678
+PROMPT = 'Digite sua msg (!q para terminar) > '
+CLIENT = 'localhost'
+CODE = 'utf-8'
+
 def PRINTS(x):
     print('-'*100)
     print(x)
@@ -8,20 +14,21 @@ def PRINTS(x):
 def conn_server():
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        server.bind(('localhost', 50000))
+        server.bind(('localhost', PORT))
         server.listen(6)
-        
+
+        return server
+
     except:
         print(f'Erro ao estabaelecer a conexão do servidor{sys.exc_info()}')
 
-        return server
     
 def broadCast(comunicacao, end_procurado, clients):
-    comunicacao = f"{end_procurado} -> {comunicacao.decode('utf-8')}"
+    comunicacao = f"{end_procurado} -> {comunicacao.decode(CODE)}"
     print (comunicacao)
     for conn, end in clients:
         if end != end_procurado:
-            conn.send(comunicacao.encode('utf-8'))
+            conn.send(comunicacao.encode(CODE))
 
 def Client_Interaction(conn_server, end, clients):
     command = b''
@@ -33,3 +40,41 @@ def Client_Interaction(conn_server, end, clients):
             command = b'!q'
             clients.remove ((conn_server, end))
             conn_server.close()
+
+#----------------------------------------------------------------------------------------------------------
+
+'''         PARTE CLIENTE            '''
+
+def conn_client():
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((SERVER, PORT))
+        return sock
+    except Exception as e:
+        print(f'Erro na conexão do cliente... {e}')
+
+def server_interaction(sock):
+    msg = b' '
+    while msg != b'':
+        try:
+            msg = sock.recv(512)
+            print ("\n"+msg.decode(CODE)+"\n"+PROMPT)
+        except:
+            msg = b''
+    closeSocket()
+
+def client_interaction(sock):
+    msg = ''
+    while msg != '!q':
+        try:
+            msg = input(PROMPT)
+            if msg != '': sock.send(msg.encode(CODE))
+        except:
+            msg = '!q'
+    closeSocket()
+
+def closeSocket(sock):
+    try:
+        sock.close()
+    except:
+        None
