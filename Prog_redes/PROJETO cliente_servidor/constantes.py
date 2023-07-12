@@ -74,5 +74,4 @@ def closeSocket(sock):
     except:
         None
 
-def mensages():
-    
+def '():
