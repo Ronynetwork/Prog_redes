@@ -3,7 +3,7 @@ import threading
 
 try:
     print ("Conectado a: ", (SERVER, PORT))
-    tServer = threading.Thread(target=server_interaction())
+    tServer = threading.Thread(target=server_interaction(sock))
     tUser = threading.Thread(target=client_interaction())
 
     tServer.start()

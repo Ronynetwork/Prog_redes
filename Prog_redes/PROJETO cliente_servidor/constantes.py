@@ -45,14 +45,6 @@ def Client_Interaction(conn_server, end, clients):
 
 '''                                        PARTE CLIENTE                                                '''
 
-def conn_client():
-    try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((SERVER, PORT))
-        return sock
-    except Exception as e:
-        print(f'Erro na conexão do cliente... {e}')
-
 def server_interaction(sock):
     msg = b' '
     while msg != b'':
