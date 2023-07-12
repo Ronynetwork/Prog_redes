@@ -32,11 +32,10 @@ def broadCast(comunicacao, end_procurado, clients):
             conn.send(comunicacao.encode(CODE))
 
 def Client_Interaction(conn_server, end, clients):
-    command = b''
     while command != b'!q':
         try:
             command = conn_server.recv(512)
-            broadCast (command, end)
+            broadCast (command, end, clients)
         except:
             command = b'!q'
             clients.remove ((conn_server, end))
