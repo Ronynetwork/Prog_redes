@@ -73,3 +73,6 @@ def closeSocket(sock):
         sock.close()
     except:
         None
+
+def mensages():
+    
