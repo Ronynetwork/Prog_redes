@@ -22,6 +22,7 @@ def conn_server():
 
     except:
         print(f'Erro ao estabaelecer a conexão do servidor{sys.exc_info()}')
+        server.close()
         
 
     
