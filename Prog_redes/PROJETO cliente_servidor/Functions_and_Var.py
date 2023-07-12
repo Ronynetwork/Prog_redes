@@ -4,7 +4,7 @@ SERVER = '10.25.2.148'
 CLIENT = 'localhost'
 PORT = 5678
 PROMPT = 'Digite sua msg (!q para terminar) > '
-CODE = 'utf-8'
+CODE = CODE
 
 def PRINTS(x):
     print('-'*100)
@@ -44,15 +44,16 @@ def Server_Interaction(sock):
             msg = b''
     closeSocket()
 
-def closeSocket():
+def closeSocket(sock):
     try:
         sock.close()
     except:
         None
 
-def broadCast(msg, addrSource):
-    msg = f"{addrSource} -> {msg.decode('utf-8')}"
+def broadCast(msg, addrSource,clients):
+    msg = f"{addrSource} -> {msg.decode(CODE)}"
     print (msg)
-    for sockConn, addr in client:
+    for sockConn, addr in clients:
         if addr != addrSource:
-            sockConn.send(msg.encode('utf-8'))
+            sockConn.send(msg.encode(CODE))
+    
