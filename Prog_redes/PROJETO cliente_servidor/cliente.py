@@ -3,8 +3,8 @@ import threading
 
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((SERVER, PORT))
-    print ("Conectado a: ", (SERVER, PORT))
+    sock.connect((CLIENT, PORT))
+    print ("Conectado a: ", (CLIENT, PORT))
     tServer = threading.Thread(target=server_interaction, args=(sock,))
     tUser = threading.Thread(target=client_interaction, args=(sock,))
 
