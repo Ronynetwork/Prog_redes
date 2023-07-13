@@ -1,17 +1,20 @@
-import threading
+import threading, socket
 from Functions_and_Var import *
 
-server = conn_server()
-PRINTS('\nAguardando a conexão com o cliente...\n')
-conn, end = server.accept()
-print(f'Conexão aceita!\nIp e porta do cliente conectado: |>{end[0]}, {end[1]}<|')
+
 try:
-    clients = []
+    server = conn_server()
+    clients = {}
+
     while True:  
-        conn_server, end = server.accept()
-        print ("Connection from: ", end)
-        clients.append((conn_server, end))
-        tClient = threading.Thread(target=Client_Interaction(), args=(conn_server, end))
+        sock_client, end = server.accept()
+        PRINTS(f'Conexão TCP estabelecida.\n\nCliente {end[0]} conectado na porta {end[1]}.')
+        clients[end[0]] = end[1]
+        tClient = threading.Thread(target=Client_Interaction, args=(sock_client, end, clients))
         tClient.start()
-except:
-    print('Todas as portas do servidor estão ocupadas')
+
+except OSError as e:
+    if e.errno == 98:
+        print('Todas as portas do servidor estão ocupadas')
+    else:
+        print('Erro ao estabelecer a conexão do servidor:', e)

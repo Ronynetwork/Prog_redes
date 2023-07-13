@@ -1,10 +1,10 @@
 import socket, sys
 
-SERVER = '10.25.2.148'
-CLIENT = 'localhost'
+SERVER = 'localhost'
 PORT = 5678
 PROMPT = 'Digite sua msg (!q para terminar) > '
-CODE = CODE
+CLIENT = 'localhost'
+CODE = 'utf-8'
 
 def PRINTS(x):
     print('-'*100)
@@ -13,28 +13,42 @@ def PRINTS(x):
 
 def conn_server():
     try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.bind(('localhost', PORT))
-        sock.listen(6)
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.bind((SERVER, PORT))
+        PRINTS('\nServidor a espera de conexões!\n')
+        server.listen(6)
 
-        print(f'\nSERVIDOR ATIVO: {sock.getsockname()}')
-        print('\nRecebendo Mensagens...\n\n')
-        
+        return server
+
     except:
         print(f'Erro ao estabaelecer a conexão do servidor{sys.exc_info()}')
-        return sock
+        server.close()
+        
+
     
-def Client_Interaction(conn_server, end,clients):
-    command = b''
-    while command != b'!q':
+def broadCast(comunicacao, end_procurado, clients):
+    comunicacao = f"{end_procurado} -> {comunicacao.decode(CODE)}"
+    print (comunicacao)
+    for conn, end in clients:
+        if end != end_procurado:
+            conn.send(comunicacao.encode(CODE))
+
+def Client_Interaction(conn_server, end, clients):
+    comunicacao = b''
+    while comunicacao != b'!q':
         try:
-            command = conn_server.recv(512)
-            broadCast (command, end)
+            comunicacao = conn_server.recv(512)
+            broadCast (comunicacao, end, clients)
         except:
-            command = b'!q'
+            comunicacao = b'!q'
             clients.remove ((conn_server, end))
             conn_server.close()
-def Server_Interaction(sock):
+
+#----------------------------------------------------------------------------------------------------------
+
+'''                                        PARTE CLIENTE                                                '''
+
+def server_interaction(sock):
     msg = b' '
     while msg != b'':
         try:
@@ -42,7 +56,17 @@ def Server_Interaction(sock):
             print ("\n"+msg.decode(CODE)+"\n"+PROMPT)
         except:
             msg = b''
-    closeSocket()
+    closeSocket(sock)
+
+def client_interaction(sock):
+    msg = ''
+    while msg != '!q':
+        try:
+            msg = input(PROMPT)
+            if msg != '': sock.send(msg.encode(CODE))
+        except:
+            msg = '!q'
+    closeSocket(sock)
 
 def closeSocket(sock):
     try:
@@ -50,10 +74,7 @@ def closeSocket(sock):
     except:
         None
 
-def broadCast(msg, addrSource,clients):
-    msg = f"{addrSource} -> {msg.decode(CODE)}"
-    print (msg)
-    for sockConn, addr in clients:
-        if addr != addrSource:
-            sockConn.send(msg.encode(CODE))
-    
+def commands(msg, clients):
+    while msg != '/q':
+        if msg == '/l':
+            print(clients)

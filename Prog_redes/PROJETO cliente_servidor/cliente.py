@@ -1,13 +1,12 @@
 from Functions_and_Var import *
-import socket, threading
+import threading
 
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((SERVER, PORT))
-
     print ("Conectado a: ", (SERVER, PORT))
-    tServer = threading.Thread(target=Server_Interaction)
-    tUser = threading.Thread(target=Client_Interaction)
+    tServer = threading.Thread(target=server_interaction, args=(sock,))
+    tUser = threading.Thread(target=client_interaction, args=(sock,))
 
     tServer.start()
     tUser.start()
@@ -16,4 +15,4 @@ try:
     tUser.join()
 
 except Exception as e:
-    print ('Erro... ', e)
+    print ("Falha ", e)
