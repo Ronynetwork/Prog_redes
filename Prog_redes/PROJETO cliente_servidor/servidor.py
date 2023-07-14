@@ -11,8 +11,8 @@ try:
         clients[end[0]] = end[1]
         tClient = threading.Thread(target=Client_Interaction, args=(sock_client,end,clients))
         tClient.start()
-    except:
-            ''
+        except:
+            print()
 except OSError as e:
     if e.errno == 98:
         print('Todas as portas do servidor estão ocupadas')
