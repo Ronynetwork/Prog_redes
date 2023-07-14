@@ -10,7 +10,7 @@ def PRINTS(x):
     print('-'*100)
     print(x)
     print('-'*100)
-
+#----------------------------------------------------------------------------------------------------------
 def conn_server():
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -25,14 +25,15 @@ def conn_server():
         server.close()
         
 
-    
+#----------------------------------------------------------------------------------------------------------
 def broadCast(comunicacao, end_procurado, clients):
     comunicacao = f"{end_procurado} -> {comunicacao.decode(CODE)}"
     print (comunicacao)
     for conn, end in clients:
         if end != end_procurado:
             conn.send(comunicacao.encode(CODE))
-
+            
+#----------------------------------------------------------------------------------------------------------
 def Client_Interaction(conn_server, end, clients):
     comunicacao = b''
     while comunicacao != b'!q':
@@ -45,9 +46,6 @@ def Client_Interaction(conn_server, end, clients):
             conn_server.close()
 
 #----------------------------------------------------------------------------------------------------------
-
-'''                                        PARTE CLIENTE                                                '''
-
 def server_interaction(sock):
     msg = b' '
     while msg != b'':
@@ -57,6 +55,9 @@ def server_interaction(sock):
         except:
             msg = b''
     closeSocket(sock)
+#----------------------------------------------------------------------------------------------------------
+
+'''                                        PARTE CLIENTE                                                '''
 
 def client_interaction(sock):
     msg = ''
@@ -68,12 +69,14 @@ def client_interaction(sock):
             msg = '!q'
     closeSocket(sock)
 
+# ------------------------------------------------------------
 def closeSocket(sock):
     try:
         sock.close()
     except:
         None
 
+# ------------------------------------------------------------
 def commands(msg, clients):
     while msg != '/q':
         if msg == '/l':
