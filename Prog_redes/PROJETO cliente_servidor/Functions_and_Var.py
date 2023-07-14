@@ -35,7 +35,7 @@ def broadCast(comunicacao, end_procurado, clients):
 #----------------------------------------------------------------------------------------------------------
 def Client_Interaction(conn_server, end, clients):
     comunicacao = b''
-    while comunicacao != b'!q':
+    while comunicacao != b'/q':
         try:
             comunicacao = conn_server.recv(512)
             broadCast (comunicacao, end, clients)
@@ -43,7 +43,7 @@ def Client_Interaction(conn_server, end, clients):
             comunicacao = b'!q'
             clients.remove ((conn_server, end))
             conn_server.close()
-            
+
 #----------------------------------------------------------------------------------------------------------
 def server_interaction(sock):
     msg = b' '
