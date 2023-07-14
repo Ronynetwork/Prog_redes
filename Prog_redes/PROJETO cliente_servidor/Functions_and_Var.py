@@ -54,6 +54,8 @@ def server_interaction(sock):
         except:
             msg = b''
     closeSocket(sock)
+
+def S
 #----------------------------------------------------------------------------------------------------------
 
 '''                                        PARTE CLIENTE                                                '''
