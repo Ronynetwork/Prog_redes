@@ -67,3 +67,23 @@ def List_Clients(clients=None, sock=None, **kwargs):
         exit()
 def Whatsapp(comunicacao, clients):
     comunicacao = SPLIT(comunicacao)
+
+def HELP(sock=None, **kwargs):
+    try:
+        # Criando descrição de cada comando
+        descriptive_options = {
+        '/l': 'Listar clientes conectados',
+        '/m:ip:porta:mensagem': 'Enviar mensagem para cliente especifíco (informe IP:PORTA do cliente)',
+        '/b:mensagem': 'Enviar mensagem em Broadcast (Para todos clientes conectados)',
+        '/h': 'Lista o seu histórico de comandos',
+        '/?': 'Lista as opções disponiveis',
+        '/q': 'Desconectar do Servidor'
+        }
+        msg_title = f"\nSegue abaixo as Opções disponiveis neste servidor:"
+        sock.send(msg_title.encode(UNICODE))
+        for comando, descrição in descriptive_options.items(): # listando por meio do FOR comando por comando 
+            msg_help = f"{comando} -> {descrição}\n" # formatação mensagem
+            sock.send(msg_help.encode(UNICODE)) # enviando comando por comando
+    except:
+        print(f'\nErro no momento de listar as Opções...{sys.exc_info()[0]}')  
+        exit()  
