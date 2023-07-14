@@ -50,7 +50,7 @@ def server_interaction(sock):
             msg = b''
             print(f'Erro na decodificação do servidor... {sys.exc_info()[0]}')
 def SPLIT(comunicacao):
-    com_split = comunicacao.split()
+    com_split = comunicacao.split(':')
     
 def List_Clients(clients=None, sock=None, **kwargs):
     try: 
@@ -66,4 +66,4 @@ def List_Clients(clients=None, sock=None, **kwargs):
         print(f'\nErro no momento de Listar os Clientes Conectados...{sys.exc_info()[0]}')  
         exit()
 def Whatsapp(comunicacao, clients):
-    comunicacao = 
+    comunicacao = SPLIT(comunicacao)
