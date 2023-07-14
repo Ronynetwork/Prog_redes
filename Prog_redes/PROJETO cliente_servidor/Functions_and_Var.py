@@ -17,7 +17,7 @@ def conn_server():
         server.bind((SERVER, PORT))
         PRINTS(f'\nServidor {SERVER} a espera de conexões na porta {PORT}!\n')
         server.listen(6)
-
+        
         return server
 
     except:
