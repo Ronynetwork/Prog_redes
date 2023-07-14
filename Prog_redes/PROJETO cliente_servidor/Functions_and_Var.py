@@ -15,7 +15,7 @@ def conn_server():
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind((SERVER, PORT))
-        PRINTS('\nServidor {server} a espera de conexões!\n')
+        PRINTS(f'\nServidor {SERVER} a espera de conexões na porta {PORT}!\n')
         server.listen(6)
 
         return server
