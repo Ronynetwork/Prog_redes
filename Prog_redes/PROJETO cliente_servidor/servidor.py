@@ -9,7 +9,7 @@ try:
         try:
             sock_client, end = server.accept()
             PRINTS(f'Conexão TCP estabelecida.\n\nCliente {end[0]} conectado na porta {end[1]}.')
-            clients[end[0]] = end[1]
+            clients[end[1]] = [end[0], sock_client]
             tClient = threading.Thread(target=Client_Interaction, args=(sock_client,end,clients))
             tClient.start()
         except:
