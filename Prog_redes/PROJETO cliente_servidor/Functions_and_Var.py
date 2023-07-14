@@ -17,13 +17,12 @@ def conn_server():
         server.bind((SERVER, PORT))
         PRINTS(f'\nServidor {SERVER} a espera de conexões na porta {PORT}!\n')
         server.listen(6)
-        
+
         return server
 
     except:
         print(f'Erro ao estabaelecer a conexão do servidor{sys.exc_info()}')
-        server.close()
-        
+        server.close()       
 
 #----------------------------------------------------------------------------------------------------------
 def broadCast(comunicacao, end_procurado, clients):
@@ -44,7 +43,7 @@ def Client_Interaction(conn_server, end, clients):
             comunicacao = b'!q'
             clients.remove ((conn_server, end))
             conn_server.close()
-
+            
 #----------------------------------------------------------------------------------------------------------
 def server_interaction(sock):
     msg = b' '
