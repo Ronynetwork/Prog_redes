@@ -1,6 +1,5 @@
-import threading, socket
+import threading
 from Functions_Server import *
-
 
 try:
     server = conn_server()
@@ -15,6 +14,7 @@ try:
         except:
             print(f'Erro ao estabelecer a conexão... {sys.exc_info()[0]}')
             exit()
+            
 except OSError as e:
     if e.errno == 98:
         print('Todas as portas do servidor estão ocupadas')
