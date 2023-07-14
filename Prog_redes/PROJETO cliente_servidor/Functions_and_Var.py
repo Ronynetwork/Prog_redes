@@ -56,7 +56,7 @@ def server_interaction(sock):
     closeSocket(sock)
 
 def SPLIT(msg):
-    
+    comunica
 #----------------------------------------------------------------------------------------------------------
 
 '''                                        PARTE CLIENTE                                                '''
