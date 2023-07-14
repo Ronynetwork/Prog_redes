@@ -1,5 +1,6 @@
-from Functions_and_Var import *
-import threading
+from Functions_Client import *
+from Functions_Server import *
+import threading, socket
 
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

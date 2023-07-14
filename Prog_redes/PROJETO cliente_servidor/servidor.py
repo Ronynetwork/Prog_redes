@@ -1,5 +1,5 @@
 import threading, socket
-from Functions_and_Var import *
+from Functions_Server import *
 
 
 try:
