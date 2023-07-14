@@ -1,10 +1,5 @@
+from variables import *
 import socket, sys
-
-SERVER = '0.0.0.0'
-PORT = 5678
-PROMPT = 'Digite sua msg (!q para terminar) > '
-CLIENT = 'localhost'
-CODE = 'utf-8'
 
 def PRINTS(x):
     print('-'*100)
@@ -58,29 +53,16 @@ def server_interaction(sock):
 def SPLIT(comunicacao):
     com_split = comunicacao.split()
     
-#----------------------------------------------------------------------------------------------------------
-
-'''                                        PARTE CLIENTE                                                '''
-
-def client_interaction(sock):
-    msg = ''
-    while msg != '!q':
-        try:
-            msg = input(PROMPT)
-            if msg != '': sock.send(msg.encode(CODE))
-        except:
-            msg = '!q'
-    closeSocket(sock)
-
-# ------------------------------------------------------------
-def closeSocket(sock):
-    try:
-        sock.close()
+def LIST_CLIENTS(clients_dict=None, sock=None, **kwargs):
+    try: 
+        msg_title = "\nOs Clientes conectados ao Servidor são:" # formatando mensagem 
+        sock.send(msg_title.encode(UNICODE)) 
+        num = 0
+        for chave, valor in clients_dict.items():  # faço um for para pegar cada cliente conectado e enviar 
+            ip = valor[0] # Armazenamento Temporário 
+            num+=1 # formatação numeração cliente
+            msg_list = f"\nCLIENTE {num}\nIP: {ip}\nPORT: {chave}\n" # formatação listagem clientes (lembrando que chave=porta e valor[0]=ip)
+            sock.send(msg_list.encode(UNICODE)) # enviando mensagens 
     except:
-        None
-
-# ------------------------------------------------------------
-def commands(msg, clients):
-    while msg != '/q':
-        if msg == '/l':
-            print(clients)
+        print(f'\nErro no momento de Listar os Clientes Conectados...{sys.exc_info()[0]}')  
+        exit() 
