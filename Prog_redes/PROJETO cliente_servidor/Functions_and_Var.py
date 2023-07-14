@@ -15,7 +15,7 @@ def conn_server():
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind((SERVER, PORT))
-        PRINTS('\nServidor a espera de conexões!\n')
+        PRINTS('\nServidor {server} a espera de conexões!\n')
         server.listen(6)
 
         return server
@@ -32,7 +32,7 @@ def broadCast(comunicacao, end_procurado, clients):
     for conn, end in clients:
         if end != end_procurado:
             conn.send(comunicacao.encode(CODE))
-            
+
 #----------------------------------------------------------------------------------------------------------
 def Client_Interaction(conn_server, end, clients):
     comunicacao = b''
