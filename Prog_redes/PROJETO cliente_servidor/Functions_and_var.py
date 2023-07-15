@@ -62,7 +62,7 @@ def SPLIT(comunicacao):
     com_split = comunicacao.split(':')
     
 def HISTORY(comunicacao):
-    
+    mensagens= 
 def List_Clients(clients, sock, **kwargs):
     try: 
         msg_title = "\nOs Clientes conectados ao Servidor são:" # formatando mensagem 
