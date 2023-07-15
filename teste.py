@@ -5,3 +5,5 @@ def HISTORY(comunicacao):
     print(mensagens)
     mensagens.append[comunicacao]
 
+while True:
+    
