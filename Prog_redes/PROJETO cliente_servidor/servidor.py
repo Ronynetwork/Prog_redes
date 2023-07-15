@@ -1,5 +1,5 @@
 import threading
-from Functions_Server import *
+from Functions_and_var import *
 
 try:
     server = conn_server()
