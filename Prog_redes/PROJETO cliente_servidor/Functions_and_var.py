@@ -1,4 +1,3 @@
-from variables import *
 import socket, sys
 
 #                                          VARIÁVEIS                                                   <:
@@ -14,7 +13,7 @@ def PRINTS(x):
     print('-'*100)
     print(x)
     print('-'*100)
-    
+
 #----------------------------------------------------------------------------------------------------------
 def conn_server():
     try:
