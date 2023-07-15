@@ -61,7 +61,7 @@ def server_interaction(sock):
 def SPLIT(comunicacao):
     com_split = comunicacao.split(':')
     
-def List_Clients(clients=None, sock=None, **kwargs):
+def List_Clients(clients, sock, **kwargs):
     try: 
         msg_title = "\nOs Clientes conectados ao Servidor são:" # formatando mensagem 
         sock.send(msg_title.encode(CODE)) 
@@ -77,7 +77,7 @@ def List_Clients(clients=None, sock=None, **kwargs):
 def Whatsapp(comunicacao, clients):
     comunicacao = SPLIT(comunicacao)
 
-def HELP(sock=None, **kwargs):
+def HELP(sock, **kwargs):
     try:
         # Criando descrição de cada comando
         descriptive_options = {
