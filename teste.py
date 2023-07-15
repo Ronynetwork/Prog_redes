@@ -8,4 +8,5 @@ def HISTORY(comunicacao):
 while True:
     comunicação = input('Insira uma mensagem:')
     HISTORY(comunicação)
-    
+    if comunicação =='quit':
+        break
