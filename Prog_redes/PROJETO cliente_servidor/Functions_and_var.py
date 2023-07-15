@@ -82,7 +82,7 @@ def HELP(sock=None, **kwargs):
         # Criando descrição de cada comando
         descriptive_options = {
         '/l': 'Listar os clientes conectados',
-        '/m:ip:porta:mensagem': 'Enviar mensagem para um cliente especifíco (informe IP:PORTA do cliente)',
+        '/m:ip:porta:mensagem': 'Enviar mensagem para um cliente especifíco (informe IP:PORTA do cliente) depois digite sua mensagem',
         '/b:mensagem': 'Enviar mensagem para todos clientes conectados',
         '/h': 'Lista o seu histórico de comandos',
         '/?': 'Lista as opções disponiveis',
