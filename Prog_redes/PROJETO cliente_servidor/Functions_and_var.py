@@ -1,10 +1,20 @@
 from variables import *
 import socket, sys
 
+#                                          VARIÁVEIS                                                   <:
+
+SERVER = '0.0.0.0'
+PORT = 5678
+PROMPT = 'Digite sua msg (!q para terminar) > '
+CLIENT = 'localhost'
+CODE = 'utf-8'
+
+#---------------------------------------------------------------------------------------------------------
 def PRINTS(x):
     print('-'*100)
     print(x)
     print('-'*100)
+    
 #----------------------------------------------------------------------------------------------------------
 def conn_server():
     try:
@@ -87,3 +97,30 @@ def HELP(sock=None, **kwargs):
     except:
         print(f'\nErro no momento de listar as Opções...{sys.exc_info()[0]}')  
         exit()  
+
+#----------------------------------------------------------------------------------------------------------
+
+'''                                        PARTE CLIENTE                                                '''
+
+def client_interaction(sock):
+    msg = ''
+    while msg != '!q':
+        try:
+            msg = input(PROMPT)
+            if msg != '': sock.send(msg.encode(CODE))
+        except:
+            msg = '!q'
+    closeSocket(sock)
+
+# ------------------------------------------------------------
+def closeSocket(sock):
+    try:
+        sock.close()
+    except:
+        None
+
+# ------------------------------------------------------------
+def commands(msg, clients):
+    while msg != '/q':
+        if msg == '/l':
+            print(clients)
