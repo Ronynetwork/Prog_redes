@@ -91,10 +91,10 @@ def HELP(sock=None, **kwargs):
         msg_title = f"\nSegue abaixo as Opções disponiveis neste servidor:"
         sock.send(msg_title.encode(CODE))
         for comando, descrição in descriptive_options.items(): # listando por meio do FOR comando por comando 
-            msg_help = f"{comando} -> {descrição}\n" # formatação mensagem
+            msg_help = f"\n{comando} -> {descrição}\n" # formatação mensagem
             sock.send(msg_help.encode(CODE)) # enviando comando por comando
     except:
-        print(f'\nErro no momento de listar as Opções...{sys.exc_info()[0]}')  
+        print(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
         exit()  
 
 #----------------------------------------------------------------------------------------------------------
