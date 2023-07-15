@@ -6,4 +6,6 @@ def HISTORY(comunicacao):
     mensagens.append[comunicacao]
 
 while True:
+    comunicação = input('Insira uma mensagem:')
+    HISTORY(comunicação)
     
