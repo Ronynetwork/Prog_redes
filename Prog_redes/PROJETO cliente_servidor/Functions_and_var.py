@@ -62,8 +62,9 @@ def SPLIT(comunicacao):
     com_split = comunicacao.split(':')
     
 def HISTORY(comunicacao):
-    prim_command= 
-    mensagens= []
+    prim_command= sys.argv
+    mensagens= [prim_command,]
+    print(mensagens)
     mensagens.append[comunicacao]
 def List_Clients(clients, sock, **kwargs):
     try: 
