@@ -1,5 +1,9 @@
-import threading
-from Functions_and_var import *
+import socket, threading, os, sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '\\Functions and Var')
+from variables import *
+from functions_client import *
+from functions_others import PRINT_DIV
+
 
 try: # Tentando estabelecer a conexão
     server = conn_server()
@@ -14,6 +18,7 @@ try: # Tentando estabelecer a conexão
         except:
             print(f'Erro ao estabelecer a conexão... {sys.exc_info()[0]}')
             exit()
+        ()
             
 except OSError as e:
     if e.errno == 98:
