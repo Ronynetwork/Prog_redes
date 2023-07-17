@@ -1,4 +1,4 @@
-import socket, threading, os, sys
+import threading, os, sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '\\Functions and Var')
 from variables import *
 from functions_client import *

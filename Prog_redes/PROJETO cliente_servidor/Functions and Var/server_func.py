@@ -85,6 +85,7 @@ def List_Clients(clients, sock, **kwargs):
     except:
         print(f'\nErro no momento de Listar os Clientes Conectados...{sys.exc_info()[0]}')  
         exit()
+        
 def Whatsapp(comunicacao, clients):
     comunicacao = SPLIT(comunicacao)
 
