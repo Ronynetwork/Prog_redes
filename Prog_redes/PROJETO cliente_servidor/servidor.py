@@ -1,14 +1,14 @@
 import threading
 from Functions_and_var import *
 
-try:
+try: # Tentando estabelecer a conexão
     server = conn_server()
-    clients = {}
+    clients = {} #Criando o dicionário onde ficaram armazenados os clientes conectados
     while True:
         try:
-            sock_client, end = server.accept()
+            sock_client, end = server.accept()#Aceitando  as conexões
             PRINTS(f'Conexão TCP estabelecida.\n\nCliente {end[0]} conectado na porta {end[1]}.')
-            clients[end[1]] = [end[0], sock_client]
+            clients[end[1]] = [end[0], sock_client] #Inserindo no dicionário a PORTA:IP do cliente
             tClient = threading.Thread(target=Client_Interaction, args=(sock_client, end, clients))
             tClient.start()
         except:

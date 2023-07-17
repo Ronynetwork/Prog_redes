@@ -61,11 +61,25 @@ def server_interaction(sock):
 def SPLIT(comunicacao):
     com_split = comunicacao.split(':')
     
+
+mensagens = []
+prim_command = (sys.argv[0].split('/')[-1])
+mensagens.append(prim_command)
+
 def HISTORY(comunicacao):
-    prim_command= sys.argv
-    mensagens= [prim_command,]
-    print(mensagens)
-    mensagens.append[comunicacao]
+    mensagens = []
+    prim_command = (sys.argv[0].split('/')[-1])
+    mensagens.append(prim_command)  
+    while True:
+        comunicacao = input('Insira uma mensagem:')
+        if comunicacao == 'quit':
+            break
+        if comunicacao != 'quit':
+            mensagens.append(comunicacao)
+        else:
+            PRINTS(f'Sua histórico de mensagens: {mensagens}')
+
+
 def List_Clients(clients, sock, **kwargs):
     try: 
         msg_title = "\nOs Clientes conectados ao Servidor são:" # formatando mensagem 
