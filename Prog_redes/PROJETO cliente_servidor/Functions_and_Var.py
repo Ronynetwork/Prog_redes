@@ -1,4 +1,4 @@
-import sys, socket
+import sys, socket, threading
 
 #                                          VARIÁVEIS                                                   <:
 
