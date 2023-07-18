@@ -58,7 +58,8 @@ def HISTORY(comunicacao):
         else:
             PRINTS(f'Sua histórico de mensagens: {mensagens}')
 
-# -----------------------------------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------------------------------------------
+'''                                           FUNÇÃO QUE LISTA TODOS OS CLIENTES CONECTADOS NO SERVIDOR                                         '''
 
 def List_Clients(clients, sock, **kwargs):
     try: 
@@ -75,7 +76,7 @@ def List_Clients(clients, sock, **kwargs):
         exit()
         
 # -------------------------------------------------------------------------------------------------------------------------------------------------
-'''                                          FUNÇÃO QUE EXPLICA A FUNCIONALIDADE DE TODAS AS OUTRAS FUNÇÕES                                     '''
+'''                                      FUNÇÃO QUE EXPLICA A FUNCIONALIDADE DE TODAS AS OUTRAS FUNÇÕES                                         '''
 def HELP(sock, **kwargs):
     try:
         # Criando descrição de cada comando
