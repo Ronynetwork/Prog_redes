@@ -41,22 +41,3 @@ try:
                              
 except:
     print(f'sla ... {sys.exc_info()}')
-'''
-        data_retorno = 0
-        while True:
-            data_retorno += (client.recv(4096).decode())
-            if not data_retorno:
-                break
-            print(len(data_retorno))
-        tamanho_total, qtd_pacotes = DADOS(data_retorno)
-
-        try:
-            nome_arq = past + arq_solicitado
-            arquivo = open(nome_arq, 'wb')
-        except:
-            print(f'Erro ao salvar o arquivo... {sys.exc_info()[0]}')
-            
-        PACOTES(client, arquivo, tamanho_total, qtd_pacotes)
-except:
-    print(f'Erro... {sys.exc_info()[0]}')
-client.close()'''

@@ -12,10 +12,11 @@ print(requisicao.status_code)
 retorno = requisicao.json()
 
 id_chat = retorno['result'][0]['message']['chat']['id']
-
+print(id_chat)
 mensagem = input('Digite algo:')
 
 resposta = {f'chat-id': id_chat, 'text':mensagem}
 
+print(resposta)
 envio = requests.post(url_req + '/sendMessage', data=resposta)
 print(envio)

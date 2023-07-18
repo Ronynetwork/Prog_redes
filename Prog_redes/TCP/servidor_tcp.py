@@ -15,7 +15,7 @@ try:
             break
         else:
             check = list(CHECAGEM(mensagem))
-            print(check[0])
+            PRINTS(check[0])
             if check[0] == True:
                 total_data = 0
                 conn.send(str(check).encode())
