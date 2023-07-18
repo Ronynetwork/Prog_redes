@@ -21,10 +21,9 @@ def conn_server():
         server.close()       
 
 #----------------------------------------------------------------------------------------------------------
-def broadCast(comunicacao, end_procurado, clients):
-    comunicacao = f"{end_procurado} -> {comunicacao.decode(CODE)}"
-    print (comunicacao)
-    for conn, end in clients:
+def broadCast(comunicacao, clients):
+    comunicacao = SPLIT(comunicacao)
+    for x in clients:
         if end != end_procurado:
             conn.send(comunicacao.encode(CODE))
 
