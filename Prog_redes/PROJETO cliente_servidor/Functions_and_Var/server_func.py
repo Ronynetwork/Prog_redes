@@ -32,6 +32,8 @@ def conn_server():
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------
 
+'''                                                    FUNÇÕES INTERATIVAS DO SERVIDOR                                                        '''
+
 def broadCast(comunicacao, clients):
     comunicacao = SPLIT(comunicacao)
     
