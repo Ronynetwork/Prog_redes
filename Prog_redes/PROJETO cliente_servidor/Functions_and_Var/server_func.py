@@ -35,8 +35,9 @@ def Client_Interaction(conn_server, end, clients):
         try:
             comunicacao = conn_server.recv(512)
             broadCast (comunicacao, end, clients)
+            commands = {}
         except:
-            comunicacao = b'!q'
+            comunicacao = b'/q'
             clients.remove ((conn_server, end))
             conn_server.close()
 
