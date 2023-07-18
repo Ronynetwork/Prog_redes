@@ -46,8 +46,10 @@ def Client_Interaction(conn_server, end, clients):
 
 #----------------------------------------------------------------------------------------------------------
 def SPLIT(comunicacao):
-    com_split = comunicacao.split(':')
-    
+    try:
+        com_split = comunicacao.split(':')
+    except:
+        print(f'')
 
 mensagens = []
 prim_command = (sys.argv[0].split('/')[-1])
@@ -105,4 +107,4 @@ def HELP(sock, **kwargs):
         exit()  
     
     def Private(comunicacao):
-        comunicacao = comunicacao.s´lit
+        comunicacao = SPLIT(comunicacao)
