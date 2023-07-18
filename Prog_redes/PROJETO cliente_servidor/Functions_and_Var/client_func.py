@@ -6,12 +6,12 @@ from variables import *
 
 def client_interaction(sock):
     msg = ''
-    while msg != '!q':
+    while msg != '/q':
         try:
             msg = input(PROMPT)
             if msg != '': sock.send(msg.encode(CODE))
         except:
-            msg = '!q'
+            msg = '/q'
     closeSocket(sock)
 
 # ------------------------------------------------------------
