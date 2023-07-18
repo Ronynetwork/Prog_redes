@@ -36,7 +36,8 @@ def Client_Interaction(conn_server, end, clients):
             comunicacao = conn_server.recv(512)
             broadCast (comunicacao, end, clients)
             commands = {'/?':HELP(),
-            '/'
+            '/l':List_Clients(),
+            '/m':
             }
         except:
             comunicacao = b'/q'
