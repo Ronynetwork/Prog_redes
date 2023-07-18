@@ -34,6 +34,8 @@ def broadCast(comunicacao, clients):
     for x in clients:
         try:
             conn.send(comunicacao[1].encode(CODE))
+        except:
+            print(f'Erro ao enviar a mensagem... sys.exc_info')
 
 #----------------------------------------------------------------------------------------------------------
 def Client_Interaction(server, client, end, clients):
