@@ -107,9 +107,10 @@ def HELP(sock, **kwargs):
         for x in clients:
             try:
                 if x == comunicacao[2]:
+                    PRINTS('Enviando a mensagem para o cliente informado.')
+                    server.connect(endereco_receptor)
                     server.send(comunicacao[3])
-                    tcp_socket.connect(endereco_receptor)
-
+                    
 
             except:
                 PRINTS(f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}')
