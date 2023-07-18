@@ -45,6 +45,8 @@ def broadCast(comunicacao, clients):
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------
 
+'''                             FUNÇÃO QUE PRINTA TODOS OS COMANDOS E MENSAGENS TROCADAS ENTRE O CLIENTE E O SERVIDOR                         '''
+
 def HISTORY(comunicacao):
     mensagens = []
     prim_command = (sys.argv[0].split('/')[-1])
@@ -59,6 +61,7 @@ def HISTORY(comunicacao):
             PRINTS(f'Sua histórico de mensagens: {mensagens}')
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
+
 '''                                           FUNÇÃO QUE LISTA TODOS OS CLIENTES CONECTADOS NO SERVIDOR                                         '''
 
 def List_Clients(clients, sock, **kwargs):
@@ -76,6 +79,7 @@ def List_Clients(clients, sock, **kwargs):
         exit()
         
 # -------------------------------------------------------------------------------------------------------------------------------------------------
+
 '''                                      FUNÇÃO QUE EXPLICA A FUNCIONALIDADE DE TODAS AS OUTRAS FUNÇÕES                                         '''
 def HELP(sock, **kwargs):
     try:
@@ -97,6 +101,7 @@ def HELP(sock, **kwargs):
         PRINTS(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
         exit()  
 # -------------------------------------------------------------------------------------------------------------------------------------------------
+
 '''                                   função que envia uma mensagem do cliente para outro em específico                                         '''
 
 def Private(server, comunicacao, clients):
@@ -112,6 +117,7 @@ def Private(server, comunicacao, clients):
                 PRINTS(f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}')
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------
+
 '''                                       INTERAÇÃO ENTRE AS MENSAGENS RECEBIDAS E OS COMANDOS ENVIADOS                                        '''
 
 def Client_Interaction(server, client, end, clients):
