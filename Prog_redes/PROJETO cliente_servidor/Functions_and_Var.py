@@ -166,6 +166,7 @@ def Client_Interaction(sock, client_info, clients):
         commands_choice = set(commands.keys()) # usado para verificar se o comando pertence ao dicionário 
         mensagens = []
         HISTORY(mensagens)
+        comunicacao = b''
         while comunicacao != b'/q':
             try:
                 comunicacao = sock.recv(BUFFER).decode(CODE) # recebendo mensagem do cliente
