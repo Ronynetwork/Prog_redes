@@ -1,4 +1,13 @@
-from variables import *
+import sys, socket
+
+#                                          VARIÁVEIS                                                   <:
+
+SERVER = '0.0.0.0'
+PORT = 5678
+PROMPT = 'Digite sua msg (!q para terminar) > '
+CLIENT = 'localhost'
+CODE = 'utf-8'
+BUFFER = 512
 
 #----------------------------------------------------------------------------------------------------------
 
