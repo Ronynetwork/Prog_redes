@@ -157,12 +157,11 @@ def Private(server, comunicacao, clients):
 def Client_Interaction(sock, client_info, clients):
     try:
         commands = {
-        '/?':HELP,
-        '/l':List_Clients,
-        '/m':Private,
-        '/b':broadCast,
-        '/h':HISTORY,
-        }
+            '/?':HELP,
+            '/l':List_Clients,
+            '/m':Private,
+            '/b':broadCast,
+            '/h':HISTORY,}
         commands_choice = set(commands.keys()) # usado para verificar se o comando pertence ao dicionário 
         mensagens = []
         comunicacao = b''
