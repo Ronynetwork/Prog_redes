@@ -36,7 +36,7 @@ def conn_server(clients):
 
 '''                                                    FUNÇÕES INTERATIVAS DO SERVIDOR                                                        '''
 
-def broadCast(clients, comunicacao, client_info):
+def broadCast(clients=None, comunicacao=None, client_info=None, **kwargs):
     comunicacao = SPLIT(comunicacao)
     msg = f'O cliente: {client_info[0]} | {client_info[1]} Enviou uma mensagem para todos!\nMensagem > {comunicacao[1]}'
     try:
@@ -53,6 +53,10 @@ def broadCast(clients, comunicacao, client_info):
 
 def HISTORY(mensagens):
     msg = f'esse é seu histórico de comandos\n\n'
+    qtd = 0
+    for x in mensagens:
+        qtd +=1
+        print(f'{msg}{qtd}. {x}')
     PRINTS(f'Sua histórico de mensagens: {mensagens}')
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -76,7 +80,7 @@ def List_Clients(clients=None, sock=None, **kwargs):
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
 '''                                      FUNÇÃO QUE EXPLICA A FUNCIONALIDADE DE TODAS AS OUTRAS FUNÇÕES                                         '''
-def HELP(sock, **kwargs):
+def HELP(sock=None, **kwargs):
     try:
         # Criando descrição de cada comando
         options = {
@@ -114,9 +118,9 @@ def Private(server, comunicacao, clients):
 
 '''                                       INTERAÇÃO ENTRE AS MENSAGENS RECEBIDAS E OS COMANDOS ENVIADOS                                        '''
 
-def Client_Interaction(sock, client, end, clients):
+def Client_Interaction(sock, client_info, clients):
     try:
-        comunicacao = server.recv(BUFFER)
+        comunicacao = sock.recv(BUFFER)
         commands = {
         '/?':HELP(),
         '/l':List_Clients(),
@@ -134,13 +138,13 @@ def Client_Interaction(sock, client, end, clients):
                 mensagens.append(comunicacao)   
                 comand = SPLIT(comunicacao) # realizando split do comando do cliente 
                 command_brute = comand[0].lower() # usando apenas para pegar o comando bruto "/x"
-                if comand_prompt in commands_choice:  # verificando se o comando está dentro das opções disponivéis 
+                if command_brute in commands_choice:  # verificando se o comando está dentro das opções disponivéis 
                     # ativando a função chamada (passando argumento depois)
                     commands[command_brute](clients_dict=clients, sock=sock, comand=comunicacao, commands=commands)
             except:
                 comunicacao = b'/q'
-        del clients[info_client[1]] # quando o cliente digitar /q ele exclui socket do cliente da lista de clientes ativos
-        sock_client.close()
+        del clients[client_info[1]] # quando o cliente digitar /q ele exclui socket do cliente da lista de clientes ativos
+        sock.close()
     except:
         print(f'Erro ao adicionar o cliente ao servidor...({sys.exc_info()[0]})')
         exit()
