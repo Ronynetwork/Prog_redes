@@ -51,6 +51,7 @@ def SPLIT(comunicacao):
     except:
         print(f'Erro ao desmembrar a mensagem... {sys.exc_info()[0]}')
 
+# ---------------------------------------------------------------------------------------------------------
 def HISTORY(comunicacao):
     mensagens = []
     prim_command = (sys.argv[0].split('/')[-1])
