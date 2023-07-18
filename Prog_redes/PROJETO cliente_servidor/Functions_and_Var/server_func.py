@@ -7,7 +7,7 @@ def PRINTS(x):
     print('-'*100)
 
 #----------------------------------------------------------------------------------------------------------
-def server():
+def conn_server():
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind((SERVER, PORT))
@@ -29,7 +29,7 @@ def broadCast(comunicacao, end_procurado, clients):
             conn.send(comunicacao.encode(CODE))
 
 #----------------------------------------------------------------------------------------------------------
-def Client_Interaction(server, end, clients):
+def Client_Interaction(server, client, end, clients):
     comunicacao = b''
     while comunicacao != b'/q':
         try:
