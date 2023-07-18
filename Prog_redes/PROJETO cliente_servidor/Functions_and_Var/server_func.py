@@ -1,19 +1,22 @@
 from variables import *
 import sys, socket
-#---------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------------------------------------
+
 def PRINTS(x):
     print('-'*100)
     print(x)
     print('-'*100)
 
-#----------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------------------------------------
+
 def SPLIT(comunicacao):
     try:
         com_split = comunicacao.split(':')
     except:
         print(f'Erro ao desmembrar a mensagem... {sys.exc_info()[0]}')
 
-#----------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------------------------------------
+
 def conn_server():
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -27,7 +30,8 @@ def conn_server():
         print(f'Erro ao estabaelecer a conexão do servidor{sys.exc_info()}')
         server.close()       
 
-#----------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------------------------------------
+
 def broadCast(comunicacao, clients):
     comunicacao = SPLIT(comunicacao)
     
@@ -38,6 +42,7 @@ def broadCast(comunicacao, clients):
             print(f'Erro ao enviar a mensagem... {sys.exc_info()[0]}')
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------
+
 def HISTORY(comunicacao):
     mensagens = []
     prim_command = (sys.argv[0].split('/')[-1])
@@ -51,6 +56,7 @@ def HISTORY(comunicacao):
         else:
             PRINTS(f'Sua histórico de mensagens: {mensagens}')
 
+# -----------------------------------------------------------------------------------------------------------------------------------------------
 
 def List_Clients(clients, sock, **kwargs):
     try: 
@@ -66,8 +72,6 @@ def List_Clients(clients, sock, **kwargs):
         print(f'\nErro no momento de Listar os Clientes Conectados...{sys.exc_info()[0]}')  
         exit()
         
-def Whatsapp(comunicacao, clients):
-    comunicacao = SPLIT(comunicacao)
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 def HELP(sock, **kwargs):
     try:
@@ -88,8 +92,9 @@ def HELP(sock, **kwargs):
     except:
         PRINTS(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
         exit()  
-    
-    def Private(server, comunicacao, clients):
+# -------------------------------------------------------------------------------------------------------------------------------------------------
+
+def Private(server, comunicacao, clients):
         comunicacao = SPLIT(comunicacao)
         for x in clients:
             try:
