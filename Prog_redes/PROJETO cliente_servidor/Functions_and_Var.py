@@ -156,8 +156,6 @@ def Private(server, comunicacao, clients):
 
 def Client_Interaction(sock, client_info, clients):
     try:
-        comunicacao = sock.recv(BUFFER)
-        PRINTS(comunicacao)
         commands = {
         '/?':HELP(),
         '/l':List_Clients(),
