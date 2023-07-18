@@ -37,7 +37,7 @@ def Client_Interaction(conn_server, end, clients):
             broadCast (comunicacao, end, clients)
             commands = {'/?':HELP(),
             '/l':List_Clients(),
-            '/m':Priva
+            '/m':Private(),
             }
         except:
             comunicacao = b'/q'
