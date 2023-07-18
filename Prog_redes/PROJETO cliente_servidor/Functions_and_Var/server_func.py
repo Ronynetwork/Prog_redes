@@ -99,11 +99,13 @@ def HELP(sock, **kwargs):
             msg_help = f"\n{comando} -> {descrição}\n" # formatação mensagem
             sock.send(msg_help.encode(CODE)) # enviando comando por comando
     except:
-        print(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
+        PRINTS(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
         exit()  
     
     def Private(comunicacao, clients):
         comunicacao = SPLIT(comunicacao)
         for x in clients:
             try:
-                comunicacao[2] == 
+                comunicacao[2] == x
+            except:
+                PRINTS(f'Não foi possível localizar o cliente informado... sys.exc_info()[0]')
