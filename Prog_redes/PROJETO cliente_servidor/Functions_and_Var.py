@@ -23,7 +23,7 @@ def client_interaction(sock):
             msg = '/q'
             exit()
 
-#--------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------
 def server_interaction(sock):
     msg = b' '
     while msg != b'':
@@ -34,8 +34,8 @@ def server_interaction(sock):
             msg = b''
             print(f'Erro na decodificação do servidor... {sys.exc_info()[0]}')
 
-from variables import *
-import sys, socket
+
+'''                                                        PARTE DO SERVIDOR                                                                  '''
 # -----------------------------------------------------------------------------------------------------------------------------------------------
 
 def PRINTS(x):
