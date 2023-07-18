@@ -104,3 +104,6 @@ def HELP(sock, **kwargs):
     
     def Private(comunicacao, clients):
         comunicacao = SPLIT(comunicacao)
+        for x in clients:
+            try:
+                comunicacao[2] == 
