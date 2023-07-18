@@ -75,6 +75,7 @@ def List_Clients(clients, sock, **kwargs):
         exit()
         
 # -------------------------------------------------------------------------------------------------------------------------------------------------
+'''                                          FUNÇÃO QUE EXPLICA A FUNCIONALIDADE DE TODAS AS OUTRAS FUNÇÕES                                     '''
 def HELP(sock, **kwargs):
     try:
         # Criando descrição de cada comando
@@ -95,7 +96,7 @@ def HELP(sock, **kwargs):
         PRINTS(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
         exit()  
 # -------------------------------------------------------------------------------------------------------------------------------------------------
-''' função que envia uma mensagem do cliente para outro em específico '''
+'''                                   função que envia uma mensagem do cliente para outro em específico                                         '''
 
 def Private(server, comunicacao, clients):
         comunicacao = SPLIT(comunicacao)
@@ -110,7 +111,7 @@ def Private(server, comunicacao, clients):
                 PRINTS(f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}')
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------
-'''                                           INTERAÇÃO ENTRE AS MENSAGENS RECEBIDAS E OS COMANDOS ENVIADOS                                    '''
+'''                                       INTERAÇÃO ENTRE AS MENSAGENS RECEBIDAS E OS COMANDOS ENVIADOS                                        '''
 
 def Client_Interaction(server, client, end, clients):
     comunicacao = b''
