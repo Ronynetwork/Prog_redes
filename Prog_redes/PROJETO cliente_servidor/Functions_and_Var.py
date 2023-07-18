@@ -166,7 +166,6 @@ def Client_Interaction(sock, client_info, clients):
         '/h':HISTORY(),
         }
         commands_choice = set(commands.keys()) # usado para verificar se o comando pertence ao dicionário 
-        comunicacao = b''
         mensagens = []
         HISTORY(mensagens)
         while comunicacao != b'/q':
