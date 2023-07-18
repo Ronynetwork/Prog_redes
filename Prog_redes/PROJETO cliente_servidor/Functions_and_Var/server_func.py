@@ -107,8 +107,8 @@ def HELP(sock, **kwargs):
         for x in clients:
             try:
                 if x == comunicacao[2]:
-                    server.send(comunicacao)
-               
+                    server.send(comunicacao[3])
+                    tcp_socket.connect(endereco_receptor)
 
 
             except:
