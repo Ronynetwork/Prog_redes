@@ -110,7 +110,6 @@ def HELP(sock, **kwargs):
                     PRINTS('Enviando a mensagem para o cliente informado...\nAguarde.')
                     server.connect(comunicacao[1], comunicacao[2])
                     server.send(comunicacao[3])
-
-
+                    print('Mensagem enviada com sucesso'), print('-'*100)
             except:
                 PRINTS(f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}')
