@@ -1,4 +1,4 @@
-import threading, os, sys, 
+import threading, os, sys, socket
 local = os.path.dirname(os.path.abspath(__file__)) + '\\Functions_and_Var'
 sys.path.append(local)
 
