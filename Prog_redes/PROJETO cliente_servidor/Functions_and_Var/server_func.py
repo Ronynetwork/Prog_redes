@@ -7,6 +7,13 @@ def PRINTS(x):
     print('-'*100)
 
 #----------------------------------------------------------------------------------------------------------
+def SPLIT(comunicacao):
+    try:
+        com_split = comunicacao.split(':')
+    except:
+        print(f'Erro ao desmembrar a mensagem... {sys.exc_info()[0]}')
+
+#----------------------------------------------------------------------------------------------------------
 def conn_server():
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,9 +30,10 @@ def conn_server():
 #----------------------------------------------------------------------------------------------------------
 def broadCast(comunicacao, clients):
     comunicacao = SPLIT(comunicacao)
+
     for x in clients:
         if end != end_procurado:
-            conn.send(comunicacao.encode(CODE))
+            conn.send(comunicacao[1].encode(CODE))
 
 #----------------------------------------------------------------------------------------------------------
 def Client_Interaction(server, client, end, clients):
@@ -44,13 +52,6 @@ def Client_Interaction(server, client, end, clients):
         comunicacao = b'/q'
         clients.remove ((server, end))
         client.close()
-
-#----------------------------------------------------------------------------------------------------------
-def SPLIT(comunicacao):
-    try:
-        com_split = comunicacao.split(':')
-    except:
-        print(f'Erro ao desmembrar a mensagem... {sys.exc_info()[0]}')
 
 # ---------------------------------------------------------------------------------------------------------
 def HISTORY(comunicacao):
