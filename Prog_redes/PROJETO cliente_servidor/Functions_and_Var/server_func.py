@@ -49,11 +49,7 @@ def SPLIT(comunicacao):
     try:
         com_split = comunicacao.split(':')
     except:
-        print(f'')
-
-mensagens = []
-prim_command = (sys.argv[0].split('/')[-1])
-mensagens.append(prim_command)
+        print(f'Erro ao desmembrar a mensagem... {sys.exc_info()[0]}')
 
 def HISTORY(comunicacao):
     mensagens = []
@@ -106,5 +102,5 @@ def HELP(sock, **kwargs):
         print(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
         exit()  
     
-    def Private(comunicacao):
+    def Private(comunicacao, clients):
         comunicacao = SPLIT(comunicacao)
