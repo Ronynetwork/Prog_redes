@@ -102,10 +102,14 @@ def HELP(sock, **kwargs):
         PRINTS(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
         exit()  
     
-    def Private(comunicacao, clients):
+    def Private(server, comunicacao, clients):
         comunicacao = SPLIT(comunicacao)
         for x in clients:
             try:
-                comunicacao[2] == x
+                if x == comunicacao[2]:
+                    server.send(comunicacao)
+               
+
+
             except:
-                PRINTS(f'Não foi possível localizar o cliente informado... sys.exc_info()[0]')
+                PRINTS(f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}')
