@@ -52,14 +52,14 @@ def broadCast(clients, comunicacao, client_info):
 '''                             FUNÇÃO QUE PRINTA TODOS OS COMANDOS E MENSAGENS TROCADAS ENTRE O CLIENTE E O SERVIDOR                         '''
 
 def HISTORY(mensagens):
-    
-        PRINTS(f'Sua histórico de mensagens: {mensagens}')
+    msg = f'esse é seu histórico de comandos\n\n'
+    PRINTS(f'Sua histórico de mensagens: {mensagens}')
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
 '''                                           FUNÇÃO QUE LISTA TODOS OS CLIENTES CONECTADOS NO SERVIDOR                                         '''
 
-def List_Clients(clients, sock, **kwargs):
+def List_Clients(clients=None, sock=None, **kwargs):
     try: 
         comunicacao_title = "\nOs Clientes conectados ao Servidor são:" # formatando mensagem 
         sock.send(comunicacao_title.encode(CODE)) 
