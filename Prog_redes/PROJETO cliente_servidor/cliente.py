@@ -1,9 +1,5 @@
-import threading, os, sys, socket
-local = os.path.dirname(os.path.abspath(__file__)) + '\\Functions_and_Var'
-sys.path.append(local)
+from Functions_and_Var import *
 
-from variables import *
-from client_func import *
 
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

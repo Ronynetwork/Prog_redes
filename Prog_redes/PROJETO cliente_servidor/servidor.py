@@ -1,10 +1,4 @@
-import threading, os, sys
-local = os.path.dirname(os.path.abspath(__file__)) + '\\Functions_and_Var'
-sys.path.append(local)
-from variables import *
-from server_func import *
-from client_func import *
-
+from Functions_and_Var import *
 
 try: # Tentando estabelecer a conexão
     clients = {} #Criando o dicionário onde ficaram armazenados os clientes conectados
