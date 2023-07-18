@@ -92,8 +92,8 @@ def HISTORY(mensagens=None, sock= None, **kwargs):
     qtd = 0
     for x in mensagens:
         qtd +=1
-        print(f'{msg}{qtd}. {x}')
-    sock.send((f'Sua histórico de mensagens: {mensagens}').encode(CODE))
+        
+    sock.send((f'Seu histórico de mensagens: {mensagens}').encode(CODE))
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -101,8 +101,8 @@ def HISTORY(mensagens=None, sock= None, **kwargs):
 
 def List_Clients(clients=None, sock=None, **kwargs):
     try: 
-        comunicacao_title = "\nOs Clientes conectados ao Servidor são:" # formatando mensagem 
-        sock.send(comunicacao_title.encode(CODE)) 
+        title = "\nOs Clientes conectados ao Servidor são:" # formatando mensagem 
+        sock.send(title.encode(CODE)) 
         num = 0
         for chave, valor in clients.items():  # faço um for para pegar cada cliente conectado e enviar 
             ip = valor[0] # Armazenamento Temporário 
@@ -127,10 +127,10 @@ def HELP(sock=None, **kwargs):
         '/?': 'Lista as opções disponiveis',
         '/q': 'Desconectar do Servidor'
         }
-        comunicacao_title = f"\nSegue abaixo as Opções disponiveis neste servidor:"
-        sock.send(comunicacao_title.encode(CODE))
-        for comando, descrição in options.items(): # listando por meio do FOR comando por comando 
-            comunicacao_help = f"\n{comando} -> {descrição}\n" # formatação mensagem
+        title = f"\nSegue abaixo as Opções disponiveis neste servidor:"
+        sock.send(title.encode(CODE))
+        for com, describ in options.items(): # listando por meio do FOR comando por comando 
+            comunicacao_help = f"\n{com} -> {describ}" # formatação mensagem
             sock.send(comunicacao_help.encode(CODE)) # enviando comando por comando
     except:
         PRINTS(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
@@ -176,8 +176,9 @@ def Client_Interaction(sock, client_info, clients):
                     commands[command_brute](clients_dict=clients, sock=sock, comand=comunicacao, commands=commands, mensagens = mensagens)
             except:
                 comunicacao = b'/q'
-        del clients[client_info[1]] # quando o cliente digitar /q ele exclui socket do cliente da lista de clientes ativos
-        sock.close()
+            del clients[client_info[1]] # quando o cliente digitar /q ele exclui socket do cliente da lista de clientes ativos
+            sock.close()
+            break
     except:
         print(f'Erro ao adicionar o cliente ao servidor...({sys.exc_info()[0]})')
         exit()
