@@ -12,20 +12,7 @@ def client_interaction(sock):
             if msg != '': sock.send(msg.encode(CODE))
         except:
             msg = '/q'
-    closeSocket(sock)
-
-# ------------------------------------------------------------
-def closeSocket(sock):
-    try:
-        sock.close()
-    except:
-        None
-
-# ------------------------------------------------------------
-def commands(msg, clients):
-    while msg != '/q':
-        if msg == '/l':
-            print(clients)
+            exit()
 
 #--------------------------------------------------------------
 def server_interaction(sock):
