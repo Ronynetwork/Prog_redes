@@ -96,6 +96,7 @@ def HELP(sock, **kwargs):
         exit()  
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 ''' função que envia uma mensagem do cliente para outro em específico '''
+
 def Private(server, comunicacao, clients):
         comunicacao = SPLIT(comunicacao)
         for x in clients:
@@ -108,8 +109,9 @@ def Private(server, comunicacao, clients):
             except:
                 PRINTS(f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}')
 
-#----------------------------------------------------------------------------------------------------------
-''' '''
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+'''                                           INTERAÇÃO ENTRE AS MENSAGENS RECEBIDAS E OS COMANDOS ENVIADOS                                    '''
+
 def Client_Interaction(server, client, end, clients):
     comunicacao = b''
     while comunicacao != b'/q':
