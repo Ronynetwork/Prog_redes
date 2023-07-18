@@ -13,7 +13,7 @@ from client_func import *
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((CLIENT, PORT))
-    print (f'Conectado ao cliente: {SERVER}, na porta {PORT}')
+    PRINTS (f'Conectado ao cliente: {SERVER}, na porta {PORT}')
     tServer = threading.Thread(target=server_interaction, args=(sock,))
     tUser = threading.Thread(target=client_interaction, args=(sock,))
 
