@@ -30,9 +30,9 @@ def conn_server():
 #----------------------------------------------------------------------------------------------------------
 def broadCast(comunicacao, clients):
     comunicacao = SPLIT(comunicacao)
-
+    
     for x in clients:
-        if end != end_procurado:
+        try:
             conn.send(comunicacao[1].encode(CODE))
 
 #----------------------------------------------------------------------------------------------------------
