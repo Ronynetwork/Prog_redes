@@ -33,8 +33,7 @@ def Client_Interaction(server, client, end, clients):
     comunicacao = b''
     while comunicacao != b'/q':
         try:
-            comunicacao = server.recv(512)
-            broadCast (comunicacao, end, clients)
+            comunicacao = server.recv(BUFFER)
             commands = {'/?':HELP(),
             '/l':List_Clients(),
             '/m':Private(),
