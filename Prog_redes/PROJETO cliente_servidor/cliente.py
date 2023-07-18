@@ -21,6 +21,6 @@ try:
     tServer.join()
     tUser.join()
 
-    sock.recv(512)
+    sock.recv(BUFFER)
 except: 
     print(f'Falha na conexão com o servidor... {sys.exc_info()[0]}')
