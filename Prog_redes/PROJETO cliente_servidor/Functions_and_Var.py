@@ -87,7 +87,7 @@ def broadCast(clients=None, comunicacao=None, client_info=None, **kwargs):
 
 '''                             FUNÇÃO QUE PRINTA TODOS OS COMANDOS E MENSAGENS TROCADAS ENTRE O CLIENTE E O SERVIDOR                         '''
 
-def HISTORY(mensagens):
+def HISTORY(mensagens=None, **kwargs):
     msg = f'esse é seu histórico de comandos\n\n'
     qtd = 0
     for x in mensagens:
@@ -165,7 +165,6 @@ def Client_Interaction(sock, client_info, clients):
         }
         commands_choice = set(commands.keys()) # usado para verificar se o comando pertence ao dicionário 
         mensagens = []
-        HISTORY(mensagens)
         comunicacao = b''
         while comunicacao != b'/q':
             try:
@@ -175,7 +174,7 @@ def Client_Interaction(sock, client_info, clients):
                 command_brute = comand[0].lower() # usando apenas para pegar o comando bruto "/x"
                 if command_brute in commands_choice:  # verificando se o comando está dentro das opções disponivéis 
                     # ativando a função chamada (passando argumento depois)
-                    commands[command_brute](clients_dict=clients, sock=sock, comand=comunicacao, commands=commands)
+                    commands[command_brute](clients_dict=clients, sock=sock, comand=comunicacao, commands=commands, mensagens = mensagens)
             except:
                 comunicacao = b'/q'
         del clients[client_info[1]] # quando o cliente digitar /q ele exclui socket do cliente da lista de clientes ativos
