@@ -41,9 +41,10 @@ def Client_Interaction(server, client, end, clients):
             '/b':broadCast()
             }
         except:
-            comunicacao = b'/q'
-            clients.remove ((server, end))
-            server.close()
+            print(f'Comando não encontrado. Erro({})')
+        comunicacao = b'/q'
+        clients.remove ((server, end))
+        client.close()
 
 #----------------------------------------------------------------------------------------------------------
 def SPLIT(comunicacao):
