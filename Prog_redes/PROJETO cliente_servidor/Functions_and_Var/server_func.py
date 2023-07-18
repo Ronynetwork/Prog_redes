@@ -104,5 +104,5 @@ def HELP(sock, **kwargs):
         print(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
         exit()  
     
-    def Private():
-        
+    def Private(comunicacao):
+        comunicacao = comunicacao.s´lit
