@@ -41,7 +41,8 @@ def Client_Interaction(server, client, end, clients):
             '/b':broadCast()
             }
         except:
-            print(f'Comando não encontrado. Erro({})')
+            print(f'Comando não encontrado. Erro({sys.exc_info()[0]})')
+    else:
         comunicacao = b'/q'
         clients.remove ((server, end))
         client.close()
