@@ -35,27 +35,9 @@ def broadCast(comunicacao, clients):
         try:
             conn.send(comunicacao[1].encode(CODE))
         except:
-            print(f'Erro ao enviar a mensagem... sys.exc_info')
+            print(f'Erro ao enviar a mensagem... {sys.exc_info()[0]}')
 
-#----------------------------------------------------------------------------------------------------------
-def Client_Interaction(server, client, end, clients):
-    comunicacao = b''
-    while comunicacao != b'/q':
-        try:
-            comunicacao = server.recv(BUFFER)
-            commands = {'/?':HELP(),
-            '/l':List_Clients(),
-            '/m':Private(),
-            '/b':broadCast()
-            }
-        except:
-            print(f'Comando não encontrado. Erro({sys.exc_info()[0]})')
-    else:
-        comunicacao = b'/q'
-        clients.remove ((server, end))
-        client.close()
-
-# ---------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------------------------------------
 def HISTORY(comunicacao):
     mensagens = []
     prim_command = (sys.argv[0].split('/')[-1])
@@ -86,7 +68,7 @@ def List_Clients(clients, sock, **kwargs):
         
 def Whatsapp(comunicacao, clients):
     comunicacao = SPLIT(comunicacao)
-
+# -------------------------------------------------------------------------------------------------------------------------------------------------
 def HELP(sock, **kwargs):
     try:
         # Criando descrição de cada comando
@@ -118,3 +100,21 @@ def HELP(sock, **kwargs):
                     print('Mensagem enviada com sucesso'), print('-'*100)
             except:
                 PRINTS(f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}')
+
+#----------------------------------------------------------------------------------------------------------
+def Client_Interaction(server, client, end, clients):
+    comunicacao = b''
+    while comunicacao != b'/q':
+        try:
+            comunicacao = server.recv(BUFFER)
+            commands = {'/?':HELP(),
+            '/l':List_Clients(),
+            '/m':Private(),
+            '/b':broadCast()
+            }
+        except:
+            print(f'Comando não encontrado. Erro({sys.exc_info()[0]})')
+    else:
+        comunicacao = b'/q'
+        clients.remove ((server, end))
+        client.close()
