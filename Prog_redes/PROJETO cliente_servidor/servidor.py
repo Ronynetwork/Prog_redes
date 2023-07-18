@@ -19,8 +19,10 @@ try: # Tentando estabelecer a conexão
         except:
             print(f'Erro ao estabelecer a conexão... {sys.exc_info()[0]}')
             exit()
-        ()
-            
+        
+        try: 
+            server.recv(512)
+            if
 except OSError as e:
     if e.errno == 98:
         print('Todas as portas do servidor estão ocupadas')
