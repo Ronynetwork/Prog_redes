@@ -87,13 +87,13 @@ def broadCast(clients=None, comunicacao=None, client_info=None, **kwargs):
 
 '''                             FUNÇÃO QUE PRINTA TODOS OS COMANDOS E MENSAGENS TROCADAS ENTRE O CLIENTE E O SERVIDOR                         '''
 
-def HISTORY(mensagens=None, sock= none **kwargs):
+def HISTORY(mensagens=None, sock= None, **kwargs):
     msg = f'esse é seu histórico de comandos\n\n'
     qtd = 0
     for x in mensagens:
         qtd +=1
         print(f'{msg}{qtd}. {x}')
-    server(f'Sua histórico de mensagens: {mensagens}')
+    sock.send((f'Sua histórico de mensagens: {mensagens}').encode(CODE))
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
