@@ -1,8 +1,9 @@
 import threading, os, sys
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '\\Functions and Var')
+local = os.path.dirname(os.path.abspath(__file__)) + '\\Functions_and_Var'
+sys.path.append(local)
 from variables import *
-from functions_client import *
-from functions_others import PRINT_DIV
+from server_func import *
+from client_func import *
 
 
 try: # Tentando estabelecer a conexão

@@ -1,7 +1,14 @@
 import threading, socket, sys, os
-local = sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '\\Functions and Var')
-print(local)
+local = os.path.dirname(os.path.abspath(__file__)) + '\\Functions_and_Var'
+sys.path.append(local)
+
+from variables import *
 from client_func import *
+
+
+
+
+
 
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -15,6 +22,5 @@ try:
 
     tServer.join()
     tUser.join()
-
-except Exception as e:
-    print ("Falha ", e)
+except: 
+    print(f'Falha na conexão com o servidor... {sys.exc_info()[0]}')

@@ -41,15 +41,6 @@ def Client_Interaction(conn_server, end, clients):
             conn_server.close()
 
 #----------------------------------------------------------------------------------------------------------
-def server_interaction(sock):
-    msg = b' '
-    while msg != b'':
-        try:
-            msg = sock.recv(512)
-            print ("\n"+msg.decode(CODE)+"\n"+PROMPT)
-        except:
-            msg = b''
-            print(f'Erro na decodificação do servidor... {sys.exc_info()[0]}')
 def SPLIT(comunicacao):
     com_split = comunicacao.split(':')
     
