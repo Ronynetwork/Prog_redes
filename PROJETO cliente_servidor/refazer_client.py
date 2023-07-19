@@ -6,8 +6,8 @@ try:
     sock.connect((CLIENT, PORT))
 
     print ("Conectado a: ", (SERVER, PORT))
-    tServer = threading.Thread(target=server_interaction, args=(sock, ))
-    tUser = threading.Thread(target=user_interaction, args=(sock, ))
+    tServer = threading.Thread(target=server_interaction, args=(sock,))
+    tUser = threading.Thread(target=user_interaction, args=(sock,))
 
     tServer.start()
     tUser.start()
