@@ -2,7 +2,7 @@ from Functions_and_Var import *
 
 try: # Tentando estabelecer a conexão
     clients = {} #Criando o dicionário onde ficaram armazenados os clientes conectados
-    server = conn_server(clients)
+    server = conn_server()
     
     while True:
         try:

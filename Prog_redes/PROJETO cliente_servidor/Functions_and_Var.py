@@ -9,31 +9,44 @@ CLIENT = 'localhost'
 CODE = 'utf-8'
 BUFFER = 512
 
-#----------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------
 
-'''                                        PARTE CLIENTE                                                '''
+'''                                                          PARTE CLIENTE                                                                     '''
 
-def client_interaction(sock):
-    msg = ''
-    while msg != '/q':
-        try:
-            msg = input(PROMPT)
-            if msg != '': sock.send(msg.encode(CODE))
-        except:
-            msg = '/q'
-            exit()
+def closeSocket(sock):
+    try:
+        sock.close()
+    except:
+        None
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------
+def user_interaction(sock):
+    try:
+        msg = ''
+        while msg != '/q':
+            try:
+                msg = input(PROMPT)
+                if msg != '': 
+                    sock.send(msg.encode(CODE))
+            except:
+                msg = '/q'
+                exit()
+    except:
+        print(f'Erro no User Interaction...{sys.exc_info()[0]}')
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 def server_interaction(sock):
-    msg = b' '
-    while msg != b'':
-        try:
-            msg = sock.recv(512)
-            print ("\n"+msg.decode(CODE)+"\n"+PROMPT)
-        except:
-            msg = b''
-            print(f'Erro na decodificação do servidor... {sys.exc_info()[0]}')
-
+    try:
+        msg = b' '
+        while msg != b'':
+            try:
+                msg = sock.recv(512)
+                print(msg.decode(CODE))
+            except:
+                msg = b''
+    except:            
+        print(f'Erro no Server interaction... {sys.exc_info()[0]}')
+        exit()
 
 '''                                                        PARTE DO SERVIDOR                                                                  '''
 # -----------------------------------------------------------------------------------------------------------------------------------------------
@@ -54,7 +67,7 @@ def SPLIT(x):
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------
 
-def conn_server(clients):
+def conn_server():
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind((SERVER, PORT))
@@ -72,9 +85,9 @@ def conn_server(clients):
 
 '''                                                    FUNÇÕES INTERATIVAS DO SERVIDOR                                                        '''
 
-def broadCast(clients=None, comunicacao=None, client_info=None, **kwargs):
-    comunicacao = SPLIT(comunicacao)
-    msg = f'O cliente: {client_info[0]} | {client_info[1]} Enviou uma mensagem para todos!\nMensagem > {comunicacao[1]}'
+def broadCast(clients=None, client_info=None, comunicacao=None, **kwargs):
+    comunicacao_div = SPLIT(comunicacao)
+    msg = f'O cliente: {client_info[0]} | {client_info[1]} Enviou uma mensagem para todos!\nMensagem > {comunicacao_div[1]}'
     try:
         for key, value in clients.items():
             if key != client_info[1]:
@@ -88,13 +101,15 @@ def broadCast(clients=None, comunicacao=None, client_info=None, **kwargs):
 '''                             FUNÇÃO QUE PRINTA TODOS OS COMANDOS E MENSAGENS TROCADAS ENTRE O CLIENTE E O SERVIDOR                         '''
 
 def HISTORY(mensagens=None, sock= None, **kwargs):
-    msg = f'esse é seu histórico de comandos\n\n'
-    qtd = 0
-    for x in mensagens:
-        qtd +=1
-        
-    sock.send((f'Seu histórico de mensagens: {mensagens}').encode(CODE))
-
+    try:
+        msg = f'Esse é seu histórico de comandos:\n\n'
+        qtd = 0
+        for x in mensagens:
+            qtd +=1
+            msg += f'{qtd} {x}\n'
+        sock.send(msg.encode(CODE))
+    except:
+        print(f'Erro no envio do History... {sys.exc_info()[0]}')
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
 '''                                           FUNÇÃO QUE LISTA TODOS OS CLIENTES CONECTADOS NO SERVIDOR                                         '''
@@ -130,8 +145,8 @@ def HELP(sock=None, **kwargs):
         title = f"\nSegue abaixo as Opções disponiveis neste servidor:"
         sock.send(title.encode(CODE))
         for com, describ in options.items(): # listando por meio do FOR comando por comando 
-            comunicacao_help = f"\n{com} -> {describ}" # formatação mensagem
-            sock.send(comunicacao_help.encode(CODE)) # enviando comando por comando
+            help_com = f"\n{com} -> {describ}" # formatação mensagem
+            sock.send(help_com.encode(CODE)) # enviando comando por comando
     except:
         PRINTS(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
         exit()  
@@ -154,6 +169,20 @@ def Private(server, comunicacao, clients):
 
 '''                                       INTERAÇÃO ENTRE AS MENSAGENS RECEBIDAS E OS COMANDOS ENVIADOS                                        '''
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def Client_Interaction(sock, client_info, clients):
     try:
         commands = {
@@ -173,7 +202,7 @@ def Client_Interaction(sock, client_info, clients):
                 command_brute = comand[0].lower() # usando apenas para pegar o comando bruto "/x"
                 if command_brute in commands_choice:  # verificando se o comando está dentro das opções disponivéis 
                     # ativando a função chamada (passando argumento depois)
-                    commands[command_brute](clients_dict=clients, sock=sock, comand=comunicacao, commands=commands, mensagens = mensagens)
+                    commands[command_brute](clients_dict=clients, sock=sock, comand=comunicacao, commands=commands, mensagens = mensagens, client_info = client_info)
             except:
                 comunicacao = b'/q'
             del clients[client_info[1]] # quando o cliente digitar /q ele exclui socket do cliente da lista de clientes ativos
