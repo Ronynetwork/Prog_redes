@@ -163,7 +163,7 @@ def HELP(sock=None, **kwargs):
 
 
 
-def Client_interaction(sockConn, addr):
+def Client_Interaction(sockConn, addr):
     msg = b''
     while msg != b'!q':
         try:
