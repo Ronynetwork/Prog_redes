@@ -1,13 +1,4 @@
-import sys, socket, threading
-
-#                                          VARIÁVEIS                                                   <:
-
-SERVER = '0.0.0.0'
-PORT = 5678
-PROMPT = 'Digite sua msg (!q para terminar) > '
-CLIENT = 'localhost'
-CODE = 'utf-8'
-BUFFER = 512
+from functions_download import *
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -27,7 +18,9 @@ def server_interaction(sock):
             msg = sock.recv(512)
         except:
             msg = b''
+            PRINTS('Você solicitou o fim da conexão.\nAté a próxima!!')
             exit()
+
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 def user_interaction(sock):
@@ -64,7 +57,7 @@ def conn_server():
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind((SERVER, PORT))
         PRINTS(f'\nServidor {SERVER} a espera de conexões na porta {PORT}!\n')
-        server.listen(5)
+        server.listen()
         
         return server
 
@@ -93,29 +86,29 @@ def broadCast(clients_list, client_info, comunicacao):
 
 #                             FUNÇÃO QUE PRINTA TODOS OS COMANDOS E MENSAGENS TROCADAS ENTRE O CLIENTE E O SERVIDOR       #               
 
-def HISTORY(mensagens=None, sock= None, **kwargs):
+def HISTORY(historic, socket_client):
     try:
         msg = f'Esse é seu histórico de comandos:\n\n'
         qtd = 0
-        for x in mensagens:
+        for x in historic:
             qtd +=1
             msg += f'{qtd} {x}\n'
-        sock.send(msg.encode(CODE))
+        socket_client.send(msg.encode(CODE))
     except:
         print(f'Erro no envio do History... {sys.exc_info()[0]}')
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
 #                                           FUNÇÃO QUE LISTA TODOS OS CLIENTES CONECTADOS NO SERVIDOR                                         #
 
-def List_Clients(clients=None, sock=None, **kwargs):
+def List_Clients(clients_list, socket_client):
     try: 
         title = "\nOs Clientes conectados ao Servidor são:" # formatando mensagem 
-        sock.send(title.encode(CODE)) 
+        socket_client.send(title.encode(CODE)) 
         num = 0
-        for chave, valor in clients.items():  # faço um for para pegar cada cliente conectado e enviar  
+        for chave, valor in clients_list.items():  # faço um for para pegar cada cliente conectado e enviar  
             num+=1 # formatação numeração cliente
             comunicacao_list = f"\nCLIENTE {num}\nIP: {valor[0]}\nPORT: {chave}\n" # formatação listagem clientes (lembrando que chave=porta e valor[0]=ip)
-            sock.send(comunicacao_list.encode(CODE)) # enviando mensagens 
+            socket_client.send(comunicacao_list.encode(CODE)) # enviando mensagens 
     except:
         print(f'\nErro no momento de Listar os Clientes Conectados...{sys.exc_info()[0]}')  
         exit()
@@ -123,7 +116,7 @@ def List_Clients(clients=None, sock=None, **kwargs):
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
 #                                      FUNÇÃO QUE EXPLICA A FUNCIONALIDADE DE TODAS AS OUTRAS FUNÇÕES                                         #
-def HELP(sock=None, **kwargs):
+def HELP(socket_client):
     try:
         # Criando descrição de cada comando
         options = {
@@ -135,10 +128,10 @@ def HELP(sock=None, **kwargs):
         '/q': 'Desconectar do Servidor'
         }
         title = f"\nSegue abaixo as Opções disponiveis neste servidor:"
-        sock.send(title.encode(CODE))
+        socket_client.send(title.encode(CODE))
         for com, describ in options.items(): # listando por meio do FOR comando por comando 
             help_com = f"\n{com} -> {describ}" # formatação mensagem
-            sock.send(help_com.encode(CODE)) # enviando comando por comando
+            socket_client.send(help_com.encode(CODE)) # enviando comando por comando
     except:
         PRINTS(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
         exit()  
@@ -146,16 +139,34 @@ def HELP(sock=None, **kwargs):
 
 #                                   função que envia uma mensagem do cliente para outro em específico                                         #
 
-def Private(server, comunicacao, clients):
+def Private(socket_client, comunicacao, clients_list):
         comunicacao = SPLIT(comunicacao)
-        for key, value in clients.items():
+        for key, value in clients_list.items():
             try:
                 if str(key) == comunicacao[2] and value[0] == comunicacao[1]:
                     PRINTS('Enviando a mensagem para o cliente informado...\nAguarde.')
-                    
-                    server.send((f'O cliente: {clients[0]}:{clients[1]} enviou uma mensagem para você.').encode(CODE))
+                    sock_destination = value[1]
+                    sock_destination.send((f'O cliente: {clients_list[0]}:{clients_list[1]} enviou uma mensagem para você.').encode(CODE))
             except:
-                server.send((f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}').encode(CODE))
+                socket_client.send((f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}').encode(CODE))
+
+# -------------------------------------------------------------------------------------------------------------------------------------------------
+'''                                             FUNÇÃO QUE LISTA OS ARQUIVOS PRESENTES EM SERVER_FILES                                          '''
+def List_Server():
+    try:
+        local =  os.path.dirname(os.path.abspath(__file__)) + '\\server_files\\'
+        # Obtém a lista de itens (arquivos e diretórios) no diretório especificado
+        itens_no_diretorio = os.listdir(local)
+        print('-'*100);print(f'Estes são os arquivos presentes na pasta do servidor e seus respectivos tamanhos:\n')
+        # Filtra apenas os arquivos
+        for item in itens_no_diretorio:
+            lenght = os.path.getsize(local+item)
+            print(f'({item}): {lenght} bytes;')
+            return itens_no_diretorio
+        PRINTS('Caso deseje realizar o download de algum arquivo, por favor utilizar o comando (/d:(nome do arquivo)).')
+    except FileNotFoundError:
+        print("Diretório não encontrado.")
+
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -167,17 +178,38 @@ def Private(server, comunicacao, clients):
 
 
 
-def Client_Interaction(socket_client, client_info):
-    mensagens = []
-    msg = b''
-    while msg != b'!q':
-        try:
-            msg = socket_client.recv(512)
-            broadCast (msg, client_info)
-        except:
-            msg = b'!q'
-    allSocks.remove ((sockConn, addr))
-    sockConn.close()
+def Client_Interaction(socket_client, client_info, clients_list):
+    try:
+        historic = []
+        commands = {
+            '/?': HELP,
+            '/l': List_Clients,
+            '/m': Private,
+            '/b': broadCast,
+            '/h': HISTORY,
+            '/d': DOWNLOAD_WEB,
+            '/f': List_Server,
+        }
+        commands_functions = set(commands.keys())
+        while True:
+            comunicacao = (socket_client.recv(512).decode(CODE)).lower()
+            historic.append(comunicacao)
+            command = SPLIT(comunicacao)
+            command_brute = command[0].lower()
+            print(f'({client_info[0]}, {client_info[1]})-> {comunicacao}')
+            if command_brute in commands_functions:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                commands[command_brute](socket_client, clients_list, comunicacao, client_info, historic )
+
+            if comunicacao.strip() == '/q':
+                break
+
+        print(f'O cliente: ({client_info[0]}, {client_info[1]}) solicitou o fim da conexão.')
+
+        del clients_list
+        socket_client.close()
+    except SystemExit:
+        print('\n')
+
 
 
 '''def Client_Interaction(socket_client, client_info, client_list):

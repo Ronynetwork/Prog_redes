@@ -5,7 +5,7 @@ try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((CLIENT, PORT))
 
-    print ("Conectado a: ", (SERVER, PORT))
+    PRINTS (f'Conectado a: " ({SERVER, PORT})')
     tServer = threading.Thread(target=server_interaction, args=(sock,))
     tUser = threading.Thread(target=user_interaction, args=(sock,))
 

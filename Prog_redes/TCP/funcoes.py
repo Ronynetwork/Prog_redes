@@ -74,8 +74,8 @@ def CONEXÃO_SERVER():
     except:
         print(f'Erro ao estabelecer a conexão... {sys.exc_info()[0]}')
 
-def CHECAGEM(req):
-    dir_atual = os.path.dirname(__file__)
+'''def CHECAGEM(req):
+    
     server_img = dir_atual + '\img_server\\'
     client_img = dir_atual + '\img_client\\'
     lista_arquivos = os.listdir(server_img)
@@ -91,5 +91,5 @@ def CHECAGEM(req):
             if x.find(req) != -1:
                 arquivos_exist.append(x)
         PRINTS(arquivos_exist)
-        return (False,arquivos_exist)
+        return (False,arquivos_exist)'''
     
