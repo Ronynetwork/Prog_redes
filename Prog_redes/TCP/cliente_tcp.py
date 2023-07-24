@@ -1,5 +1,3 @@
-import socket, time, sys
-
 from funcoes import *
 
 client = CONEXÃO_CLIENTE()
@@ -21,10 +19,12 @@ try:
             print('Você solicitou o fim da conexão.\n\nAté a próxima!!')
             print('-'*100)
             break
-        mensagem = client.recv(4096).decode()
-        print(mensagem)
+        mensagem = client.recv(512).decode()
+
         if 'Size:' in mensagem:
             tamanho = int(mensagem.split(':')[1])
+        else:
+            continue
         
         qtd_pct_total = tamanho//4096
         pct = 0
@@ -38,7 +38,7 @@ try:
             if  not data_retorno:
                 break
             total_retorno += len(data_retorno)
-            print(len(total_retorno))
+            print(total_retorno)
             arquivo.write(data_retorno)
             if total_retorno >= tamanho:
                 break

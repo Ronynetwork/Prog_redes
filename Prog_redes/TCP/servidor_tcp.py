@@ -4,8 +4,8 @@ dir_atual = os.path.dirname(os.path.abspath(__file__))
 conn, end,server = CONEXÃO_SERVER()
 
 try:
-    arq_existe = 0
     while True:
+        arq_existe = 0
         mensagem = conn.recv(512)
         mensagem = mensagem.decode('utf-8')
 
@@ -20,11 +20,11 @@ try:
             print(nome_arquivo)
             lista = os.listdir(dir_atual + '\\img_server\\')
             for arquivo in lista:
-                print(arquivo)
                 if nome_arquivo != arquivo:
                     arq_existe = 1
             if arq_existe == 1:
-                print(f'O Arquivo que você pediu {mensagem} não existe no servidor!')
+                conn.send(f'O Arquivo que você pediu {mensagem} não existe no servidor!'.encode())
+                continue
                 
             total_data = 0
             try:
@@ -34,9 +34,7 @@ try:
                 size_arq = os.path.getsize(nome_arquivo)
                 print(size_arq)
                 comunicacao = (f'Size:{size_arq}')
-                conn.send(comunicacao.encode('utf_8'))
-
-
+                conn.send(comunicacao.encode('utf-8'))
 
                 with open(nome_arquivo, 'rb') as arquivo:
                     while True:
@@ -50,5 +48,5 @@ try:
             except:
                 print('Não foi possivel enviar o restante do arquivo')
 
-except FileNotFoundError:
-    conn.send('O arquivo não existe nossa base de dados.'.encode())
+except:
+    print(sys.exc_info())
