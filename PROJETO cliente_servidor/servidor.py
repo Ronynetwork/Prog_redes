@@ -2,7 +2,7 @@
 from Functions_and_Var import *
 
 try:
-    import threading, os, sys, logging, logging.config
+    import socketthreading, os, sys, logging, logging.config
 except:
     print(f'\nErro na Importação das Bibliotecas necessárias...{sys.exc_info()[0]}')  
     sys.exit()
