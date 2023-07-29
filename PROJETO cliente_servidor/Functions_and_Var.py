@@ -1,5 +1,6 @@
 from var import *
-import os, sys, socket, threading, logging, logging.config
+from otherfunc import *
+from functions_download import *
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 
 #                                                          PARTE CLIENTE                                                                     #
