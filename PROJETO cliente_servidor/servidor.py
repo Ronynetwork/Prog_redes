@@ -21,7 +21,7 @@ try:
     BotLog = logging.getLogger('TelegramBot')
     DebugLog = logging.getLogger('Debug')
 except:
-    PRINTS(f'\nErro na Inicialização da configuração do Log!
+    PRINTS(f'\nErro na Inicialização da configuração do Log!')
 
 
 try:
