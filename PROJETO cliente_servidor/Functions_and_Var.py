@@ -176,8 +176,7 @@ def Client_Interaction(socket_client, client_info, clients_list):
                 HELP(socket_client)
             
             elif command[0].strip() == '/q':
-                break
-                exit
+                exit()
             elif command[0] == '/l':
                 List_Clients(clients_list, socket_client)
             elif command[0] == '/m':
