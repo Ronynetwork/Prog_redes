@@ -183,7 +183,9 @@ def Client_Interaction(socket_client, client_info, clients_list):
             elif command[0] == '/h':
                 print(4)
                 HISTORY(historic, socket_client)
-            
+            elif command[0]:
+                               
+                
             elif command[0] == '/f':
                 List_Server()
 
