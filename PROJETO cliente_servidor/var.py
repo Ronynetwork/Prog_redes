@@ -1,6 +1,3 @@
-from servidor import *
-import sys
-
 MAX_NOT = 15
 MSG_SIZE = 512
 SERVER_CLIENT = 'localhost'

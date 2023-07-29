@@ -58,4 +58,4 @@ def MSG_CLIENT(socket_client, comunicacao):
     try:
         socket_client.send(comunicacao.encode(CODE))
     except:
-        loggerServer.error(f'Erro ao enviar mensagem para o cliente...{sys.exc_info()[0]}')
+        ServerLog.error(f'Erro ao enviar mensagem para o cliente...{sys.exc_info()[0]}')
