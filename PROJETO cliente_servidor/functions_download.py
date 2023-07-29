@@ -94,7 +94,7 @@ def DOWNLOAD_WEB(socket_conexão, sock_client):
     return header, arquivo_dados, content_type
 
 # -----------------------------------------------------------------------------------------------------------------------------------------
-def DOWNLOAD(socket_client, comunicacao, dir_atual):
+def DOWNLOAD(socket_client, comunicacao):
     try:
         url_brute = str(comunicacao[3:]) # pegando a URL do comando (/m:URL) apartir da 3° posição
         try:
