@@ -10,6 +10,12 @@ dir_logconf = dir_atual + "\\log.ini"
 dir_log = dir_atual + "\\serv_log.log"
 dir_pastdownload = dir_atual + '\\server_files'
 
+
+def PRINTS(x):
+    print('-'*100)
+    print(x)
+    print('-'*100)
+
 ''' CONFIGURAÇÃO DO LOG '''
 
 try:
@@ -22,11 +28,6 @@ try:
 except:
     PRINTS(f'\nErro na Inicialização da configuração do Log!\nVerifique se seu arquivo "log.ini" está configurado... {sys.exc_info()[0]}\n')
     sys.exit()
-
-def PRINTS(x):
-    print('-'*100)
-    print(x)
-    print('-'*100)
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------
 def SPLIT_URL (url): # FUNÇÃO PARA QUEBRAR A URL E PEGAR INFORMAÇÕES IMPORTANTES

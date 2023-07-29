@@ -1,6 +1,6 @@
 ''' IMPORTANDO BIBLIOTECAS NECESSÁRIAS PARA O FUNCIONAMENTO DO CÓDIGO '''
 from otherfunc import *
-form functions
+from Functions_and_Var import *
 # ============================================================================================================
 
 ''' DEFINIÇÃO DE ALGUMAS VARIAVEIS E DIRETÓRIOS '''
