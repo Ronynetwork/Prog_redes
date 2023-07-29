@@ -1,7 +1,6 @@
 ''' IMPORTANDO BIBLIOTECAS NECESSÁRIAS PARA O FUNCIONAMENTO DO CÓDIGO '''
 
-try:
-    import threading, os, sys, logging, logging.config
+import threading, os, sys, logging, logging.config
     from Functions_and_Var import *
 
 except:
