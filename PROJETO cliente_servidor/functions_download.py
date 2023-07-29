@@ -1,5 +1,5 @@
 import sys, socket, ssl, socket
-from run import *
+from servidor import *
 
 from var import *
 #                                                                     VARIÁVEIS                                                                   <:
@@ -127,5 +127,5 @@ def DOWNLOAD(socket_client, comunicacao, dir_atual):
         erro = "\nInforme todos os argumentos/parametros necessários para essa opção\n"
         MSG_CLIENT(socket_client, erro)
     except:
-        loggerServer.error(f'Erro no momento de fazer o Download da URL...{sys.exc_info()[0]}')  
+        ServerLog.error(f'Erro no momento de fazer o Download da URL...{sys.exc_info()[0]}')  
         exit()  
