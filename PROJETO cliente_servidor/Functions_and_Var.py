@@ -1,55 +1,38 @@
 from functions_download import *
+from var import *
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 
 #                                                          PARTE CLIENTE                                                                     #
 
-def closeSocket(sock):
-    try:
-        sock.close()
-    except:
-        None
-
-#-------------------------------------------------------------------------------------------------------------------------------------------------
-def server_interaction(sock):
-    msg = b''
-    while msg != b'':
-        try:
-            msg = sock.recv(512)
-        except:
-            msg = b''
-            PRINTS('Você solicitou o fim da conexão.\nAté a próxima!!')
-            exit()
-
-
-#-------------------------------------------------------------------------------------------------------------------------------------------------
 def user_interaction(sock):
     msg = b''
     while msg != '/q':
         try:
             msg = input(PROMPT)
-            if msg != '': sock.send(msg.encode('utf-8'))
+            if msg != '': sock.send(msg.encode(CODE))
         except:
             msg = '/q'
             exit()
 
-#                                                        PARTE DO SERVIDOR                                                                  #
-# -----------------------------------------------------------------------------------------------------------------------------------------------
 
-def PRINTS(x):
-    print('-'*100)
-    print(x)
-    print('-'*100)
-
-# -----------------------------------------------------------------------------------------------------------------------------------------------
-
-def SPLIT(x):
+def server_interaction(sock):
     try:
-        comunicacao = x.split(':')
-        return comunicacao
-    except:
-        print(f'Erro ao desmembrar a mensagem... {sys.exc_info()[0]}')
+        msg = b''
+        while True:
+            msg = sock.recv(512)
+            if not msg:  # Se a mensagem estiver vazia, significa que o servidor encerrou a conexão.
+                break
+            recebimento = msg.decode(CODE)
+            print(recebimento)
+    except Exception as exceção:
+        print(f'Erro na comunicação com o servidor: {exceção}')
+    finally:
+        PRINTS('Você solicitou o fim da conexão.\nAté a próxima!!')
+        sock.close()
+        exit()
 
+#                                                        PARTE DO SERVIDOR                                                                  #
 # -----------------------------------------------------------------------------------------------------------------------------------------------
 
 def conn_server():
@@ -60,7 +43,6 @@ def conn_server():
         server.listen()
         
         return server
-
     except:
         print(f'Erro ao estabelecer a conexão do servidor{sys.exc_info()[0]}')
         server.close()
@@ -89,11 +71,15 @@ def broadCast(clients_list, client_info, comunicacao):
 def HISTORY(historic, socket_client):
     try:
         msg = f'Esse é seu histórico de comandos:\n\n'
+        print(1)
         qtd = 0
         for x in historic:
+            print(2)
             qtd +=1
             msg += f'{qtd} {x}\n'
+        print(3)
         socket_client.send(msg.encode(CODE))
+        print(msg)
     except:
         print(f'Erro no envio do History... {sys.exc_info()[0]}')
 # -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -181,26 +167,29 @@ def List_Server():
 def Client_Interaction(socket_client, client_info, clients_list):
     try:
         historic = []
-        commands = {
-            '/?': HELP,
-            '/l': List_Clients,
-            '/m': Private,
-            '/b': broadCast,
-            '/h': HISTORY,
-            '/d': DOWNLOAD_WEB,
-            '/f': List_Server,
-        }
-        commands_functions = set(commands.keys())
         while True:
-            comunicacao = (socket_client.recv(512).decode(CODE)).lower()
-            historic.append(comunicacao)
+            comunicacao = socket_client.recv(512).decode(CODE).lower()
             command = SPLIT(comunicacao)
-            command_brute = command[0].lower()
-            print(f'({client_info[0]}, {client_info[1]})-> {comunicacao}')
-            if command_brute in commands_functions:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-                commands[command_brute](socket_client, clients_list, comunicacao, client_info, historic )
+            print(command[0])
+            if command[0] == '/?':
+                HELP(socket_client)
+            elif command[0] == '/l':
+                List_Clients(clients_list, socket_client)
+            elif command[0] == '/m':
+                Private(socket_client, comunicacao, clients_list)
+            elif command[0] == '/b':
+                broadCast(clients_list, client_info, comunicacao)
+            elif command[0] == '/h':
+                print(4)
+                HISTORY(historic, socket_client)
+            
+            elif command[0] == '/f':
+                List_Server()
 
-            if comunicacao.strip() == '/q':
+            historic.append(command[0])
+            print(f'({client_info[0]}, {client_info[1]})-> {command[0]}')
+            
+            if command[0].strip() == '/q':
                 break
 
         print(f'O cliente: ({client_info[0]}, {client_info[1]}) solicitou o fim da conexão.')

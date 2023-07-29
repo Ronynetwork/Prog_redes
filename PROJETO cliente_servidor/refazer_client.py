@@ -14,5 +14,6 @@ try:
 
     tServer.join()
     tUser.join()
+    
 except Exception as e:
     print ("Falha ", e)
