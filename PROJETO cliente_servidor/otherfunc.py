@@ -1,5 +1,5 @@
 import logging, logging.config, os, sys
-
+from var import *
 # ============================================================================================================
 
 ''' DEFINIÇÃO DE ALGUMAS VARIAVEIS E DIRETÓRIOS '''

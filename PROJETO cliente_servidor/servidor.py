@@ -28,8 +28,7 @@ try:
     BotLog = logging.getLogger('TelegramBot')
     DebugLog = logging.getLogger('Debug')
 except:
-    PRINTS(f'\nErro na Inicialização da configuração do Log!\nVerifique se seu arquivo "log.ini" está configurado... {sys.exc_info()[0]}\n')
-    sys.exit()
+    PRINTS(f'\nErro na Inicialização da configuração do Log!
 
 
 try:
