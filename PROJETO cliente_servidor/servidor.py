@@ -2,8 +2,6 @@
 
 try:
     import threading, os, sys, logging, logging.config
-    from Functions_and_Var import *
-
 except:
     print(f'\nErro na Importação das Bibliotecas necessárias...{sys.exc_info()[0]}')  
     sys.exit()
