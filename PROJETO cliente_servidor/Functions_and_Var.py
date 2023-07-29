@@ -184,8 +184,7 @@ def Client_Interaction(socket_client, client_info, clients_list):
                 print(4)
                 HISTORY(historic, socket_client)
             elif command[0]:
-                               
-                
+                DOWNLOAD(socket_client, comunicacao)               
             elif command[0] == '/f':
                 List_Server()
 
