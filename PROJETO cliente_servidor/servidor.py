@@ -1,4 +1,5 @@
 ''' IMPORTANDO BIBLIOTECAS NECESSÁRIAS PARA O FUNCIONAMENTO DO CÓDIGO '''
+from Functions_and_Var import *
 
 try:
     import threading, os, sys, logging, logging.config
