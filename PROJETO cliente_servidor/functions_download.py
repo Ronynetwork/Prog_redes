@@ -1,6 +1,5 @@
-import sys, socket, ssl, socket
-from servidor import *
-
+import socket, ssl
+from otherfunc import *
 from var import *
 #                                                                     VARIÁVEIS                                                                   <:
 
