@@ -1,4 +1,5 @@
-import sys, os,  socket, ssl, socket
+import sys, socket, ssl, socket
+from run import *
 
 from var import *
 #                                                                     VARIÁVEIS                                                                   <:
