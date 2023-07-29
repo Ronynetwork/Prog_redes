@@ -133,6 +133,7 @@ def Private(socket_client, comunicacao, clients_list):
                     PRINTS('Enviando a mensagem para o cliente informado...\nAguarde.')
                     sock_destination = value[1]
                     sock_destination.send((f'O cliente: {clients_list[0]}:{clients_list[1]} enviou uma mensagem para você.').encode(CODE))
+                    Sere
             except:
                 socket_client.send((f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}').encode(CODE))
 
