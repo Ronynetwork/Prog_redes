@@ -1,12 +1,6 @@
 ''' IMPORTANDO BIBLIOTECAS NECESSÁRIAS PARA O FUNCIONAMENTO DO CÓDIGO '''
 from Functions_and_Var import *
 
-try:
-    import socketthreading, os, sys, logging, logging.config
-except:
-    print(f'\nErro na Importação das Bibliotecas necessárias...{sys.exc_info()[0]}')  
-    sys.exit()
-
 # ============================================================================================================
 
 ''' DEFINIÇÃO DE ALGUMAS VARIAVEIS E DIRETÓRIOS '''
