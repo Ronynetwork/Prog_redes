@@ -1,3 +1,4 @@
+from servidor import *
 import sys
 
 MAX_NOT = 15
