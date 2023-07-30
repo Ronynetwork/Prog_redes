@@ -1,28 +1,6 @@
 ''' IMPORTANDO BIBLIOTECAS NECESSÁRIAS PARA O FUNCIONAMENTO DO CÓDIGO '''
 from otherfunc import *
 from Functions_and_Var import *
-# ============================================================================================================
-
-''' DEFINIÇÃO DE ALGUMAS VARIAVEIS E DIRETÓRIOS '''
-
-dir_atual = os.path.dirname(os.path.abspath(__file__))  # pegando a pasta atual
-dir_arq =  os.path.abspath(__file__) 
-dir_logconf = dir_atual + "\\log.ini"
-dir_log = dir_atual + "\\serv_log.log"
-dir_pastdownload = dir_atual + '\\server_files'
-
-''' CONFIGURAÇÃO DO LOG '''
-
-try:
-    logging.config.fileConfig(dir_logconf, defaults={'log_path': dir_log.replace('\\', '\\\\')}) # lendo o log.ini na pasta atual
-    urllib3_logger = logging.getLogger('urllib3') 
-    urllib3_logger.setLevel(logging.WARNING) # deixando o level dos logs da URLLIB3 em warning (motivo: espama muitos logs info por conta das requisições do instagram)
-    ServerLog  = logging.getLogger('Servidor') # pegando os logger definidos na configuração (Server/BotTelegram e debug para fins de debug do código)
-    BotLog = logging.getLogger('TelegramBot')
-    DebugLog = logging.getLogger('Debug')
-except:
-    PRINTS(f'\nErro na Inicialização da configuração do Log!')
-
 
 try:
 
@@ -31,7 +9,8 @@ try:
         try:
             server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             server.bind((SERVER, PORT))
-            ServerLog.info(f'\nServidor {SERVER} a espera de conexões na porta {PORT}!\n')
+            PRINTS('Aguaradando conexão do cliente...')
+            ServerLog.info(f'Servidor {SERVER} a espera de conexões na porta {PORT}!')
             server.listen()
             
             socket_client, client_info = server.accept()

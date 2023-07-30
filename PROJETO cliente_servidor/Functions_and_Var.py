@@ -111,7 +111,10 @@ def HELP(socket_client):
         '/b:mensagem': 'Enviar mensagem para todos clientes conectados',
         '/h': 'Lista o seu histórico de comandos',
         '/?': 'Lista as opções disponiveis',
-        '/q': 'Desconectar do Servidor'
+        '/q': 'Desconectar do Servidor',
+        '/d:nome_do_arquivo': 'Enviar arquivo do servidor para o cliente',
+        '/w:url': 'Efetuar o download de um arquivo a partir da url informada',
+        '/u:nome_arquivo': 'Enviar um arquivo para o servidor'
         }
         title = f"\nSegue abaixo as Opções disponiveis neste servidor:"
         socket_client.send(title.encode(CODE))
@@ -133,7 +136,7 @@ def Private(socket_client, comunicacao, clients_list):
                     PRINTS('Enviando a mensagem para o cliente informado...\nAguarde.')
                     sock_destination = value[1]
                     sock_destination.send((f'O cliente: {clients_list[0]}:{clients_list[1]} enviou uma mensagem para você.').encode(CODE))
-                    ServerLog.info((f'O cliente: {clients_list[0]}:{clients_list[1]} enviou a seguinte mensagem: {comunicacao[3]}'))
+                    ServerLog.info((f'O cliente: {clients_list[0]}:{clients_list[1]} recebeu uma mensagem.'))
             except:
                 socket_client.send((f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}').encode(CODE))
 
@@ -171,11 +174,10 @@ def Client_Interaction(socket_client, client_info, clients_list):
         while True:
             comunicacao = socket_client.recv(512).decode(CODE).lower()
             command = SPLIT(comunicacao)
-            print(command[0])
             if command[0] == '/?':
                 HELP(socket_client)
             elif command[0].strip() == '/q':
-                print(f'O cliente: ({client_info[0]}, {client_info[1]}) solicitou o fim da conexão.')
+                ServerLog.info(f'O cliente: ({client_info[0]}, {client_info[1]}) solicitou o fim da conexão.')
                 break
             elif command[0] == '/l':
                 List_Clients(clients_list, socket_client)
@@ -189,11 +191,12 @@ def Client_Interaction(socket_client, client_info, clients_list):
                 DOWNLOAD(socket_client, comunicacao)               
             elif command[0] == '/f':
                 List_Server()
+            else:
+                ServerLog.info(f'O cliente(IP/PORTA): ({client_info[0]}, {client_info[1]}) -> enviou uma mensagem: {command[0]}')
             historic.append(command[0])
-            print(f'({client_info[0]}, {client_info[1]})-> {command[0]}')
         del clients_list
         socket_client.close()
     except SystemExit:
-        print('\n')
+        print()
 
 
