@@ -46,6 +46,16 @@ def sock_http(local_arq, host):
     socket_conexão.sendall(requisição.encode(CODE))
     return socket_conexão
 
+def CONT_LENGHT(header):
+    try:
+        lines = header.strip().split('\n')
+        for line in lines:
+            if line.lower().startswith('content-lenght:'): # vasculho nessas linhas o content-type por meio do startswich que retorna True quando a palavra existir
+                tam = line.strip().split(':')[1]
+                return tam
+    except:
+        print(f'Erro ao localizar o content-type... {sys.exc_info()[0]}')
+
 # --------------------------------------------------------------------------------------------------------------------------------------------------
 
 def CONT_TYPE(header):
@@ -103,6 +113,7 @@ def DOWNLOAD(socket_client, comunicacao):
             erro = '\nInforme a URL corretamente... (tente novamente)!\n' # Realizo tratamento fora da função [motivo: debug facilitado]
             MSG_CLIENT(socket_client, erro)
             return
+        
         try:        
             # Realizando conexão HTTP/HTTPS a depender da URL
             if protocolo =='https': 
@@ -116,15 +127,44 @@ def DOWNLOAD(socket_client, comunicacao):
             erro = '\nA Requisição não teve sucesso, verifique a URL... (tente novamente)!\n'
             MSG_CLIENT(socket_client, erro)
             return
+        
         # Separei as funções para a DOWNLOAD_WEB realizar o bruto [motivo: debug facilitado/redução de código/modulação]
-        arquivo_dados, content_type = DOWNLOAD_WEB(socket_conexão, socket_client) # me retorna o arquivo/extensão dele
+        dados, content_type = DOWNLOAD_WEB(socket_conexão, socket_client) # me retorna o arquivo/extensão dele
         nome_arquivo = f'{name_arq}.{content_type}' # definindo o nome do arquivo com o nome retirado da URL + sua extensão real 
         diretorio_arquivo = dir + f'\\server_files\\{nome_arquivo}' # definindo local de save
         with open(diretorio_arquivo, 'wb') as arquivo: # gravando o arquivo
-            arquivo.write(arquivo_dados)
+            arquivo.write(dados)
+
     except IndexError: # caso do cliente não passar todos os argumentos necessários
         erro = "\nInforme todos os argumentos/parametros necessários para essa opção\n"
         MSG_CLIENT(socket_client, erro)
+
     except:
         ServerLog.error(f'Erro no momento de fazer o Download da URL...{sys.exc_info()[0]}')  
         exit()  
+
+def UPLOAD(socket_client, comunicacao, dir_atual):
+    try:
+        local_arq = dir_atual + f'\\server_files\\{comunicacao[1]}'
+        with open(local_arq, 'wb') as arquivo:
+            msg_upload = f'\nGravando Arquivo no Servidor\nNome: {comunicacao[1]}\nTamanho: {comunicacao[2]} bytes\n'
+            MSG_CLIENT(socket_client, msg_upload) # enviando mensagem para o cliente 
+            bytes_recebidos = 0 
+            pct = 1
+            while True: 
+                data_arquive = socket_client.recv(BUFFER) # Recebendo o conteúdo 
+                if not data_arquive: break
+                arquivo.write(data_arquive) # escrevendo 
+                bytes_recebidos += len(data_arquive) # adicionando cada pacote de bytes aos bytes recebidos
+                msg_upload = f'Pacote ({pct}) - Dados: {bytes_recebidos}/{comunicacao[2]} bytes\n' # informando o processamento
+                MSG_CLIENT(socket_client, msg_upload)
+                if bytes_recebidos >= comunicacao[2]: break # após os bytes recebidos forem iguais ou excederem o tamanho enviado antecipadamente, ele encerra.
+                pct += 1
+        msg_upload = f'\n\nO Upload do arquivo {comunicacao[1]} foi finalizado!\n' # informando que o Upload foi feito com sucesso
+        MSG_CLIENT(socket_client, msg_upload)
+    except FileNotFoundError: # erro já tratado no lado cliente, apenas para evitar logs 
+        msg = f'O arquivo de nome {comunicacao[1]} não foi encontrado.'
+        MSG_CLIENT(socket_client, msg)
+    except:
+        ServerLog.error(f'Erro no recebimento dos dados pelo Upload [Lado servidor]...{sys.exc_info()[0]}')
+

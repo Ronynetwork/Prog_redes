@@ -1,4 +1,4 @@
-import logging, logging.config, os, sys, socket, threading
+import logging, logging.config, os, sys
 from var import *
 # ============================================================================================================
 
@@ -9,6 +9,7 @@ print(dir_atual)
 dir_arq =  os.path.abspath(__file__) 
 dir_logconf = dir_atual + "\\log.ini"
 print(dir_logconf)
+dir_log = dir_atual + '\\Server_Log.log'
 dir_pastdownload = dir_atual + '\\server_files'
 
 
@@ -20,9 +21,7 @@ def PRINTS(x):
 ''' CONFIGURAÇÃO DO LOG '''
 
 try:
-    logging.config.fileConfig(dir_logconf) # lendo o log.ini na pasta atual
-    log_file = os.path.join(dir_atual, "serv_log.log")
-    logging.basicConfig(filename=log_file, level=logging.DEBUG)
+    logging.config.fileConfig(dir_logconf, defaults={'Log_server': dir_log.replace('\\', '\\\\')}) # lendo o log.ini na pasta atual
     urllib3_logger = logging.getLogger('urllib3') 
     urllib3_logger.setLevel(logging.WARNING) # deixando o level dos logs da URLLIB3 em warning (motivo: espama muitos logs info por conta das requisições do instagram)
     ServerLog  = logging.getLogger('Servidor') # pegando os logger definidos na configuração (Server/BotTelegram e debug para fins de debug do código)

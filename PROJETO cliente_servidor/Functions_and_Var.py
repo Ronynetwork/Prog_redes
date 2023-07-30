@@ -10,6 +10,12 @@ def user_interaction(sock):
     while msg != '/q':
         try:
             msg = input(PROMPT)
+            if msg[0] == '/u':
+                msg_split = msg.split(':')
+                size = os.path.getsize(msg_split[1])
+                comunicacao = msg + f':{str(size)}'
+                sock.send(comunicacao.encode(CODE))
+                
             if msg != '': sock.send(msg.encode(CODE))
         except:
             msg = '/q'
@@ -70,16 +76,13 @@ def broadCast(clients_list, client_info, comunicacao):
 
 def HISTORY(historic, socket_client):
     try:
-        msg = f'Esse é seu histórico de comandos:\n\n'
-        print(1)
+        
+        msg = f'\nEsse é seu histórico de comandos:\n\n'
         qtd = 0
         for x in historic:
-            print(2)
             qtd +=1
             msg += f'{qtd} {x}\n'
-        print(3)
         socket_client.send(msg.encode(CODE))
-        print(msg)
     except:
         print(f'Erro no envio do History... {sys.exc_info()[0]}')
 # -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -114,7 +117,7 @@ def HELP(socket_client):
         '/q': 'Desconectar do Servidor',
         '/d:nome_do_arquivo': 'Enviar arquivo do servidor para o cliente',
         '/w:url': 'Efetuar o download de um arquivo a partir da url informada',
-        '/u:nome_arquivo': 'Enviar um arquivo para o servidor'
+        '/u:nome_arquivo': 'Enviar um arquivo para o servidor\n'
         }
         title = f"\nSegue abaixo as Opções disponiveis neste servidor:"
         socket_client.send(title.encode(CODE))
@@ -162,12 +165,6 @@ def List_Server():
 
 #                                       INTERAÇÃO ENTRE AS MENSAGENS RECEBIDAS E OS COMANDOS ENVIADOS                                        #
 
-
-
-
-
-
-
 def Client_Interaction(socket_client, client_info, clients_list):
     try:
         historic = []
@@ -177,7 +174,9 @@ def Client_Interaction(socket_client, client_info, clients_list):
             if command[0] == '/?':
                 HELP(socket_client)
             elif command[0].strip() == '/q':
-                ServerLog.info(f'O cliente: ({client_info[0]}, {client_info[1]}) solicitou o fim da conexão.')
+                ServerLog.critical(f'O cliente: ({client_info[0]}, {client_info[1]}) solicitou o fim da conexão.')
+                del clients_list[client_info[1]]
+                socket_client.close()
                 break
             elif command[0] == '/l':
                 List_Clients(clients_list, socket_client)
@@ -187,15 +186,13 @@ def Client_Interaction(socket_client, client_info, clients_list):
                 broadCast(clients_list, client_info, comunicacao)
             elif command[0] == '/h':
                 HISTORY(historic, socket_client)
-            elif command[0] == '/d':
+            elif command[0] == '/w':
                 DOWNLOAD(socket_client, comunicacao)               
             elif command[0] == '/f':
                 List_Server()
             else:
                 ServerLog.info(f'O cliente(IP/PORTA): ({client_info[0]}, {client_info[1]}) -> enviou uma mensagem: {command[0]}')
             historic.append(command[0])
-        del clients_list
-        socket_client.close()
     except SystemExit:
         print()
 
