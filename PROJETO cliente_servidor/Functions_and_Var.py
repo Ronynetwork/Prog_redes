@@ -174,10 +174,9 @@ def Client_Interaction(socket_client, client_info, clients_list):
             print(command[0])
             if command[0] == '/?':
                 HELP(socket_client)
-            
             elif command[0].strip() == '/q':
                 print(f'O cliente: ({client_info[0]}, {client_info[1]}) solicitou o fim da conexão.')
-                exit()
+                break
             elif command[0] == '/l':
                 List_Clients(clients_list, socket_client)
             elif command[0] == '/m':
@@ -190,10 +189,8 @@ def Client_Interaction(socket_client, client_info, clients_list):
                 DOWNLOAD(socket_client, comunicacao)               
             elif command[0] == '/f':
                 List_Server()
-            
             historic.append(command[0])
             print(f'({client_info[0]}, {client_info[1]})-> {command[0]}')
-
         del clients_list
         socket_client.close()
     except SystemExit:
