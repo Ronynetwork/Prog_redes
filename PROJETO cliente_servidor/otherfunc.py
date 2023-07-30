@@ -5,10 +5,8 @@ from var import *
 ''' DEFINIÇÃO DE ALGUMAS VARIAVEIS E DIRETÓRIOS '''
 
 dir_atual = os.path.dirname(os.path.abspath(__file__))  # pegando a pasta atual
-print(dir_atual)
 dir_arq =  os.path.abspath(__file__) 
 dir_logconf = dir_atual + "\\log.ini"
-print(dir_logconf)
 dir_log = dir_atual + '\\Server_Log.log'
 dir_pastdownload = dir_atual + '\\server_files'
 
@@ -54,7 +52,7 @@ def SPLIT(x):
         comunicacao = x.split(':')
         return comunicacao
     except:
-        print(f'Erro ao desmembrar a mensagem... {sys.exc_info()[0]}')
+        ServerLog.error(f'Erro ao desmembrar a mensagem... {sys.exc_info()[0]}')
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------
 def MSG_CLIENT(socket_client, comunicacao):

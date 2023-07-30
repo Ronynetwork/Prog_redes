@@ -1,6 +1,7 @@
 from var import *
 from otherfunc import *
 from functions_download import *
+from run import *
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 
 #                                                          PARTE CLIENTE                                                                     #
@@ -50,7 +51,7 @@ def conn_server():
         
         return server
     except:
-        print(f'Erro ao estabelecer a conexão do servidor{sys.exc_info()[0]}')
+        ServerLog.eror(f'Erro ao estabelecer a conexão do servidor{sys.exc_info()[0]}')
         server.close()
   
 
@@ -66,8 +67,10 @@ def broadCast(clients_list, client_info, comunicacao):
             if key != client_info[1]:
                 sock_broadcast = value[1]
                 sock_broadcast.send(msg.encode(CODE))
+        ServerLog.info('Foi solicitado o comando /f -> Listagem dos arquivos do servidor.')
+        ServerLog.info(f'A mensagem enviada via broadcast foi {comunicacao_div[1]}')
     except:
-        print(f'Erro ao enviar mensagem em Broadcast... {sys.exc_info()[0]}')
+        ServerLog.error(f'Erro ao enviar mensagem em Broadcast... {sys.exc_info()[0]}')
         exit()
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------
@@ -83,8 +86,10 @@ def HISTORY(historic, socket_client):
             qtd +=1
             msg += f'{qtd} {x}\n'
         socket_client.send(msg.encode(CODE))
+        ServerLog.info('Foi solicitado o comando /h -> Historico de mensagens.')
+
     except:
-        print(f'Erro no envio do History... {sys.exc_info()[0]}')
+        ServerLog.error(f'Erro no envio do History... {sys.exc_info()[0]}')
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
 #                                           FUNÇÃO QUE LISTA TODOS OS CLIENTES CONECTADOS NO SERVIDOR                                         #
@@ -98,8 +103,9 @@ def List_Clients(clients_list, socket_client):
             num+=1 # formatação numeração cliente
             comunicacao_list = f"\nCLIENTE {num}\nIP: {valor[0]}\nPORT: {chave}\n" # formatação listagem clientes (lembrando que chave=porta e valor[0]=ip)
             socket_client.send(comunicacao_list.encode(CODE)) # enviando mensagens 
+        ServerLog.info('Foi solicitado o comando /l -> Listagem dos clientes conectados no servidor.')
     except:
-        print(f'\nErro no momento de Listar os Clientes Conectados...{sys.exc_info()[0]}')  
+        ServerLog.error(f'Erro no momento de Listar os Clientes Conectados...{sys.exc_info()[0]}')  
         exit()
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -124,8 +130,10 @@ def HELP(socket_client):
         for com, describ in options.items(): # listando por meio do FOR comando por comando 
             help_com = f"\n{com} -> {describ}" # formatação mensagem
             socket_client.send(help_com.encode(CODE)) # enviando comando por comando
+            ServerLog.info('Foi solicitado o comando /? -> Listagem dos comandos do servidor.')
+
     except:
-        PRINTS(f'\nErro ao listar as Opções...{sys.exc_info()[0]}')  
+        ServerLog.error(f'Erro ao listar as Opções...{sys.exc_info()[0]}')  
         exit()  
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -139,7 +147,8 @@ def Private(socket_client, comunicacao, clients_list):
                     PRINTS('Enviando a mensagem para o cliente informado...\nAguarde.')
                     sock_destination = value[1]
                     sock_destination.send((f'O cliente: {clients_list[0]}:{clients_list[1]} enviou uma mensagem para você.').encode(CODE))
-                    ServerLog.info((f'O cliente: {clients_list[0]}:{clients_list[1]} recebeu uma mensagem.'))
+                    ServerLog.info('Foi solicitado o comando /m -> mensagem privada.')
+                    ServerLog.info((f'O cliente: {clients_list[0]}:{clients_list[1]} recebeu uma mensagem -> {comunicacao[3]}'))
             except:
                 socket_client.send((f'Não foi possível localizar o cliente informado... {sys.exc_info()[0]}').encode(CODE))
 
@@ -157,8 +166,9 @@ def List_Server():
             print(f'({item}): {lenght} bytes;')
             return itens_no_diretorio
         PRINTS('Caso deseje realizar o download de algum arquivo, por favor utilizar o comando (/d:(nome do arquivo)).')
+        ServerLog.info('Foi solicitado o comando /f -> Listagem dos arquivos do servidor.')
     except FileNotFoundError:
-        print("Diretório não encontrado.")
+        DebugLog.debug("Diretório não encontrado.")
 
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -178,22 +188,23 @@ def Client_Interaction(socket_client, client_info, clients_list):
                 del clients_list[client_info[1]]
                 socket_client.close()
                 break
+            elif command[0] == '/b':
+                broadCast(clients_list, client_info, comunicacao)
+            elif command[0] == '/f':
+                List_Server()
+            elif command[0] == '/h':
+                HISTORY(historic, socket_client)
             elif command[0] == '/l':
                 List_Clients(clients_list, socket_client)
             elif command[0] == '/m':
                 Private(socket_client, comunicacao, clients_list)
-            elif command[0] == '/b':
-                broadCast(clients_list, client_info, comunicacao)
-            elif command[0] == '/h':
-                HISTORY(historic, socket_client)
             elif command[0] == '/w':
-                DOWNLOAD(socket_client, comunicacao)               
-            elif command[0] == '/f':
-                List_Server()
+                DOWNLOAD(socket_client, comunicacao)
+
             else:
                 ServerLog.info(f'O cliente(IP/PORTA): ({client_info[0]}, {client_info[1]}) -> enviou uma mensagem: {command[0]}')
             historic.append(command[0])
     except SystemExit:
-        print()
+        ServerLog.debug('Foi acianada a função exit')
 
 

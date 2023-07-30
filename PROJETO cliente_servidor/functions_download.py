@@ -134,7 +134,7 @@ def DOWNLOAD(socket_client, comunicacao):
         diretorio_arquivo = dir + f'\\server_files\\{nome_arquivo}' # definindo local de save
         with open(diretorio_arquivo, 'wb') as arquivo: # gravando o arquivo
             arquivo.write(dados)
-
+        ServerLog.info('Foi solicitado o comando /w -> Download por vida de uma url.')
     except IndexError: # caso do cliente não passar todos os argumentos necessários
         erro = "\nInforme todos os argumentos/parametros necessários para essa opção\n"
         MSG_CLIENT(socket_client, erro)
@@ -142,7 +142,7 @@ def DOWNLOAD(socket_client, comunicacao):
     except:
         ServerLog.error(f'Erro no momento de fazer o Download da URL...{sys.exc_info()[0]}')  
         exit()  
-
+# ----------------------------------------------------------------------------------------------------------------------------
 def UPLOAD(socket_client, comunicacao, dir_atual):
     try:
         local_arq = dir_atual + f'\\server_files\\{comunicacao[1]}'
@@ -161,6 +161,9 @@ def UPLOAD(socket_client, comunicacao, dir_atual):
                 if bytes_recebidos >= comunicacao[2]: break # após os bytes recebidos forem iguais ou excederem o tamanho enviado antecipadamente, ele encerra.
                 pct += 1
         msg_upload = f'\n\nO Upload do arquivo {comunicacao[1]} foi finalizado!\n' # informando que o Upload foi feito com sucesso
+        
+        ServerLog.info('Foi solicitado o comando /u -> Upload do arquivo para o servidor.')
+        ServerLog.info(f'O upload do arquivo: {comunicacao[1]} foi finalizado.')
         MSG_CLIENT(socket_client, msg_upload)
     except FileNotFoundError: # erro já tratado no lado cliente, apenas para evitar logs 
         msg = f'O arquivo de nome {comunicacao[1]} não foi encontrado.'

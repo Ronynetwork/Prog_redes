@@ -17,32 +17,38 @@ def KILL_PROCESS(PID):
 
 def RUNNER():
     try:
-        if system == 'windows': # verificação de sistema 
-            # utilizo o subprocess para executar ele em 2° plano e retornar o seu PID original
-            process = subprocess.Popen["pythonw", "app_server.py"].pid
+        system = platform.system().lower()  # Verficando o tipo de sistema operacional
+
+        if system == 'windows':
+            #Utilizando subprocess para rodar o script em segundoi plano e encontrar eu PID 
+            process = subprocess.Popen(["pythonw", "servidor.py"]).pid
         elif system == 'linux':
-            process = subprocess.Popen["python", "app_server.py", "&"].pid
-        with open(dir_pid, "w") as file:
-            file.write(str(process)) # após inicializar escrevo no arqivo do pid o número do pid 
-        print(f'\nO Servidor foi iniciado em 2° Plano com sucesso!\nPID -> {process}\n')
-    except:
-        print(f'\nErro na hora de Rodar o Processo! {sys.exc_info()[0]}')
+            process = subprocess.Popen(["python", "servidor.py", "&"]).pid
+
+        dir_pid = "pid.txt"  # Assume que o nome do arquivo é 'pid.txt'
+        with open(dir_pid, "a") as file:
+            file.write(str(process) + "\n")  # Adiciona o PID nos processos
+
+        print(f'\nO servidor está em background com sucesso!!\nPID -> {process}\n')
+    except Exception as e:
+        print(f'\nErro enquanto tentava rodar o processo... {e}')
         sys.exit()
+
 
 
 
 def PID_VERIFICATION(PID):
     try:
-        if system == 'windows': # verificação de sistema
+        if system == 'linux':
+            processo = subprocess.run(['ps', '-p', PID], capture_output=True, text=True).stdout.strip()
+        elif system == 'windows': # verificação de sistema
             # com o RUN ele me retorna detalhes do processos, logo se for False/None, o processo não existe
             processo = subprocess.run(['Powershell', 'Get-Process', '-Id', PID], capture_output=True, text=True).stdout.strip()
-        elif system == 'linux':
-            processo = subprocess.run(['ps', '-p', PID], capture_output=True, text=True).stdout.strip()
     except: 
-        print(f'\nErro na hora de Verificar o PID! {sys.exc_info()[0]}')
+        print(f'\nErro ao Verificar o PID! {sys.exc_info()[0]}')
     else:
         if processo:
-            print(f'\nO Server já está sendo rodado em 2° Plano com o PID: {PID}\n')
+            print(f'\nO Server já está em 2° Plano com o PID: {PID}\n')
             sys.exit()
         else:
             RUNNER()
