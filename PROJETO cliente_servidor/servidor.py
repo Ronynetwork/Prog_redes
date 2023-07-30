@@ -6,7 +6,7 @@ import threading
 
 try:
     clients_list = {}
-    PRINTS('SERVIDOR ATIVO!!')
+    CREATE_PAST('\\server_files')
     try:
         while True:
             server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

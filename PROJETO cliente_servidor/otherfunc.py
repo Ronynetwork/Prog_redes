@@ -1,5 +1,7 @@
 import logging, logging.config, os, sys
 from var import *
+
+
 # ============================================================================================================
 
 ''' DEFINIÇÃO DE ALGUMAS VARIAVEIS E DIRETÓRIOS '''
@@ -28,6 +30,14 @@ try:
 except:
     PRINTS(f'\nErro na Inicialização da configuração do Log!\nVerifique se seu arquivo "log.ini" está configurado... {sys.exc_info()}\n')
     sys.exit()
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
+def CREATE_PAST(name):
+    try:
+        os.makedirs(name, exist_ok=True) # utilizando makedirs para ter o parametro "exist_ok=true" para caso a pasta exista, não retorne erro!
+    except:
+        ServerLog.error(f'Erro na Criação da Pasta...{sys.exc_info()[0]}')  
+        exit()      
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------
 def SPLIT_URL (url): # FUNÇÃO PARA QUEBRAR A URL E PEGAR INFORMAÇÕES IMPORTANTES
