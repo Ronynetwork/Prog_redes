@@ -25,7 +25,7 @@ try:
     urllib3_logger = logging.getLogger('urllib3') 
     urllib3_logger.setLevel(logging.WARNING) # deixando o level dos logs da URLLIB3 em warning (motivo: espama muitos logs info por conta das requisições do instagram)
     ServerLog  = logging.getLogger('Servidor') # pegando os logger definidos na configuração (Server/BotTelegram e debug para fins de debug do código)
-    BotLog = logging.getLogger('TelegramBot')
+    TeleLog = logging.getLogger('TelegramBot')
     DebugLog = logging.getLogger('Debug')
 except:
     PRINTS(f'\nErro na Inicialização da configuração do Log!\nVerifique se seu arquivo "log.ini" está configurado... {sys.exc_info()}\n')
