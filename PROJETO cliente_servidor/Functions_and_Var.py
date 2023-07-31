@@ -168,7 +168,7 @@ def List_Server(socket_client):
         socket_client.send('\nCaso deseje realizar o download de algum arquivo, por favor utilizar o comando (/d:(nome do arquivo)).'.encode(CODE))
         ServerLog.info('Foi solicitado o comando /f -> Listagem dos arquivos do servidor.')
     except FileNotFoundError:
-        DebugLog.debug("Diretório não encontrado.")
+        ServerLog.debug("Diretório não encontrado.")
 
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------
