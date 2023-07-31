@@ -11,6 +11,7 @@ try:
     server.bind((SERVER, PORT))
     ServerLog.info(f'Servidor {SERVER} a espera de conexões na porta {PORT}!')
     bot_thread = threading.Thread(target=Run_bot, args= (clients_list, dir_log))
+    bot_thread.start()
     server.listen()
     CREATE_PAST(dir_atual + '\\server_files')
     try:

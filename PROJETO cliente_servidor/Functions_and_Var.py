@@ -154,18 +154,18 @@ def Private(socket_client, comunicacao, clients_list):
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 '''                                             FUNÇÃO QUE LISTA OS ARQUIVOS PRESENTES EM SERVER_FILES                                          '''
-def List_Server():
+def List_Server(socket_client):
     try:
         local =  os.path.dirname(os.path.abspath(__file__)) + '\\server_files\\'
         # Obtém a lista de itens (arquivos e diretórios) no diretório especificado
         itens_no_diretorio = os.listdir(local)
-        print('-'*100);print(f'Estes são os arquivos presentes na pasta do servidor e seus respectivos tamanhos:\n')
+        socket_client.send(f'Estes são os arquivos presentes na pasta do servidor e seus respectivos tamanhos:\n'.encode(CODE))
         # Filtra apenas os arquivos
         for item in itens_no_diretorio:
             lenght = os.path.getsize(local+item)
             print(f'({item}): {lenght} bytes;')
             return itens_no_diretorio
-        PRINTS('Caso deseje realizar o download de algum arquivo, por favor utilizar o comando (/d:(nome do arquivo)).')
+        socket_client.send('\nCaso deseje realizar o download de algum arquivo, por favor utilizar o comando (/d:(nome do arquivo)).'.encode(CODE))
         ServerLog.info('Foi solicitado o comando /f -> Listagem dos arquivos do servidor.')
     except FileNotFoundError:
         DebugLog.debug("Diretório não encontrado.")
@@ -191,7 +191,7 @@ def Client_Interaction(socket_client, client_info, clients_list):
             elif command[0] == '/b':
                 broadCast(clients_list, client_info, comunicacao)
             elif command[0] == '/f':
-                List_Server()
+                List_Server(socket_client)
             elif command[0] == '/h':
                 HISTORY(historic, socket_client)
             elif command[0] == '/l':
