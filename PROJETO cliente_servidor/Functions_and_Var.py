@@ -163,8 +163,7 @@ def List_Server(socket_client):
         # Filtra apenas os arquivos
         for item in itens_no_diretorio:
             lenght = os.path.getsize(local+item)
-            print(f'({item}): {lenght} bytes;')
-            return itens_no_diretorio
+            socket_client.send(f'({item}): {lenght} bytes;'.encode(CODE))
         socket_client.send('\nCaso deseje realizar o download de algum arquivo, por favor utilizar o comando (/d:(nome do arquivo)).'.encode(CODE))
         ServerLog.info('Foi solicitado o comando /f -> Listagem dos arquivos do servidor.')
     except FileNotFoundError:

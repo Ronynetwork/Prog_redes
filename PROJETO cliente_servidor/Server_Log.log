@@ -3,3 +3,27 @@
 2023-07-31 17:53:43,879 - Servidor - INFO - Servidor 0.0.0.0 a espera de conexões na porta 5678!
 2023-07-31 17:53:44,135 - Servidor - INFO - ('127.0.0.1', 55094) Se conectou ao servidor.
 2023-07-31 17:53:48,441 - Servidor - INFO - Foi solicitado o comando /l -> Listagem dos clientes conectados no servidor.
+2023-07-31 20:21:21,590 - TelegramBot - INFO - Sua API foi verificada com sucesso!
+2023-07-31 20:21:21,590 - TelegramBot - INFO - Sua API foi verificada com sucesso!
+2023-07-31 20:21:21,590 - root - INFO - Servidor 0.0.0.0 a espera de conexões na porta 5678!
+2023-07-31 20:21:35,409 - root - INFO - ('127.0.0.1', 52543) Se conectou ao servidor.
+2023-07-31 20:22:26,305 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
+2023-07-31 20:22:26,305 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
+2023-07-31 20:24:04,397 - TelegramBot - INFO - Sua API foi verificada com sucesso!
+2023-07-31 20:24:04,397 - TelegramBot - INFO - Sua API foi verificada com sucesso!
+2023-07-31 20:24:04,398 - root - INFO - Servidor 0.0.0.0 a espera de conexões na porta 5678!
+2023-07-31 20:24:19,486 - root - INFO - ('127.0.0.1', 52650) Se conectou ao servidor.
+2023-07-31 20:24:24,862 - root - INFO - O cliente(IP/PORTA): (127.0.0.1, 52650) -> enviou uma mensagem: oi
+2023-07-31 20:24:25,422 - root - INFO - O cliente(IP/PORTA): (127.0.0.1, 52650) -> enviou uma mensagem: oi
+2023-07-31 20:24:25,822 - root - INFO - O cliente(IP/PORTA): (127.0.0.1, 52650) -> enviou uma mensagem: oi
+2023-07-31 20:24:26,207 - root - INFO - O cliente(IP/PORTA): (127.0.0.1, 52650) -> enviou uma mensagem: oi
+2023-07-31 20:24:26,573 - root - INFO - O cliente(IP/PORTA): (127.0.0.1, 52650) -> enviou uma mensagem: oi
+2023-07-31 20:25:25,056 - TelegramBot - INFO - Sua API foi verificada com sucesso!
+2023-07-31 20:25:25,056 - TelegramBot - INFO - Sua API foi verificada com sucesso!
+2023-07-31 20:25:25,056 - root - INFO - Servidor 0.0.0.0 a espera de conexões na porta 5678!
+2023-07-31 20:25:34,120 - root - INFO - ('127.0.0.1', 52695) Se conectou ao servidor.
+2023-07-31 20:25:38,765 - root - INFO - O cliente(IP/PORTA): (127.0.0.1, 52695) -> enviou uma mensagem: oi
+2023-07-31 20:25:39,198 - root - INFO - O cliente(IP/PORTA): (127.0.0.1, 52695) -> enviou uma mensagem: oi
+2023-07-31 20:25:39,599 - root - INFO - O cliente(IP/PORTA): (127.0.0.1, 52695) -> enviou uma mensagem: oi
+2023-07-31 20:25:39,966 - root - INFO - O cliente(IP/PORTA): (127.0.0.1, 52695) -> enviou uma mensagem: oi
+2023-07-31 20:25:41,918 - root - INFO - Foi solicitado o comando /h -> Historico de mensagens.
