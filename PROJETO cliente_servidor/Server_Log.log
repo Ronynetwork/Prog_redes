@@ -1,18 +1,5 @@
-2023-07-31 17:16:18,136 - TelegramBot - INFO - Sua API foi verificada com sucesso!
-2023-07-31 17:16:18,136 - TelegramBot - INFO - Sua API foi verificada com sucesso!
-2023-07-31 17:16:18,136 - Servidor - INFO - Servidor 0.0.0.0 a espera de conexões na porta 5678!
-2023-07-31 17:17:25,745 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
-2023-07-31 17:17:25,745 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
-2023-07-31 17:17:51,993 - Servidor - INFO - ('127.0.0.1', 58466) Se conectou ao servidor.
-2023-07-31 17:17:58,700 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
-2023-07-31 17:17:58,700 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
-2023-07-31 17:19:32,454 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
-2023-07-31 17:19:32,454 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
-2023-07-31 17:24:38,088 - TelegramBot - INFO - Sua API foi verificada com sucesso!
-2023-07-31 17:24:38,088 - TelegramBot - INFO - Sua API foi verificada com sucesso!
-2023-07-31 17:24:38,088 - Servidor - INFO - Servidor 0.0.0.0 a espera de conexões na porta 5678!
-2023-07-31 17:25:02,877 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
-2023-07-31 17:25:02,877 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
-2023-07-31 17:25:28,969 - Servidor - INFO - ('127.0.0.1', 58674) Se conectou ao servidor.
-2023-07-31 17:25:41,649 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
-2023-07-31 17:25:41,649 - TelegramBot - INFO - Foi pedido para Listar os Clientes Conectados!
+2023-07-31 17:53:43,879 - TelegramBot - INFO - Sua API foi verificada com sucesso!
+2023-07-31 17:53:43,879 - TelegramBot - INFO - Sua API foi verificada com sucesso!
+2023-07-31 17:53:43,879 - Servidor - INFO - Servidor 0.0.0.0 a espera de conexões na porta 5678!
+2023-07-31 17:53:44,135 - Servidor - INFO - ('127.0.0.1', 55094) Se conectou ao servidor.
+2023-07-31 17:53:48,441 - Servidor - INFO - Foi solicitado o comando /l -> Listagem dos clientes conectados no servidor.
