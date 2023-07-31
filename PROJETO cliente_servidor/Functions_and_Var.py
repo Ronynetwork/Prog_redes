@@ -204,6 +204,6 @@ def Client_Interaction(socket_client, client_info, clients_list):
                 ServerLog.info(f'O cliente(IP/PORTA): ({client_info[0]}, {client_info[1]}) -> enviou uma mensagem: {command[0]}')
             historic.append(command[0])
     except SystemExit:
-        ServerLog.debug('Foi acianada a função exit')
+        ServerLog.debug('Foi acionada a função exit')
 
 
