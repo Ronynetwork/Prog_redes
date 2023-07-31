@@ -1,3 +1,3 @@
 # Python
 
-Olá! Aqui que desenlvolvo projetos de aplicações de Python! 🐍
+Olá! Aqui que desenvolvo projetos de aplicações de Python! 🐍
