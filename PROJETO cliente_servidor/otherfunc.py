@@ -32,9 +32,8 @@ try:
     urllib3_logger = logging.getLogger('urllib3') 
     urllib3_logger.setLevel(logging.WARNING)
     # Obtendo os loggers definidos na configuração (Servidor, TelegramBot e Debug)
-    ServerLog = logging.getLogger('Servidor')
+    ServerLog = logging.getLogger('root')
     TeleLog = logging.getLogger('TelegramBot')
-    DebugLog = logging.getLogger('Debug')
 except:
     # Em caso de erro na configuração do log, imprime a mensagem de erro e encerra o programa
     PRINTS(f'\nErro na Inicialização da configuração do Log!\nVerifique se seu arquivo "log.ini" está configurado... {sys.exc_info()}\n')
