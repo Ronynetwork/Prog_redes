@@ -26,8 +26,6 @@ def VERIFICATION_KEY():
    
 VERIFICATION_KEY()
 
-# ============================================================================================================
-
 ''' FUNÇÃO PARA NOTIFICAR O BOT A CADA CLIENTE CONECTADO '''
 
 def NOTIFICATION_BOT(msg_connected):
@@ -38,7 +36,6 @@ def NOTIFICATION_BOT(msg_connected):
         TeleLog.error(f'Erro no envio da mensagem de [Cliente Conectado] para o Bot...{sys.exc_info()[0]}')  
         sys.exit()
 
-# ============================================================================================================
 
 ''' FUNÇÃO PARA LISTAR OS CLIENTES CONECTADOS AO BOT '''
 
@@ -72,7 +69,6 @@ def Log_bot(dir_log):
         TeleLog.error(f'Erro no momento de listar o Log para o Bot do Telegram...{sys.exc_info()}')  
         sys.exit() 
 
-# ============================================================================================================
 
 ''' INFORMANDO PARA DIGITAR UM COMANDO VÁLIDO '''
 
@@ -86,7 +82,6 @@ def INVALID():
         TeleLog.error(f'Erro no momento de Informar para digitar um comando válido...{sys.exc_info()[0]}')  
         sys.exit() 
 
-# ============================================================================================================
 
 ''' FUNÇÃO PARA RECEBER MENSAGENS/COMANDOS DA CONVERSA COM O BOT '''
 
