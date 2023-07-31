@@ -42,12 +42,12 @@ def Bot_notification(msg_connected):
 
 ''' FUNÇÃO PARA LISTAR OS CLIENTES CONECTADOS AO BOT '''
 
-def Bots_clients(connect_clients):
+def Bots_clients(clients_list):
     try:
         num = 0
-        if len(connect_clients) > 0: # verifica se existe algum cliente conectado
+        if len(clients_list) > 0: # verifica se existe algum cliente conectado
             msg_list = "Os clientes conectados são:\n" # formatação mensagem
-            for chave, valor in connect_clients.items(): # pego cada cliente conectado (ip/porta) do dicionário já criado
+            for chave, valor in clients_list.items(): # pego cada cliente conectado (ip/porta) do dicionário já criado
                 num+=1 # formatação numeração cliente
                 msg_list += f"\nCLIENTE {num}\nIP: {valor[0]}\nPORTA: {chave}\n\n" # formatação listagem clientes (lembrando que chave=porta e valor[0]=ip
         else: # se não existir ele informa para o chat que não possui nenhum conectado
@@ -90,7 +90,7 @@ def INVALID():
 
 ''' FUNÇÃO PARA RECEBER MENSAGENS/COMANDOS DA CONVERSA COM O BOT '''
 
-def Run_bot(clients_connected, dir_log):
+def Run_bot(clients_list, dir_log):
     try:
         message_ID = None # defino o id da mensagem como NONE, usado mais a frente
         while True: # while True para ficar "ouvindo" o chat
@@ -106,7 +106,7 @@ def Run_bot(clients_connected, dir_log):
                     command = msg['message']['text'] # pego o texto da mensagem
                     if command == '/u' : # verifico se o que foi digitado = /u
                         TeleLog.info('Foi pedido para Listar os Clientes Conectados!')
-                        Bots_clients(clients_connected) # se sim, ativo a função de listagem dos clientes conectados
+                        Bots_clients(clients_list) # se sim, ativo a função de listagem dos clientes conectados
                     elif command == '/log':
                         TeleLog.info('Foi pedido para Listar o Log Atual!')
                         Log_bot(dir_log) # se sim, ativo a função de listagem do log
