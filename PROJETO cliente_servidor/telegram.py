@@ -4,7 +4,7 @@ import requests, time
 # ============================================================================================================
 API = '6338998807:AAGvV1OnJRlG24Bu5Au0n1N4HXnMg1KCWj8'
 url_req = f'https://api.telegram.org/bot{API}' # montagem variavel para requisição
-id_chat = 5506756754 # PREENCHA AQUI COM O ID CHAT DO SEU BOT
+chat_ID = 5506756754 # PREENCHA AQUI COM O ID CHAT DO SEU BOT
 
 # ============================================================================================================
 
@@ -30,9 +30,9 @@ VERIFICATION_KEY()
 
 ''' FUNÇÃO PARA NOTIFICAR O BOT A CADA CLIENTE CONECTADO '''
 
-def Bot_notification(msg_connected):
+def NOTIFICATION_BOT(msg_connected):
     try:
-        resposta = {'chat_id':id_chat,'text':f'{msg_connected}'} # realizo a montagem da formatação para o chat com id especificado
+        resposta = {'chat_id':chat_ID, 'text':f'{msg_connected}'} # realizo a montagem da formatação para o chat com id especificado
         var = requests.post(url_req+'/sendMessage',data=resposta) # envio a mensagem via requests.post
     except:
         TeleLog.error(f'Erro no envio da mensagem de [Cliente Conectado] para o Bot...{sys.exc_info()[0]}')  
@@ -52,7 +52,7 @@ def Bots_clients(clients_list):
                 msg_list += f"\nCLIENTE {num}\nIP: {valor[0]}\nPORTA: {chave}\n\n" # formatação listagem clientes (lembrando que chave=porta e valor[0]=ip
         else: # se não existir ele informa para o chat que não possui nenhum conectado
             msg_list = "O Servidor não possui nenhum cliente conectado!"
-        resposta = {'chat_id':id_chat,'text':f'{msg_list}'} # realizo a montagem da formatação para o chat com id especificado
+        resposta = {'chat_id':chat_ID,'text':f'{msg_list}'} # realizo a montagem da formatação para o chat com id especificado
         var = requests.post(url_req+'/sendMessage',data=resposta) # envio a mensagem via requests.post
     except:
         TeleLog.error(f'Erro no momento de Listar os Clientes Conectados...{sys.exc_info()[0]}')  
@@ -67,7 +67,7 @@ def Log_bot(dir_log):
         file_name = 'log-server.txt'
         with open(dir_log, 'rb') as arquive: 
             log = arquive.read()    
-        send_mesage = requests.post(url_req+'/sendDocument', data={'chat_id': id_chat}, files={'document': (file_name, log)}) # realizo envio do Log como documento
+        send_mesage = requests.post(url_req+'/sendDocument', data={'chat_id': chat_ID}, files={'document': (file_name, log)}) # realizo envio do Log como documento
     except:
         TeleLog.error(f'Erro no momento de listar o Log para o Bot do Telegram...{sys.exc_info()}')  
         sys.exit() 
@@ -80,7 +80,7 @@ def INVALID():
     try:
         msg_invalid = "\nInforme um comando válido!\n\n/u -> Listagem de Clientes Conectados\n/log -> Listagem do Log atual do servidor\n"
         msg_invalid += "\nBy: https://github.com/kakanetwork"
-        resposta = {'chat_id':id_chat,'text':f'{msg_invalid}'} # faço o envio
+        resposta = {'chat_id':chat_ID,'text':f'{msg_invalid}'} # faço o envio
         var = requests.post(url_req+'/sendMessage',data=resposta) 
     except:
         TeleLog.error(f'Erro no momento de Informar para digitar um comando válido...{sys.exc_info()[0]}')  
@@ -112,8 +112,8 @@ def Run_bot(clients_list, dir_log):
                         Log_bot(dir_log) # se sim, ativo a função de listagem do log
                     else:
                         msg_invalid = "\ncomando inválido! segue os comandos aceitos:\n\n/u -> Lista de Clientes Conectados\n/log -> Lista do Log atual do servidor\n"
-                        msg_invalid += "\nPor: https://github.com/Ronynetwork"
-                        resposta = {'chat_id':id_chat,'text':f'{msg_invalid}'} # faço o envio
+                        msg_invalid += "\nPor:https://github.com/Ronynetwork"
+                        resposta = {'chat_id':chat_ID,'text':f'{msg_invalid}'} # faço o envio
                         var = requests.post(url_req+'/sendMessage',data=resposta)
                 message_ID= msg['update_id'] + 1 # aqui eu defino o id message (pego ele dentro do .json), e jogo +1 pois funciona como um OFFSET
                 # onde a cada mensagem, o seu id vai ser +1 em relação ao anterior
