@@ -3,12 +3,6 @@ from otherfunc import *
 from var import *
 #                                                                     VARIÁVEIS                                                                   <:
 
-SERVER = '0.0.0.0'
-PORT = 5678
-PROMPT = 'Digite sua msg (/q para terminar) > '
-CLIENT = 'localhost'
-CODE = 'utf-8'
-BUFFER = 512
 
 def PRINTS(x):
     print('-'*100)
@@ -85,7 +79,7 @@ def DOWNLOAD_WEB(socket_conexão, sock_client):
                 break
             data_ret += data
             dados_recebidos += len(data)    # joga na variavel o quanto de bytes já foram recebidos
-            position  = data_ret.find('\r\n\r\n'.encode())
+            position  = data_ret.find('\r\n\r\n'.encode(CODE))
             header   = data_ret[:position].decode('utf-8').lower()   # pegando o cabeçalho 
         if content_lenght == -1:
             msg_size = 'Não foi possivel capturar o Content_Lenght...'
